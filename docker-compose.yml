@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: botiga
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./backend/mysql_data:/var/lib/mysql # Carpeta de datos persistentes dentro de backend/
+      - ./backend/dadesdb.sql:/docker-entrypoint-initdb.d/dades.sql # Archivo SQL de inicialización
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "9090:8080"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/
+    working_dir: /var/www/
+    depends_on:
+      - db
+    command: bash -c "composer install && cp .env.example .env && php artisan key:generate && php artisan migrate && php artisan serve --host=0.0.0.0"
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" # Puerto para Vue.js
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    command: npm run dev -- --host
