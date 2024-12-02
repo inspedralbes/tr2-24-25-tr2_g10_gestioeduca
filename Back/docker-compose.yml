@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  # que hi hagi a la carpeta "docker-entrypoint-initdb.d" al primer inici
+  db:
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: botiga
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - 3306:3306
+    volumes:
+      # Per guardar les dades de forma persistent
+      # La carpeta de l'esquerra HA D'EXISTIR
+      - ./mysql_data:/var/lib/mysql
+      # Per crear algunes taules al primer inici
+      - ./dadesdb.sql:/docker-entrypoint-initdb.d/dades.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "9090:8080"
+
+  laravel:
+    #S'ha de fer un dockerfile amb PHP i Composer i les utilitats de docker per php per aixecar un servidor Laravel
+    build: ./
+    ports:
+      - 8000:8000
+    volumes:
+    #Quina carpeta LOCAL s'ha de mapejar / veure DINS del contenidor?
+      - .:/var/www/
+    working_dir: /var/www/
+    depends_on:
+      - db
+    #Quan es crea, es poden executar ordres
+    command: bash -c "composer install && cp ./.env.example ./.env && php artisan key:generate && php artisan migrate && php artisan serve --host=0.0.0.0"
