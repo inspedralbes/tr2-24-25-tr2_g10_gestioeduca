@@ -7,14 +7,17 @@ help: ## Target de ayuda por defecto
 start_all: ## Levanta todos los servicios en desarrollo
 	cd ./Back/ && $(MAKE) up
 	cd ./Front/ && $(MAKE) start
+	docker ps
 
 stop_all: ## Levanta todos los servicios en desarrollo
 	cd ./Back && $(MAKE) down
 	cd ./Front && $(MAKE) close_all
+	docker ps
 
 restart_all: ## Reinicia todos los servicios en desarrollo
 	cd ./Back && $(MAKE) restart
 	cd ./Front && $(MAKE) restart
+	docker ps
 
 # Target por defecto
 .DEFAULT_GOAL := help

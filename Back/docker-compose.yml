@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   # que hi hagi a la carpeta "docker-entrypoint-initdb.d" al primer inici
   db:
