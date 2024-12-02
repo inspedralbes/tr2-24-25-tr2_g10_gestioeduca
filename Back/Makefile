@@ -15,7 +15,6 @@ up: ## Construyendo servicios Docker laravel y adminer
 down: ## Detener y eliminar contenedores laravel
 	@echo 'Deteniendo servicios'
 	docker-compose down
-	docker rmi -f back_laravel php:8.2-fpm composer adminer mysql:8.2.0
 
 restart: ## Iniciando todos los servicios laravel
 	@echo 'Iniciando/Reiniciando servicios'
