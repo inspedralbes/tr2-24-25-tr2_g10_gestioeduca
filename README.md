@@ -22,7 +22,7 @@ Abans de començar, assegura't de tenir instal·lat el següent component:
 **Aixeca els serveis de forma senzilla (Vue, nodejs y laravel)**
 - Les **comandes principals** per obrir el projecte de forma ràpida i segura.
     ```bash
-    cd tr2-24-25-tr2_g10_gestioeduca
+    cd DAWTR2GX_g10_gestioeduca
     docker-compose up -d # Encendre els contenidors
     firefox "localhost:5173" # Vue
     firefox "localhost:9090" # Adminer
