@@ -4,14 +4,13 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: botiga
+      MYSQL_DATABASE: gestioeduca
       MYSQL_USER: user
       MYSQL_PASSWORD: user
+    volumes:
+      - ./backend/mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
-    volumes:
-      - ./backend/mysql_data:/var/lib/mysql # Carpeta de datos persistentes dentro de backend/
-      - ./backend/dadesdb.sql:/docker-entrypoint-initdb.d/dades.sql # Archivo SQL de inicialización
 
   adminer:
     image: adminer
@@ -32,7 +31,7 @@ services:
     working_dir: /var/www/
     depends_on:
       - db
-    command: bash -c "composer install && cp .env.example .env && php artisan key:generate && php artisan migrate && php artisan serve --host=0.0.0.0"
+    command: bash -c "composer install && php artisan key:generate && php artisan migrate:fresh --seed && php artisan serve --host=0.0.0.0" #cp .env.example .env
 
   frontend:
     build: 
