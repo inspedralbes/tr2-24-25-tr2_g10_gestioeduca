@@ -7,7 +7,7 @@ Aleiram Minaya, Lucas Benitez, Araceli Pacheco, Joselyn Ninahuaman, Adrià Esté
 
 1. **Clona el projecte**
     ```bash
-    git clone https://github.com/inspedralbes/tr2-24-25-tr2_g10_gestioeduca.git
+    git clone https://github.com/inspedralbes/DAWTR2GX_g10_gestioeduca.git
 ## 🚀 Requisitos
 
 Abans de començar, assegura't de tenir instal·lat el següent component:
