@@ -7,7 +7,6 @@ export const useAppStore = defineStore('app', () => {
   const studentsList = ref([]);
   const teachersList = ref([]);
   const studentsAtRiskOfExclusion = ref([]);
-
   const studentProfile = ref({
     id_student: '',
     name: '',
@@ -46,7 +45,7 @@ export const useAppStore = defineStore('app', () => {
   ]);
 
   const groupsInfo = ref([]);
-  const roles = ref([
+  const roles = ref([ //CESC-Resultats
     "M'agrada",
     "No m'agrada",
     "Empenta",
@@ -60,6 +59,28 @@ export const useAppStore = defineStore('app', () => {
     "L'exclouen",
     "Amics",
   ]);
+  const formData = ref({ //CESC-Preguntes
+    studentForms: [
+      {
+        id_student: '',
+        responses: {
+          question1: '',
+          question2: '',
+          question3: '',
+          question4: '',
+          question5: '',
+          question6: '',
+          question7: '',
+          question8: '',
+          question9: '',
+          question10: '',
+          question11: '',
+          question12: '',
+        },
+        dateSubmitted: '',
+      },
+    ],
+  });
   // Actions
   const getCurrentUser = () => currentUser.value;
   const getStudentsList = () => studentsList.value;
@@ -69,6 +90,7 @@ export const useAppStore = defineStore('app', () => {
   const getGroupsInfo = () => groupsInfo.value;
   const getSkillList = () => skillList.value;
   const getRoles = () => roles.value;
+  const getFormData = () => formData.value;
   // Setters
   const setCurrentUser = (user) => {
     currentUser.value = user;
@@ -117,6 +139,9 @@ export const useAppStore = defineStore('app', () => {
     studentsAtRiskOfExclusion: computed(getStudentsAtRiskOfExclusion),
     studentProfile: computed(getStudentProfile),
     groupsInfo: computed(getGroupsInfo),
+    skillList: computed(getSkillList),
+    roles: computed(getRoles),
+    formData: computed(getFormData),
     setCurrentUser,
     setStudentsList,
     setTeachersList,
@@ -129,5 +154,7 @@ export const useAppStore = defineStore('app', () => {
     roles,
     getRoles,
     setRoles,
+    formData,
+    getFormData,
   };
 });
