@@ -29,7 +29,7 @@ seed: ## Migrate seeders
 
 close: ## Tancar tot i eliminar les docker images que no utilitzas.
 	docker compose down
-	docker image prune -a -y
+	docker image prune -a
 
 show:
 	@echo "$(CYAN)==> Listando todos los contenedores (activos e inactivos):$(RESET)"
