@@ -10,5 +10,7 @@ migrate:
 godb: ##Entrar a la bbdd
 	docker exec -it $(MYSQL_CONTAINER) mysql -u user -p;
 
-env: ## Crea fitxer .env
-	cp .env.example .env
+seed:
+	docker exec -it $(LARAVEL_CONTAINER) php artisan migrate:fresh --seed
+
+
