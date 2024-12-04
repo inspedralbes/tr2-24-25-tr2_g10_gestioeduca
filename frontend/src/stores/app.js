@@ -3,11 +3,10 @@ import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', () => {
   // State
-  // const currentUser = ref(null);
   const currentUser = ref({
     id: null,
     name: '',
-    Permissions: '',
+    permissions: '',
     email: '',
     password: '',
   });
@@ -53,18 +52,13 @@ export const useAppStore = defineStore('app', () => {
 
   const groupsInfo = ref([]);
   const roles = ref([ //CESC-Resultats
-    "M'agrada",
-    "No m'agrada",
-    "Empenta",
-    "Insulta",
-    "Exclou",
-    "Rumor",
-    "Ajuda",
-    "Anima",
-    "L'empenten",
-    "L'insulten",
-    "L'exclouen",
-    "Amics",
+    "Agressivitat fisica",
+    "Agressivitat verbal",
+    "Agressivitat relacional",
+    "Victimització fisica",
+    "Victimització verbal",
+    "Victimització relacional",
+    "Prosocialitat",
   ]);
   const formData = ref({ //CESC-Preguntes
     studentForms: [
