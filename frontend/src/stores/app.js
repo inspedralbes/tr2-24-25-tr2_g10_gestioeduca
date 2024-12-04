@@ -3,7 +3,14 @@ import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', () => {
   // State
-  const currentUser = ref(null);
+  // const currentUser = ref(null);
+  const currentUser = ref({
+    id: null,
+    name: '',
+    Permissions: '',
+    email: '',
+    password: '',
+  });
   const studentsList = ref([]);
   const teachersList = ref([]);
   const studentsAtRiskOfExclusion = ref([]);
