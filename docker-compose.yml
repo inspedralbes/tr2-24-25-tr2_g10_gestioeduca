@@ -56,7 +56,7 @@ services:
       - ./backend/node-app:/usr/src/app
     ports:
       - "3000:3000"
-    command: npm start
+    command: npm install && npm start
     environment:
       - NODE_ENV=development
     depends_on:
