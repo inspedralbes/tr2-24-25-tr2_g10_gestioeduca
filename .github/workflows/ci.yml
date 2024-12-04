@@ -1,0 +1,36 @@
+name: Validate Docker Compose on Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  validate-docker compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Run Docker Compose (up and down)
+      - name: Test Docker Compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker compose.yml"
+
+      # Step 4: Run a command to ensure services are running correctly
+      - name: Verify services
+        run: |
+          docker compose ps
+          docker compose exec <service-name> sh -c "echo 'Service is running'"
+
+      # Step 6: Ensure proper cleanup
+      - name: Clean up services
+        run: |
+          docker compose down --volumes
