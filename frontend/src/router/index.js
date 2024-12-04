@@ -18,6 +18,21 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../components/LoginComponent.vue'),
     },
+    {
+      path: '/studentProfile',
+      name: 'studentProfile',
+      component: () => import('../components/ProfileStudentComponent.vue'),
+    },
+    {
+      path: '/studentTeacher',
+      name: 'studentTeacher',
+      component: () => import('../components/ProfileTeacherComponent.vue'),
+    },
+    {
+      path: '/groupProfile',
+      name: 'groupProfile',
+      component: () => import('../components/GroupsComponent.vue'),
+    },
   ],
 })
 
