@@ -8,7 +8,6 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar las dependencias
-RUN npm install tailwindcss postcss autoprefixer
 RUN npm install
 
 # Copiar el resto de los archivos del proyecto
