@@ -46,7 +46,7 @@ const gestioSubmit = async (e) => {
   <div class="login-container">
     <div class="login-content">
       <div class="login-header">
-        <h1>Benvingut!</h1>
+        <h1 class="bg-red-500">Benvingut!</h1>
         <p>Gestió d'informació académica</p>
       </div>
 
@@ -87,5 +87,5 @@ const gestioSubmit = async (e) => {
 </template>
 
 <style scoped>
-
+  @import '@/assets/output.css';
 </style>
