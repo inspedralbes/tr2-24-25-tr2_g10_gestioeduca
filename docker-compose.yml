@@ -48,6 +48,20 @@ services:
     restart: unless-stopped
     command: npm run dev -- --host
 
+  nodejs:
+    image: node:18
+    container_name: nodejs-service
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend/node-app:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: npm start
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - db
+
 # Persistencia
 volumes:
   mysql_data:

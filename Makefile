@@ -31,6 +31,9 @@ close: ## Tancar tot i eliminar les docker images que no utilitzas.
 	docker compose down
 	docker image prune -a
 
+dist:
+	docker exec -it $(VUE_CONTAINER) npm run build
+
 show:
 	@echo "$(CYAN)==> Listando todos los contenedores (activos e inactivos):$(RESET)"
 	@docker ps -a
