@@ -1,20 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue';
+
+import LandingComponent from '@/components/Landing/LandingComponent.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: LoginView,
+      name: 'landing',
+      component: LandingComponent,
     },
-    {
-      path: '/studentsList',
-      name: 'studentsList',
-      component: () => import('../components/StudentsListComponent.vue'),
-    },
-      // {
+    // {
     //   path: '/login',
     //   name: 'login',
       // route level code-splitting
@@ -37,6 +33,11 @@ const router = createRouter({
     //   name: 'groupProfile',
     //   component: () => import('../components/GroupsComponent.vue'),
     // },
+    {
+      path: '/studentsList',
+      name: 'studentsList',
+      component: () => import('../components/StudentsListComponent.vue'),
+    },
   ],
 })
 
