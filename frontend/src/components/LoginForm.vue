@@ -26,9 +26,9 @@ const validateForm = () => {
 const gestioSubmit = async (e) => {
   e.preventDefault();
   msgError.value = '';
-  
+
   if (!validateForm()) return;
-  
+
   isLoading.value = true;
   try {
     // Envia el formulari i espera 1 segon per a la resposta amb les dades introduïdes
@@ -51,26 +51,15 @@ const gestioSubmit = async (e) => {
       </div>
 
       <form @submit="gestioSubmit" class="login-form">
-        <TextInput
-          v-model="username"
-          placeholder="Nom d'usuari"
-          :has-msgError="msgError && !username"
-        />
+        <TextInput v-model="username" placeholder="Nom d'usuari" :has-msgError="msgError && !username" />
 
-        <PasswordInput
-          v-model="password"
-          :has-msgError="msgError && !password"
-        />
+        <PasswordInput v-model="password" :has-msgError="msgError && !password" />
 
         <div class="forgot-password">
           <a href="#">Heu oblidat la contrasenya?</a>
         </div>
 
-        <button 
-          type="submit" 
-          class="sign-in-button"
-          :disabled="isLoading"
-        >
+        <button type="submit" class="sign-in-button" :disabled="isLoading">
           {{ isLoading ? 'Iniciant sessió...' : 'Iniciar sessió' }}
         </button>
 
@@ -87,5 +76,96 @@ const gestioSubmit = async (e) => {
 </template>
 
 <style scoped>
-  @import '@/assets/output.css';
+@import '@/assets/output.css';
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-content {
+  width: 100%;
+  max-width: 380px;
+  background: var(--card-background);
+  padding: 2rem 1.5rem;
+  border-radius: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-top: -0.5rem;
+}
+
+.forgot-password a {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.sign-in-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+}
+
+.sign-in-button:hover {
+  opacity: 0.9;
+}
+
+.sign-in-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.divider {
+  position: relative;
+  margin: 1.5rem 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .login-content {
+    padding: 2.5rem;
+  }
+}
 </style>
