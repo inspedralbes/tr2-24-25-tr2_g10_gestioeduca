@@ -10,7 +10,7 @@
     <div class="mt-8">
       <router-link to="/login">
         <button
-          class="rounded-md bg-indigo-600 px-6 py-2 text-white font-semibold hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-400">
+          class="rounded-md bg-primary px-6 py-2 text-white font-semibold hover:bg-blue-500 focus:ring-2 focus:ring-blue-400">
           Empezar
         </button>
       </router-link>

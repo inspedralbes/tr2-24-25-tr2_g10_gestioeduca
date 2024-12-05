@@ -4,7 +4,11 @@ export default {
     "./src/**/*.{vue,js,jsx,ts,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': 'rgb(0, 173, 238)',
+      },
+    },
   },
   plugins: [],
  }
