@@ -25,6 +25,14 @@ export const useAppStore = defineStore('app', () => {
     teacherComments: '',
     groupAssignments: [],
   });
+  const teacherProfile = ref({
+    id_teacher: '',
+    name: '',
+    email: '',
+    subjects: [
+      { name: '', isTutor: false },
+    ],
+  });
 
   const skillList = ref([
     "Aprenentatge i utilització de coneixements",
@@ -88,6 +96,7 @@ export const useAppStore = defineStore('app', () => {
   const getTeachersList = () => teachersList.value;
   const getStudentsAtRiskOfExclusion = () => studentsAtRiskOfExclusion.value;
   const getStudentProfile = () => studentProfile.value;
+  const getTeacherProfile = () => teacherProfile.value;
   const getGroupsInfo = () => groupsInfo.value;
   const getSkillList = () => skillList.value;
   const getRoles = () => roles.value;
@@ -121,6 +130,14 @@ export const useAppStore = defineStore('app', () => {
       skills,
       teacherComments,
       groupAssignments,
+    };
+  }
+  const setTeacherProfile = ({ id_teacher, name, email, subjects }) => {
+    teacherProfile.value = {
+      id_teacher,
+      name,
+      email,
+      subjects,
     };
   }
 
@@ -157,6 +174,9 @@ export const useAppStore = defineStore('app', () => {
     setRoles,
     formData,
     getFormData,
+    teacherProfile,
+    getTeacherProfile,
+    setTeacherProfile,
   };
 });
 
