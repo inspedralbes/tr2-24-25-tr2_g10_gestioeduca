@@ -1,17 +1,20 @@
 # Usar una imagen base ligera y estable
 FROM node:18-alpine
 
+# Establecer el usuario predeterminado como "node" (preconfigurado en la imagen)
+USER node
+
 # Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
 # Copiar solo package.json y package-lock.json primero
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
 # Instalar las dependencias
 RUN npm install
 
 # Copiar el resto de los archivos del proyecto
-COPY . .
+COPY --chown=node:node . .
 
 # Exponer el puerto utilizado por Vite
 EXPOSE 5173
