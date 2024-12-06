@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white py-24 sm:py-32">
+  <div class="bg-white pt-24"> 
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <ul role="list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 xl:gap-16">
         <li v-for="person in people" :key="person.name" class="flex flex-col items-center text-center">
@@ -38,17 +38,17 @@ li {
 }
 
 img {
-  width: 150px; /* Tamaño de la foto */
+  width: 150px; 
   height: 150px;
-  border-radius: 50%; /* Hace la imagen circular */
-  object-fit: cover; /* Mantiene la proporción de la imagen */
+  border-radius: 50%; 
+  object-fit: cover; 
 }
 
 h3 {
-  font-size: 1.5rem; /* Tamaño del nombre */
+  font-size: 1.5rem; 
 }
 
 p {
-  font-size: 1rem; /* Tamaño del rol */
+  font-size: 1rem;
 }
 </style>

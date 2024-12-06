@@ -13,6 +13,6 @@
 
   
   <script setup>
-  // No se necesita script en este caso.
+  
   </script>
   

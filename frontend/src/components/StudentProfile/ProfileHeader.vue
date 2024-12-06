@@ -72,35 +72,35 @@ export default {
 </script>
 
 <style scoped>
-/* Ajusta la altura de la barra de navegación y la separación de los elementos */
+
 header {
-  height: 80px; /* Aumenta la altura de la barra de navegación */
+  height: 80px; 
 }
 
 nav {
-  width: 100%; /* Asegura que la barra de navegación ocupe todo el ancho */
+  width: 100%; 
 }
 
 @media (max-width: 1024px) {
   nav {
-    padding: 0 20px; /* Ajusta el relleno para dispositivos más pequeños */
+    padding: 0 20px; 
   }
 }
 
 @media (min-width: 1025px) {
   .lg\\:px-8 {
-    padding-left: 40px; /* Espacio adicional para dispositivos grandes */
-    padding-right: 40px; /* Espacio adicional para dispositivos grandes */
+    padding-left: 40px; 
+    padding-right: 40px; 
   }
 }
 
-/* Botones adicionales con margen entre ellos */
+
 .hidden.lg\\:flex > button {
-  margin-right: 20px; /* Espacio entre los botones */
+  margin-right: 20px; 
 }
 
-/* Ajuste de los botones de la barra para que se vean bien en móviles */
+
 .lg\\:hidden {
-  padding: 10px; /* Ajusta el padding de los elementos de la barra */
+  padding: 10px; 
 }
 </style>
