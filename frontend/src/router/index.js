@@ -30,11 +30,12 @@ const router = createRouter({
         component: () => import('../components/StudentProfile/StudentProfileComponent.vue'),
       },
       
-    // {
-    //   path: '/studentTeacher',
-    //   name: 'studentTeacher',
-    //   component: () => import('../components/ProfileTeacherComponent.vue'),
-    // },
+    {
+    path: '/studentTeacher',
+    name: 'studentTeacher',
+     component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
+    },
+  
     // {
     //   path: '/groupProfile',
     //   name: 'groupProfile',
