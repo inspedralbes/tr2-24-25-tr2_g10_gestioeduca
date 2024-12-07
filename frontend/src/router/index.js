@@ -47,6 +47,11 @@ const router = createRouter({
         component: () => import('../components/StudentsListComponent.vue'),
       },
       {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../components/Dashboard/DashboardComponent.vue'),
+      },
+      {
         path: '/tancar-sessio', // Nueva ruta para cerrar sesión
         name: 'tancarSessio',
         component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista

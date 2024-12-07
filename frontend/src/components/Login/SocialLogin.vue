@@ -1,11 +1,45 @@
 <script setup>
 import { googleAuthCodeLogin } from "vue3-google-login";
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+
+const router = useRouter();
+const userData = ref(null);
 
 const gestioGoogleLogin = async () => {
     try {
         const response = await googleAuthCodeLogin();
         console.log('Login amb Google correctament!', response);
-        //Enviar token al backend
+        
+        // Get user info from Google using the code
+        const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                code: response.code,
+                client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+                client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+                redirect_uri: window.location.origin,
+                grant_type: 'authorization_code',
+            }),
+        });
+
+        const { access_token } = await tokenResponse.json();
+        
+        // Get user information
+        const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${access_token}` },
+        });
+        
+        userData.value = await userInfo.json();
+        
+        // Store user data
+        localStorage.setItem('user', JSON.stringify(userData.value));
+        
+        // Redirect to dashboard
+        router.push('/dashboard');
     } catch (error) {
         console.error('Error al iniciar sessio amb Google:', error);
     }
