@@ -6,14 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::create('professors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('teachers', function (Blueprint $table) {
+            $table->id('teacher_id');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email')->unique();
             $table->string('department');
             $table->date('hire_date');
@@ -21,11 +19,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('professors');
+        Schema::dropIfExists('teachers');
     }
 };

@@ -2,12 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfessorController;
-use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CourseController;
 
-Route::get('/professors', [ProfessorController::class, 'index']);
-Route::get('/professors/{id}', [ProfessorController::class, 'show']);
-Route::post('/professors', [ProfessorController::class, 'store']);
+// Rutas protegidas con autenticación Sanctum
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('students', StudentController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('courses', CourseController::class);
+});
 
-Route::get('/alumnos', [AlumnoController::class, 'index']); // Obtener todos los alumnos
-Route::post('/alumnos', [AlumnoController::class, 'store']); // Crear un nuevo alumno
+?>
