@@ -17,11 +17,11 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Intentar autenticar al usuario
+
         if (Auth::attempt($validated)) {
             $user = Auth::user();
 
-            // Generar un token para el usuario autenticado
+
             $token = $user->createToken('token')->plainTextToken;
 
             return response()->json([
