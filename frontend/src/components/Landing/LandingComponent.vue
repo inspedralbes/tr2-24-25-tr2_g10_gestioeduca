@@ -15,7 +15,7 @@ import ContactForm from './ContactForm.vue'
 import HeroSection from './HeroSection.vue'
 import ImageCarousel from './ImageCarousel.vue'
 import EducationSection from './EducationSection.vue'
-import Footer from './Footer.vue'
+import Footer from '../common/Footer.vue'
 
 export default {
   name: 'LandingComponent',

@@ -20,7 +20,7 @@
   import ProfileHeader from './ProfileHeader.vue';
   import ProfileDetails from './ProfileDetails.vue';
   import ProfileSubjects from './ProfileSubjects.vue';
-  import Footer from '../Landing/Footer.vue'; 
+  import Footer from '../common/Footer.vue'; 
     
   export default {
     name: 'StudentProfileComponent',
