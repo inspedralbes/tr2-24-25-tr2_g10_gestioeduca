@@ -30,29 +30,38 @@ const router = createRouter({
         component: () => import('../components/StudentProfile/StudentProfileComponent.vue'),
       },
       
-    {
-    path: '/studentTeacher',
-    name: 'studentTeacher',
-     component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
-    },
+      {
+      path: '/studentTeacher',
+      name: 'studentTeacher',
+      component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
+      },
   
     // {
     //   path: '/groupProfile',
     //   name: 'groupProfile',
     //   component: () => import('../components/GroupsComponent.vue'),
     // },
-    {
-      path: '/studentsList',
-      name: 'studentsList',
-      component: () => import('../components/StudentsListComponent.vue'),
-    },
-    {
-      path: '/tancar-sessio', // Nueva ruta para cerrar sesión
-      name: 'tancarSessio',
-      component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista
-    },
-    
-  ],
-})
+      {
+        path: '/studentsList',
+        name: 'studentsList',
+        component: () => import('../components/StudentsListComponent.vue'),
+      },
+      {
+        path: '/teachersList',
+        name: 'teachersList',
+        component: () => import('../components/TeachersListComponent.vue'),
+      },
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../components/Dashboard/DashboardComponent.vue'),
+      },
+      {
+        path: '/tancar-sessio', // Nueva ruta para cerrar sesión
+        name: 'tancarSessio',
+        component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista
+      },
+    ],
+  });
 
 export default router
