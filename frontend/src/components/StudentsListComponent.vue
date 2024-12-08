@@ -14,6 +14,7 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
 </script>
 
 <template>
+    <ProfileHeader />
     <div class="bg-white py-12 sm:py-16 w-full min-h-screen flex items-center justify-center">
         <div class="mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 px-6 lg:px-8">
             <div v-for="student in students" :key="student.id_student" class="bg-gray-100 p-4 rounded-lg shadow-md">
@@ -41,7 +42,6 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
 </template>
 
 <style scoped>
-@import '@/assets/output.css';
 
 .card-container {
     border: 2px solid #ccc;
