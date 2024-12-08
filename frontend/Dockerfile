@@ -7,18 +7,11 @@ WORKDIR /app
 # Copiar solo package.json y package-lock.json primero
 COPY package*.json ./
 
-# Cambiar temporalmente al usuario root para crear y ajustar permisos
-USER root
-RUN mkdir -p /app/node_modules && chown -R node:node /app
-
-# Cambiar de nuevo al usuario "node" para continuar las operaciones seguras
-USER node
-
 # Instalar las dependencias
 RUN npm install
 
 # Copiar el resto de los archivos del proyecto
-COPY --chown=node:node . .
+COPY . .
 
 # Exponer el puerto utilizado por Vite
 EXPOSE 5173
