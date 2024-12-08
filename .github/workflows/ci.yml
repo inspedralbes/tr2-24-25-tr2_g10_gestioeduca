@@ -33,28 +33,29 @@ jobs:
 
       # Step 5: Wait for services to start
       - name: Wait for services to start
-        run: sleep 10
+        run: sleep 20
 
-      # Step 6: Verify db service
+      # Step 6: Debug container logs if frontend fails
+      - name: Check container status
+        run: docker ps -a
+
+      - name: Logs of frontend service
+        if: always()  # Ensure this runs even if a previous step fails
+        run: docker-compose logs frontend
+
+      # Step 7: Verify services
       - name: Verify Database Service (db)
-        run: |
-          docker-compose exec db echo "Database service is running"
+        run: docker-compose exec db echo "Database service is running"
 
-      # Step 7: Verify adminer service
       - name: Verify Adminer Service
-        run: |
-          docker-compose exec adminer echo "Adminer service is running"
+        run: docker-compose exec adminer echo "Adminer service is running"
 
-      # Step 8: Verify backend service
       - name: Verify Backend Service
-        run: |
-          docker-compose exec backend echo "Backend service is running"
+        run: docker-compose exec backend echo "Backend service is running"
 
-      # Step 9: Verify frontend service
       - name: Verify Frontend Service
-        run: |
-          docker-compose exec frontend echo "Frontend service is running"
+        run: docker-compose exec frontend echo "Frontend service is running"
 
-      # Step 10: Clean up services
+      # Step 8: Clean up services
       - name: Clean up services
         run: docker-compose down --volumes
