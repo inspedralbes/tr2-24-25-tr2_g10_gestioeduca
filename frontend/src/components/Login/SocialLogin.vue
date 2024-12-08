@@ -35,6 +35,11 @@ const gestioGoogleLogin = async () => {
         
         userData.value = await userInfo.json();
         
+        // Check if email domain is @inspedralbes.cat
+        if (!userData.value.email?.endsWith('@inspedralbes.cat')) {
+            throw new Error('Només es permet l\'accés amb comptes @inspedralbes.cat');
+        }
+        
         // Store user data
         localStorage.setItem('user', JSON.stringify(userData.value));
         
@@ -42,6 +47,7 @@ const gestioGoogleLogin = async () => {
         router.push('/dashboard');
     } catch (error) {
         console.error('Error al iniciar sessio amb Google:', error);
+        alert(error.message || 'Error al iniciar sessió amb Google');
     }
 };
 </script>
