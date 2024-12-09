@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white min-h-screen flex flex-col">
     <NavBar @show-contact="showContactForm" />
     <ContactForm :is-visible="isContactFormVisible" @close="closeContactForm" />
     <HeroSection />
     <ImageCarousel />
     <EducationSection />
-    <Footer />
+    <Footer class="mt-auto" />
   </div>
 </template>
 
