@@ -36,11 +36,11 @@ const router = createRouter({
       component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
     },
 
-    // {
-    //   path: '/groupProfile',
-    //   name: 'groupProfile',
-    //   component: () => import('../components/GroupsComponent.vue'),
-    // },
+    {
+     path: '/groupsProfile/:id',
+     name: 'groupsProfile',
+    component: () => import('../components/GroupsProfile/GroupProfileComponent.vue'),
+    },
     {
       path: '/studentsList',
       name: 'studentsList',
