@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ProfileHeader from './ProfileHeader.vue';
+import ProfileHeader from './studentProfile/ProfileHeader.vue';
 import ProfileDetails from './ProfileDetails.vue';
 import ProfileEducation from './ProfileEducation.vue';
 import Footer from '../common/Footer.vue'; 

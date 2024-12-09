@@ -19,49 +19,49 @@ const router = createRouter({
     // {
     //   path: '/login',
     //   name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
     //   component: () => import('../components/LoginComponent.vue'),
     // },
-      {
-        path: '/studentProfile/:id',
-        name: 'studentProfile',
-        component: () => import('../components/StudentProfile/StudentProfileComponent.vue'),
-      },
-      
-      {
+    {
+      path: '/studentProfile/:id',
+      name: 'studentProfile',
+      component: () => import('../components/StudentProfile/StudentProfileComponent.vue'),
+    },
+
+    {
       path: '/studentTeacher',
       name: 'studentTeacher',
       component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
-      },
-  
+    },
+
     // {
     //   path: '/groupProfile',
     //   name: 'groupProfile',
     //   component: () => import('../components/GroupsComponent.vue'),
     // },
-      {
-        path: '/studentsList',
-        name: 'studentsList',
-        component: () => import('../components/StudentsListComponent.vue'),
-      },
-      {
-        path: '/teachersList',
-        name: 'teachersList',
-        component: () => import('../components/TeachersListComponent.vue'),
-      },
-      {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('../components/Dashboard/DashboardComponent.vue'),
-      },
-      {
-        path: '/tancar-sessio', // Nueva ruta para cerrar sesión
-        name: 'tancarSessio',
-        component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista
-      },
-    ],
-  });
+    {
+      path: '/studentsList',
+      name: 'studentsList',
+      component: () => import('../components/modules/user/StudentsListComponent.vue'),
+    },
+    {
+      path: '/teachersList',
+      name: 'teachersList',
+      component: () => import('../components/modules/user/TeachersListComponent.vue'),
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../components/Dashboard/DashboardComponent.vue'),
+    },
+    {
+      path: '/tancar-sessio', // Nueva ruta para cerrar sesión
+      name: 'tancarSessio',
+      component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista
+    },
+  ],
+});
 
 export default router

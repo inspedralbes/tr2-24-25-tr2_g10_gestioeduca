@@ -2,12 +2,10 @@
   <header class="sticky top-0 z-50 bg-white shadow-md w-full">
     <nav class="flex items-center justify-between px-6 py-4 lg:px-8 lg:py-6" aria-label="Global">
       <!-- Logo -->
-      <div class="flex lg:flex-1">
-        <router-link to="/" class="-m-1.5 p-1.5">
+      <router-link to="/" class="-m-1.5 p-1.5">
           <span class="sr-only">Your Company</span>
-          <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Logo">
+          <img class="h-8 w-auto" src="../../../public/img/icono.png" alt="Logo">
         </router-link>
-      </div>
 
       <!-- Botón del menú móvil -->
       <div class="flex lg:hidden">
