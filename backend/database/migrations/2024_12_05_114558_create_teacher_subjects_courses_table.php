@@ -8,18 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('teacher_subjects_courses', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        if (!Schema::hasTable('teacher_subjects_courses')) {
+            Schema::create('teacher_subjects_courses', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
 
-            $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('subject_id');
-            $table->unsignedBigInteger('course_id');
+                $table->unsignedBigInteger('teacher_id');
+                $table->unsignedBigInteger('subject_id');
+                $table->unsignedBigInteger('course_id');
 
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-        });
+                $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+                $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+                $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            });
+        }
     }
 
     public function down(): void
