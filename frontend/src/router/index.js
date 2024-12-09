@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import LandingComponent from '@/components/Landing/LandingComponent.vue'
 import LoginView from '../views/LoginView.vue'
+import GroupList from '../views/Groups/GroupList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,9 +23,14 @@ const router = createRouter({
       component: () => import('../views/DashboardView.vue'),
     },
     {
-      path: '/studen',
+      path: '/studentsList',
       name: 'alumnos',
       component: () => import('../components/StudentsListComponent.vue'),
+    },
+    {
+      path: '/grupos',
+      name: 'GroupList',
+      component: GroupList
     },
     {
       path: '/studentProfile',
