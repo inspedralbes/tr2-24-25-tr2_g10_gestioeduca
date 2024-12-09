@@ -3,12 +3,17 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 
 const students = ref([]);
+const router = useRouter();
 
+const viewStudentDetails = (id) => {
+    router.push({ name: 'studentProfile', params: { id } });
+};
 onMounted(async () => {
     const response = await fetch('../public/students.json');
     const router = useRouter();
     students.value = await response.json();
 });
+
 // Función para generar URL del avatar basado en el ID
 const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id}`;
 </script>
@@ -27,7 +32,7 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
                             <h3 class="text-base font-semibold text-gray-900">{{ student.name }} {{ student.surname }}
                             </h3>
                             <p class="text-sm text-gray-600">{{ student.curs }}</p>
-                            <button @click="viewStudentDetails(student)"
+                            <button @click="viewStudentDetails(student.id_student)"
                             class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none
                             focus:ring-2 focus:ring-blue-400">
                             Fitxa alumne
