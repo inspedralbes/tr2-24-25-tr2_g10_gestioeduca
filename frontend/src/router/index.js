@@ -31,8 +31,8 @@ const router = createRouter({
     },
 
     {
-      path: '/studentTeacher',
-      name: 'studentTeacher',
+      path: '/teacherProfile/:id',
+      name: 'teacherProfile',
       component: () => import('../components/TeacherProfile/TeacherProfileComponent.vue'),
     },
 
