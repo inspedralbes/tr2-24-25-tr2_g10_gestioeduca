@@ -5,16 +5,9 @@
       <p>Carregant...</p>
     </div>
 
- 
+    <!-- Perfil del estudiante -->
     <div v-else class="student-profile">
-    
-      <ProfileHeader :studentName="studentName" :studentTagline="studentTagline" />
-
-     
-      <ProfileDetails :bio="studentBio" />
-
-     
-      <ProfileEducation :educationList="education" />
+      <ProfileHeader :studentName="studentName" />
     </div>
 
     <!-- Pie de página -->
@@ -27,6 +20,7 @@ import ProfileHeader from './ProfileHeader.vue';
 import ProfileDetails from './ProfileDetails.vue';
 import ProfileEducation from './ProfileEducation.vue';
 import Footer from '../common/Footer.vue'; 
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'StudentProfileComponent',
@@ -46,16 +40,35 @@ export default {
     };
   },
   created() {
-    
-    setTimeout(() => {
-      this.studentName = 'John Doe'; 
-      this.studentBio = 'A passionate learner who loves to build web applications.';  
-      this.education = [
-        'Computer Science B.Sc. - University of Example',
-        'Front-End Developer Bootcamp - Example Academy',
-      ];  
-      this.isLoading = false;  
-    }, 2000); 
+    const route = useRoute();
+    const studentId = route.params.id;
+
+    // Fetch para obtener datos del estudiante
+    this.fetchStudentData(studentId);
+  },
+  methods: {
+    async fetchStudentData(id) {
+      try {
+        // Llamada al archivo JSON o API
+        const response = await fetch('../public/students.json');
+        if (!response.ok) throw new Error('Error al cargar los datos');
+
+        const students = await response.json();
+
+        // Buscar el estudiante por su ID
+        const student = students.find(s => s.id_student === id);
+        if (!student) throw new Error('Estudiante no encontrado');
+
+        // Asignar los datos al estado
+        this.studentName = `${student.name} ${student.surname}`;
+        this.studentBio = student.teacherComments || 'Sin comentarios adicionales.';
+        this.education = student.skills || [];
+      } catch (error) {
+        console.error('Error al cargar datos del estudiante:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
 };
 </script>
@@ -89,6 +102,4 @@ export default {
   padding: 20px;
   color: #007bff;
 }
-
-
 </style>
