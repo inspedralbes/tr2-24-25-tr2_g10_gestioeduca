@@ -32,10 +32,14 @@ class StudentController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:students',
+            'password' => 'required|string|min:8',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
             'current_course' => 'nullable|string',
         ]);
+
+        // Para encriptar la contraseña antes de guardarla
+        $validated['password'] = bcrypt($request->input('password'));
 
         $student = Student::create($validated);
 
@@ -55,10 +59,16 @@ class StudentController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email,' . $id,
+            'password' => 'nullable|string|min:8', // Si se proporciona una nueva contraseña
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
             'current_course' => 'nullable|string',
         ]);
+
+         // Encriptar la nueva contraseña si es proporcionada
+        if ($request->has('password')) {
+            $validated['password'] = bcrypt($request->input('password'));
+        }
 
         $student->update($validated);
 
