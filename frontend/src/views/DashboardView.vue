@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import Sidebar from '@/components/Layout/Sidebar.vue'
+import MainLayout from '@/components/Layout/MainLayout.vue';
 
 const router = useRouter();
 const userData = ref(null);
@@ -18,6 +20,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <Sidebar />
     <div class="dashboard-container">
         <div v-if="userData" class="welcome-section">
             <h1>Benvingut, {{ userData.name }}!</h1>
