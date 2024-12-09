@@ -33,10 +33,8 @@
   </template>
   
   <script setup>
-  /* No necesitas lógica específica en este caso */
   </script>
   
   <style scoped>
-  /* Los estilos son manejados por Tailwind, no se necesita código adicional */
   </style>
   

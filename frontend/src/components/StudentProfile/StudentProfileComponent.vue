@@ -67,7 +67,7 @@ export default {
   },
   created() {
     const route = useRoute();
-    this.studentId = route.params.id; // Ahora es una cadena, no la convertimos a entero
+    this.studentId = route.params.id; 
     this.fetchStudentData(this.studentId);
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
         if (!response.ok) throw new Error("Error al cargar los datos");
 
         const students = await response.json();
-        const student = students.find((s) => s.id_student === id); // Comparar como cadenas
+        const student = students.find((s) => s.id_student === id); 
         if (!student) throw new Error("Estudiante no encontrado");
 
         this.studentName = `${student.name} ${student.surname}`;
