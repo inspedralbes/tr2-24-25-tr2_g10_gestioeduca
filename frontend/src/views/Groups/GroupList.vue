@@ -2,10 +2,7 @@
 import { ref } from 'vue'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 import GroupGenerator from '../../components/Groups/GroupGenerator.vue'
-import GroupGeneratorMobile from '../../components/Groups/GroupGeneratorMobile.vue'
 import GroupPreview from '../../components/Groups/GroupPreview.vue'
-import GroupPreviewMobile from '../../components/Groups/GroupPreviewMobile.vue'
-
 const students = ref([
   {
     id: 1,
