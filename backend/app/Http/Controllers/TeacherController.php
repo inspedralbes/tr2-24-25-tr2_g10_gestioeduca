@@ -32,7 +32,6 @@ class TeacherController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:teachers',
             'department' => 'nullable|string',
-            'hire_date' => 'nullable|date',
         ]);
 
         $teacher = Teacher::create($validated);
@@ -54,7 +53,6 @@ class TeacherController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:teachers,email,' . $id,
             'department' => 'nullable|string',
-            'hire_date' => 'nullable|date',
         ]);
 
         $teacher->update($validated);

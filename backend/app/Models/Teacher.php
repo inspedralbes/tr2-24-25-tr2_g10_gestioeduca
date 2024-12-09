@@ -11,7 +11,6 @@ class Teacher extends Model
         'last_name',
         'email',
         'department',
-        'hire_date'
     ];
 
     protected $hidden = [

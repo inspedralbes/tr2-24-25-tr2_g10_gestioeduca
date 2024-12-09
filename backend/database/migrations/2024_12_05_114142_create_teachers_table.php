@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('department');
-            $table->date('hire_date');
             $table->timestamps();
         });
     }
