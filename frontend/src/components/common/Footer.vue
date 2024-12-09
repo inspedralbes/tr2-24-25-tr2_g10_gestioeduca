@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-800 text-white py-8 text-center">
+  <footer class="bg-primary text-white py-8 text-center">
     <p>&copy; {{ currentYear }} TGRUPIFY. Todos los derechos reservados.</p>
   </footer>
 </template>
@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 footer {
-  background-color: #2d3748;
+  background-color: var(--primary-color);
   color: #fff;
 }
 </style>

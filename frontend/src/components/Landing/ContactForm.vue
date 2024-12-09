@@ -27,7 +27,7 @@
         </div>
         <div class="flex justify-center">
           <button type="submit"
-            class="rounded-md bg-indigo-600 px-6 py-2 text-white font-semibold hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-400">
+            class="rounded-md bg-primary px-6 py-2 text-white rounded font-semibold hover:bg-primary/90 transition-colors">
             Enviar
           </button>
         </div>

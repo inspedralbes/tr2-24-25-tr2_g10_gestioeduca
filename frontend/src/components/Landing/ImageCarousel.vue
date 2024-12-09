@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-100 py-20">
+  <div class="bg-gray-100 py-12">
     <div class="mx-auto max-w-7xl px-6">
-      <h2 class="text-3xl font-semibold text-gray-900 mb-8 text-center">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-8 text-center">
         Acció Finançada pel Ministeri d'Educació, Formació Professional i Esports i per la Unió Europea - NextGenerationUE
       </h2>
       <div class="carousel-container">
@@ -23,12 +23,12 @@ export default {
   data() {
     return {
       images: [
-        { url: 'https://via.placeholder.com/800x500?text=Image+1', alt: 'Image 1' },
-        { url: 'https://via.placeholder.com/800x500?text=Image+2', alt: 'Image 2' },
-        { url: 'https://via.placeholder.com/800x500?text=Image+3', alt: 'Image 3' },
-        { url: 'https://via.placeholder.com/800x500?text=Image+4', alt: 'Image 4' },
-        { url: 'https://via.placeholder.com/800x500?text=Image+5', alt: 'Image 5' },
-        { url: 'https://via.placeholder.com/800x500?text=Image+6', alt: 'Image 6' }
+        { url: './../../public/img/logo1.jpg', alt: 'Image 1' },
+        { url: './../../public/img/logo2.png', alt: 'Image 2' },
+        { url: './../../public/img/logo3.png', alt: 'Image 3' },
+        { url: './../../public/img/logo4.jpg', alt: 'Image 4' },
+        { url: './../../public/img/logo5.jpg', alt: 'Image 5' },
+        { url: './../../public/img/logo6.jpg', alt: 'Image 6' }
       ]
     }
   },
@@ -58,8 +58,8 @@ export default {
 }
 
 .carousel-item {
-  flex: 0 0 300px;
-  padding: 0 1rem;
+  flex: 0 0 200px; 
+  padding: 0 0.5rem; 
   transition: transform 0.3s ease;
 }
 
@@ -69,10 +69,10 @@ export default {
 
 .carousel-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 100px; 
+  object-fit: contain; 
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes scroll {
@@ -86,7 +86,7 @@ export default {
 
 @media (max-width: 640px) {
   .carousel-item {
-    flex: 0 0 250px;
+    flex: 0 0 150px; 
   }
 }
 </style>
