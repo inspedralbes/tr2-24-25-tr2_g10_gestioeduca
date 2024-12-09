@@ -11,13 +11,33 @@ class CourseSeeder extends Seeder
     {
         // Crear cursos
         Course::create([
-            'course_name' => 'Mathematics',
-            'year' => 2021,
+            'course_name' => '1 ESO',
+            'year' => 2024,
         ]);
 
         Course::create([
-            'course_name' => 'Science',
-            'year' => 2022,
+            'course_name' => '2 ESO',
+            'year' => 2024,
+        ]);
+
+        Course::create([
+            'course_name' => '3 ESO',
+            'year' => 2024,
+        ]);
+
+        Course::create([
+            'course_name' => '4 ESO',
+            'year' => 2024,
+        ]);
+
+        Course::create([
+            'course_name' => '1 Bachilletaro',
+            'year' => 2024,
+        ]);
+
+        Course::create([
+            'course_name' => '2 Bachillerato',
+            'year' => 2024,
         ]);
 
     }

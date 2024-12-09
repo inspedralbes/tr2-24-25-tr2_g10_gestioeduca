@@ -20,6 +20,33 @@ class SubjectSeeder extends Seeder
             'description' => 'An introductory course to Calculus',
         ]);
 
+        Subject::create([
+            'subject_name' => 'Science',
+            'description' => 'An introductory course to Science',
+        ]);
+
+        Subject::create([
+            'subject_name' => 'Literature',
+            'description' => 'An introductory course to Literature',
+        ]);
+
+
+        Subject::create([
+            'subject_name' => 'History',
+            'description' => 'An introductory course to History',
+        ]);
+
+
+        Subject::create([
+            'subject_name' => 'Biology',
+            'description' => 'An introductory course to Biology',
+        ]);
+
+        Subject::create([
+            'subject_name' => 'Economics',
+            'description' => 'An introductory course to Economics',
+        ]);
+
         // Crear más asignaturas según lo necesites
     }
 }
