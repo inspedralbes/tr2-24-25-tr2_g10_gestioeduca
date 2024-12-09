@@ -39,39 +39,27 @@ El projecte està dividit en dos directoris principals:
 - **Front/:** Conté el codi i els serveis per al frontend + Nodejs.
 
 # Convenciones para los Commits
-```
 chore: Cambios menores que no afectan el código de producción, como actualizaciones de dependencias o tareas de mantenimiento.
-```
 ```
 chore: update dependencies
 ```
-```
 docs: Cambios relacionados con la documentación del proyecto
-```
 ```
 docs: update README with new setup instructions
 ```
-```
 fix: Corrección de errores en el código que solucionan problemas identificados
-```
 ```
 fix: resolve issue with user authentication
 ```
-```
 feat: Adición de nuevas funcionalidades o características al proyecto.
-```
 ```
 feat: add user profile page
 ```
-```
 refactor: Cambios en el código que mejoran la estructura o el rendimiento sin modificar la funcionalidad.
-```
 ```
 refactor: simplify user authentication logic
 ```
-```
 test: Añadir o modificar pruebas en el proyecto.
-```
 ```
 test: add unit tests for user profile component
 ```
