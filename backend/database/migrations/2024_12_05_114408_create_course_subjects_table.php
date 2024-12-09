@@ -6,18 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
+    public function up()
+{
+    if (!Schema::hasTable('course_subjects')) {
         Schema::create('course_subjects', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('course_id')->unsigned();
+            $table->bigInteger('subject_id')->unsigned();
             $table->timestamps();
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('subject_id');
-
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
+}
+
 
     public function down(): void
     {

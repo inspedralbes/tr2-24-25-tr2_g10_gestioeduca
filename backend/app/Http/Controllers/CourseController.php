@@ -13,7 +13,7 @@ class CourseController extends Controller
         return response()->json(Course::all());
     }
 
-    // Mostrar un curso específico
+
     public function show($id)
     {
         $course = Course::find($id);

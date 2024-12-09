@@ -4,17 +4,29 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class VerifyCsrfToken
 {
     /**
-     * Handle an incoming request.
+     * Los URIs que deberían ser excluidos de la verificación CSRF.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @var array
      */
-    public function handle(Request $request, Closure $next): Response
+    protected $except = [
+        'api/*',  // Excluye las rutas API de la verificación CSRF
+    ];
+
+    /**
+     * Maneja una solicitud entrante.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        return parent::handle($request, $next);
     }
 }
+
+?>

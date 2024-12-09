@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    // Mostrar todos los estudiantes
+
     public function index()
     {
         return response()->json(Student::all());
