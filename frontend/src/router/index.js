@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LandingComponent from '@/components/Landing/LandingComponent.vue'
 import LoginView from '../views/LoginView.vue'
 import GroupList from '../views/Groups/GroupList.vue'
+import FormList from '../views/Forms/FormList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +30,11 @@ const router = createRouter({
       name: 'studentProfile',
       component: () => import('../components/StudentProfile/StudentProfileComponent.vue'),
     },
-
+    {
+      path: '/formularios',
+      name: 'FormList',
+      component: FormList
+    },
     {
       path: '/teacherProfile/:id',
       name: 'teacherProfile',
