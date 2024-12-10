@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import LandingComponent from '@/components/Landing/LandingComponent.vue'
 import LoginView from '../views/LoginView.vue'
+import GroupList from '../views/Groups/GroupList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,9 +37,9 @@ const router = createRouter({
     },
 
     {
-     path: '/groupsProfile/:id',
-     name: 'groupsProfile',
-    component: () => import('../components/GroupsProfile/GroupProfileComponent.vue'),
+      path: '/groupsProfile/:id',
+      name: 'groupsProfile',
+      component: () => import('../components/GroupsProfile/GroupProfileComponent.vue'),
     },
     {
       path: '/studentsList',
@@ -55,6 +55,11 @@ const router = createRouter({
       path: '/groupsList',
       name: 'groupsList',
       component: () => import('../components/modules/user/GroupsListComponent.vue'),
+    },
+    {
+      path: '/grupos',
+      name: 'GroupList',
+      component: GroupList
     },
     {
       path: '/dashboard',
