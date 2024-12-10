@@ -9,18 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         if (!Schema::hasTable('teacher_subjects_courses')) {
-            Schema::create('teacher_subjects_courses', function (Blueprint $table) {
+            Schema::create('teacher_subject_course', function (Blueprint $table) {
                 $table->id();
+                $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relación con usuarios (profesores)
+                $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade'); // Relación con materias
+                $table->foreignId('course_id')->constrained('courses')->onDelete('cascade'); // Relación con cursos
+                $table->integer('year'); // Año del curso (por ejemplo, 1er año, 2do año)
                 $table->timestamps();
-
-                $table->unsignedBigInteger('teacher_id');
-                $table->unsignedBigInteger('subject_id');
-                $table->unsignedBigInteger('course_id');
-
-                $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-                $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-                $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             });
+
         }
     }
 

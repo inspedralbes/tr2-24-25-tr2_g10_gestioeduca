@@ -12,12 +12,8 @@ return new class extends Migration
         if (!Schema::hasTable('student_courses')) {
             Schema::create('student_courses', function (Blueprint $table) {
                 $table->id();
-                $table->bigInteger('student_id')->unsigned();
-                $table->bigInteger('course_id')->unsigned();
-
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-                $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-                $table->unique(['student_id', 'course_id']);
+                $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relación con los usuarios (alumnos)
+                $table->foreignId('course_id')->constrained('courses')->onDelete('cascade'); // Relación con cursos
                 $table->timestamps();
             });
         }
