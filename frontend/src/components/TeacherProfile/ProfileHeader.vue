@@ -5,8 +5,7 @@
         <div class="flex lg:flex-1">
           <router-link to="/" class="-m-1.5 p-1.5">
             <span class="sr-only">Logo de la Institución</span>
-            <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Logo">
-          </router-link>
+            <img class="h-8 w-auto" src="../../../public/img/icono.png" alt="Logo">          </router-link>
         </div>
   
         <!-- Mobile menu button -->

@@ -4,19 +4,20 @@ import { ref, onMounted } from 'vue';
 import ProfileHeader from '../../StudentProfile/ProfileHeader.vue';
 import Footer from '../../common/Footer.vue';
 
-const students = ref([]);
+const groups = ref([]);
 const isLoading = ref(true);
 const router = useRouter();
 
-const viewStudentDetails = (id) => {
-  router.push({ name: 'studentProfile', params: { id } });
+const viewGroupsDetails = (id) => {
+  router.push({ name: 'groupsProfile', params: { id } });
 };
 
 onMounted(async () => {
   try {
-    const response = await fetch('/students.json');
-    if (!response.ok) throw new Error('Error dades.');
-    students.value = await response.json();
+    const response = await fetch('/groups.json');
+    if (!response.ok) throw new Error('Error al cargar los datos.');
+    groups.value = await response.json();
+    console.log("entran los datos")
   } catch (error) {
     console.error(error);
   } finally {
@@ -25,7 +26,7 @@ onMounted(async () => {
 });
 
 // Función para generar URL del avatar basado en el ID
-const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id}`;
+const getAvatar = (id) => `https://api.dicebear.com/5.x/shapes/svg?seed=Group-${id}`;
 </script>
 
 <template>
@@ -37,21 +38,18 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
   <div v-else>
     <ProfileHeader /> <!-- Cabecera del perfil -->
 
-    <!-- Lista de estudiantes -->
-    <div class="student-list-wrapper bg-white py-12 sm:py-16 w-full flex flex-col min-h-[calc(100vh-150px)]">
+    <div class="group-list-wrapper bg-white py-12 sm:py-16 w-full flex flex-col min-h-[calc(100vh-150px)]">
       <div class="mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 px-6 lg:px-8">
-        <div v-for="student in students" :key="student.id_student" class="bg-gray-100 p-4 rounded-lg shadow-md">
+        <div v-for="group in groups" :key="group.group_id" class="bg-gray-100 p-4 rounded-lg shadow-md">
           <!-- Tarjeta del estudiante -->
           <div class="flex flex-col items-center">
             <div class="card-container">
-              <img :src="getAvatar(student.id_student)" alt="Avatar del estudiante" class="avatar rounded-full" />
+              <img :src="getAvatar(group.group_id)" alt="Avatar del grupo" class="avatar rounded-full" />
               <div class="text-center">
-                <h3 class="text-base font-semibold text-gray-900">{{ student.name }} {{ student.surname }}</h3>
-                <p class="text-sm text-gray-600">{{ student.curs }}</p>
-                <button @click="viewStudentDetails(student.id_student)"
-                        class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none
-                        focus:ring-2 focus:ring-blue-400">
-                  Fitxa alumne
+                <h3 class="text-base font-semibold text-gray-900">{{ group.description }}</h3>
+                <p class="text-sm text-gray-600">{{ group.course}}</p>
+                <button @click="viewGroupsDetails(group.group_id)" class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Fitxa grup
                 </button>
               </div>
             </div>
@@ -82,7 +80,7 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
     transform: scale(1.05);
 }
 
-.student-list-wrapper {
+.group-list-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start; 
