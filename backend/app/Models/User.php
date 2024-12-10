@@ -1,49 +1,58 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable,HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Relación con los roles
+    public function roles()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    // Método para verificar si tiene un rol específico
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    // Relación con las materias que enseña el profesor
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'teacher_subject_course')
+                    ->wherePivot('user_id', $this->id);
+    }
+
+    // Relación con los cursos en los que está el alumno
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'student_course')->wherePivot('user_id', $this->id);
+    }
+
+    // Verifica si es profesor
+    public function isProfessor()
+    {
+        return $this->hasRole('profesor');
+    }
+
+    // Verifica si es alumno
+    public function isStudent()
+    {
+        return $this->hasRole('alumno');
     }
 }

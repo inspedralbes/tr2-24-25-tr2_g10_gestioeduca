@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
 
     public function index()
     {
-        return response()->json(Course::all());
-    }
+        // Verifica si el usuario tiene el rol adecuado
+        if (Auth::user()->hasRole('profesor') || Auth::user()->hasRole('admin')) {
+    return response()->json(Course::all());
+}
 
+
+        return response()->json(['message' => 'No autorizado'], 403);
+    }
 
     public function show($id)
     {
@@ -28,7 +35,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'course_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'year' => 'required|integer',
         ]);
 

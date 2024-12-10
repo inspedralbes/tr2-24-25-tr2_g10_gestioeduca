@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
-
 {
-    protected $fillable = [
-        'subject_name',
-        'description'
-    ];
+
+    protected $fillable = ['name'];
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class, 'teacher_subjects_courses', 'subject_id', 'teacher_id');
+        return $this->belongsToMany(User::class, 'teacher_subject_course')->whereHas('roles', function ($query) {
+            $query->where('name', 'profesor');
+        });
     }
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'teacher_subjects_courses', 'subject_id', 'course_id');
+        return $this->belongsToMany(Course::class, 'teacher_subject_course');
     }
 }
+

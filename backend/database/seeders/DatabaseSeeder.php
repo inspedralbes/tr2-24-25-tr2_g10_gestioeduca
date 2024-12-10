@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,17 +17,14 @@ class DatabaseSeeder extends Seeder
     public function run()
 
     {
-        Student::factory()->count(30)->create();
 
-        // Crear profesores
-        Teacher::factory()->count(10)->create();
 
         // Llama a otros seeders si es necesario
         $this->call([
             CourseSeeder::class,
             SubjectSeeder::class,
-            TeacherSeeder::class,
-            StudentSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

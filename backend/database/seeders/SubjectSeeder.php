@@ -11,12 +11,12 @@ class SubjectSeeder extends Seeder
     {
         // Crear asignaturas
         Subject::create([
-            'subject_name' => 'Algebra',
+            'name' => 'Algebra',
             'description' => 'An introductory course to Algebra',
         ]);
 
         Subject::create([
-            'subject_name' => 'Calculus',
+            'name' => 'Calculus',
             'description' => 'An introductory course to Calculus',
         ]);
 

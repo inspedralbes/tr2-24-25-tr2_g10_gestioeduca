@@ -46,7 +46,6 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
 </template>
 
 <style scoped>
-@import '@/assets/output.css';
 
 .card-container {
     border: 2px solid #ccc;
