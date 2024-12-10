@@ -17,6 +17,12 @@ help:
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+laravel: ## Accedir al contenidor Laravel
+	docker exec -it $(LARAVEL_CONTAINER) bash
+
+vue: ## Accedir al contenidor Vue
+	docker exec -it $(VUE_CONTAINER) sh
+
 migrate: ## Migrate dins del contenidor laravel
 	docker exec -it $(LARAVEL_CONTAINER) php artisan migrate:fresh
 	docker restart $(LARAVEL_CONTAINER)
