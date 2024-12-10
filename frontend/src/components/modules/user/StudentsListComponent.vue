@@ -15,7 +15,7 @@ const viewStudentDetails = (id) => {
 onMounted(async () => {
   try {
     const response = await fetch('/students.json');
-    if (!response.ok) throw new Error('Error al cargar los datos.');
+    if (!response.ok) throw new Error('Error dades.');
     students.value = await response.json();
   } catch (error) {
     console.error(error);
