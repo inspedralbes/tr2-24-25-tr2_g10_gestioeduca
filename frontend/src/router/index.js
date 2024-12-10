@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LandingComponent from '@/components/Landing/LandingComponent.vue'
 import LoginView from '../views/LoginView.vue'
 import GroupList from '../views/Groups/GroupList.vue'
+import StudentDashboard from '@/components/student/StudentDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,36 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+    },
+    {
+      path: '/student',
+      component: StudentDashboard,
+      children: [
+        {
+          path: '',
+          redirect: '/student/dashboard'
+        },
+        {
+          path: 'dashboard',
+          name: 'studentHome',
+          component: () => import('@/components/student/StudentHome.vue')
+        },
+        {
+          path: 'subjects',
+          name: 'studentSubjects',
+          component: () => import('@/components/student/StudentSubjects.vue')
+        },
+        {
+          path: 'group',
+          name: 'studentGroup',
+          component: () => import('@/components/student/StudentGroup.vue')
+        },
+        {
+          path: 'forms',
+          name: 'studentForms',
+          component: () => import('@/components/student/StudentForms.vue')
+        }
+      ]
     },
     {
       path: '/dashboard',
