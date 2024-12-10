@@ -59,7 +59,7 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../components/Dashboard/DashboardComponent.vue'),
+      component: () => import('../views/DashboardView.vue'),
     },
     {
       path: '/tancar-sessio', // Nueva ruta para cerrar sesión
