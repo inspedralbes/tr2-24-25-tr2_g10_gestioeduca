@@ -32,7 +32,7 @@ input {
 
 input:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--color-primary);
 }
 
 input.error {

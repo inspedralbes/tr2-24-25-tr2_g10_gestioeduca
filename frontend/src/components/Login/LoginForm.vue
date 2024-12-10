@@ -127,7 +127,7 @@ p {
 }
 
 .sign-in-button {
-    background: var(--primary-color);
+    background: var(--color-primary);
     color: white;
     border: none;
     padding: 0.875rem;

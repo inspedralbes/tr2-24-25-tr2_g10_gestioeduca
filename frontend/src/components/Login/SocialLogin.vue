@@ -86,7 +86,7 @@ const gestioGoogleLogin = async () => {
 }
 
 .social-button:hover {
-    border-color: var(--primary-color);
+    border-color: var(--color-primary);
     transform: translateY(-2px);
 }
 
