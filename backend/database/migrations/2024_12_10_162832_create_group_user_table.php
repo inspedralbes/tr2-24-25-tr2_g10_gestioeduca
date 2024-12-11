@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('group_user')) {
             Schema::create('group_user', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('id_group');
-                $table->unsignedBigInteger('user_id');
-                $table->foreignId('id_group')->references('id')->on('groups')->onDelete('cascade');
-                $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->foreignId('id_group')->constrained('groups')->onDelete('cascade');
+                $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
                 $table->timestamps();
             });
-        }
+        
     }
 
     /**

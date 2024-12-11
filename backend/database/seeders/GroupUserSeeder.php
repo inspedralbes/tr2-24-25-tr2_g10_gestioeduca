@@ -18,7 +18,6 @@ class GroupUserSeeder extends Seeder
             ['id_group' => 1, 'user_id' => 1, 'created_at' => now(), 'updated_at' => now()],
             ['id_group' => 1, 'user_id' => 2, 'created_at' => now(), 'updated_at' => now()],
             ['id_group' => 2, 'user_id' => 3, 'created_at' => now(), 'updated_at' => now()],
-            ['id_group' => 2, 'user_id' => 4, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }
