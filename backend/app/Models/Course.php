@@ -7,22 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable = [
-        'course_name',
-        'year'
+        'name'
     ];
 
-    public function teachers()
+    public function users()
     {
-        return $this->belongsToMany(Teacher::class, 'teacher_subjects_courses', 'course_id', 'teacher_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'teacher_subjects_courses', 'course_id', 'subject_id');
-    }
-
-    public function students()
-    {
-        return $this->hasMany(Student::class, 'course_id', 'id');
+        return $this->belongsToMany(Subject::class);
     }
 }

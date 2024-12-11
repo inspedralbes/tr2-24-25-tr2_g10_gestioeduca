@@ -7,66 +7,30 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-
     public function index()
     {
-        return response()->json(Subject::all());
+        return Subject::all();
     }
-
-
-    public function show($id)
-    {
-        $subject = Subject::find($id);
-
-        if (!$subject) {
-            return response()->json(['message' => 'Subject not found'], 404);
-        }
-
-        return response()->json($subject);
-    }
-
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'subject_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        $subject = Subject::create($validated);
-
-        return response()->json($subject, 201);
+        return Subject::create($request->all());
     }
 
-
-    public function update(Request $request, $id)
+    public function show(Subject $subject)
     {
-        $subject = Subject::find($id);
-
-        if (!$subject) {
-            return response()->json(['message' => 'Subject not found'], 404);
-        }
-
-        $validated = $request->validate([
-            'subject_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        $subject->update($validated);
-
-        return response()->json($subject);
+        return $subject;
     }
 
-    public function destroy($id)
+    public function update(Request $request, Subject $subject)
     {
-        $subject = Subject::find($id);
+        $subject->update($request->all());
+        return $subject;
+    }
 
-        if (!$subject) {
-            return response()->json(['message' => 'Subject not found'], 404);
-        }
-
+    public function destroy(Subject $subject)
+    {
         $subject->delete();
-
-        return response()->json(['message' => 'Subject deleted successfully']);
+        return response()->json(null, 204);
     }
 }
