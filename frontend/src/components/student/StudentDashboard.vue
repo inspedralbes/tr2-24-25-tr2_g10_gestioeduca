@@ -4,7 +4,7 @@
     <aside :class="[
       'bg-primary text-white transition-all duration-300',
       isMenuOpen ? 'w-64' : 'w-16',
-      'lg:w-64' // Siempre visible en tamaños grandes
+      'lg:w-64' 
     ]">
       <!-- Encabezado del menú -->
       <div class="flex items-center justify-between p-4 border-b border-white/20">
