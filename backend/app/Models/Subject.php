@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-
-    protected $fillable = ['name'];
-
-    public function teachers()
-    {
-        return $this->belongsToMany(User::class, 'teacher_subject_course')->whereHas('roles', function ($query) {
-            $query->where('name', 'profesor');
-        });
-    }
+    protected $fillable = ['name', 'year', 'description'];
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'teacher_subject_course');
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
-

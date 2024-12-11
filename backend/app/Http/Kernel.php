@@ -3,27 +3,29 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 
 class Kernel extends HttpKernel
 {
     /**
-     * The application's global HTTP middleware stack.
+     * Los middlewares globales de la aplicación.
+     *
+     * Estos middlewares se ejecutarán para todas las solicitudes entrantes a la aplicación.
      *
      * @var array
      */
     protected $middleware = [
-        \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Illuminate\Http\Middleware\HandleCors::class,
+        \Fruitcake\Cors\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        'role' => \App\Http\Middleware\RoleMiddleware::class, // MIDDLEWARE PARA QUE Verifique el rol del usuario
+        \Illuminate\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\TrustHosts::class,
     ];
 
     /**
-     * The application's route middleware groups.
+     * Los middlewares globales de la aplicación (para grupos).
      *
      * @var array
      */
@@ -32,26 +34,28 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
         'api' => [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
     /**
-     * The application's route middleware.
+     * Los middlewares de ruta para la aplicación.
+     *
+     * Estos middlewares se pueden asignar a rutas individuales.
      *
      * @var array
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
@@ -60,4 +64,25 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+    /**
+     * Los comandos de consola de la aplicación.
+     *
+     * Estos comandos se pueden registrar dentro del Kernel.
+     *
+     * @var array
+     */
+    protected $commands = [
+        \App\Console\Commands\Inspire::class,
+    ];
+
+    /**
+     * Registra los servicios que se ejecutarán cuando la aplicación inicie.
+     *
+     * @return void
+     */
+    public function bootstrap()
+    {
+        $this->app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+    }
 }

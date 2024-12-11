@@ -11,13 +11,11 @@ class CourseSeeder extends Seeder
     {
         // Crear cursos
         Course::create([
-            'name' => '1ero eso',
-            'year' => 2021,
-        ]);
+            'name' => '1ero eso'
+                ]);
 
         Course::create([
             'name' => '1ro bachillerato',
-            'year' => 2022,
         ]);
 
     }
