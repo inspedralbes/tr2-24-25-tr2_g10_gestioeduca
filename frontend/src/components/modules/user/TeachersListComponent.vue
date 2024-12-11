@@ -10,7 +10,7 @@ const teachers = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await fetch('/teachers.json');
+    const response = await fetch('http://localhost:8000/api/users');
     if (!response.ok) throw new Error('Error dades.');
     teachers.value = await response.json();
   } catch (error) {
@@ -51,10 +51,10 @@ const getInitials = (name, surname) => {
               <div
                 class="flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-lg font-semibold rounded-full"
               >
-                {{ getInitials(teacher.name, teacher.surname) }}
+                {{ getInitials(teacher.name, teacher.last_name) }}
               </div>
               <div class="text-center">
-                <h3 class="text-base font-semibold text-gray-900">{{ teacher.name }} {{ teacher.surname }}</h3>
+                <h3 class="text-base font-semibold text-gray-900">{{ teacher.name }} {{ teacher.last_name }}</h3>
                 <p class="text-sm text-gray-600">{{ teacher.email }}</p>
                 <button @click="viewTeacherDetails(teacher.id_teacher)" class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none
                         focus:ring-2 focus:ring-blue-400">
