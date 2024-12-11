@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\Group;
+use PhpParser\Node\Stmt\GroupUse;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +27,8 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            GroupSeeder::class,
+            GroupUserSeeder::class,
         ]);
     }
 }

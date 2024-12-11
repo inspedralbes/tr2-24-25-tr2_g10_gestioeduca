@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     use HasFactory;
-
+    protected $table = 'groups';
     protected $primaryKey = 'id_group'; 
     protected $fillable = [
         'name',
@@ -26,6 +26,6 @@ class Group extends Model
     // Relación con User (tabla intermedia)
     public function users()
     {
-        return $this->belongsToMany(User::class, 'group_user', 'id_group', 'id_user');
+        return $this->belongsToMany(User::class, 'group_user', 'id_group', 'user_id');
     }
 }

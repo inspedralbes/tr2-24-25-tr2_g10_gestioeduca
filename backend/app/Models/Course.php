@@ -18,4 +18,8 @@ class Course extends Model
             $query->where('name', 'profesor');
         });
     }
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'id_course'); 
+    }
 }

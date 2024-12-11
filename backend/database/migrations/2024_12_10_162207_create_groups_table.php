@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('name');
-            $table->text('description')->nullable(); // Descripción opcional
-            $table->integer('number_of_students')->default(0); 
-            $table->foreignId('id_course') ->constrained('courses') ->onDelete('cascade'); 
-            $table->timestamps(); 
-        });
+        if (Schema::hasTable('groups')) {
+            Schema::create('groups', function (Blueprint $table) {
+                $table->id(); 
+                $table->string('name');
+                $table->text('description')->nullable(); // Descripción opcional
+                $table->integer('number_of_students')->default(0); 
+                $table->foreignId('id_course') ->references('id') ->on('courses') ->onDelete('cascade');
+                $table->timestamps(); 
+            });
+        }
     }
 
     /**

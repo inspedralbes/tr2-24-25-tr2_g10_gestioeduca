@@ -2,21 +2,23 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Group;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class GroupUserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Ejecuta el seeder.
      */
     public function run(): void
     {
-        $groups = \App\Models\Group::all();
-        $users = \App\Models\User::all();
-
-        foreach ($groups as $group) {
-            $group->users()->attach($users->random(4));
-        }
+        DB::table('group_user')->insert([
+            ['id_group' => 1, 'user_id' => 1, 'created_at' => now(), 'updated_at' => now()],
+            ['id_group' => 1, 'user_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+            ['id_group' => 2, 'user_id' => 3, 'created_at' => now(), 'updated_at' => now()],
+            ['id_group' => 2, 'user_id' => 4, 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }
