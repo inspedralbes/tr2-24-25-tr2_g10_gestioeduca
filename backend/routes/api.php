@@ -16,7 +16,7 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 });
-
+Route::resource('groups', GroupController::class);
 // Rutas protegidas por autenticación y roles
 Route::middleware('auth')->group(function () {
 
@@ -29,10 +29,10 @@ Route::middleware('auth')->group(function () {
     // Rutas para manejar recursos (CRUD) de Cursos y Materias
     Route::resource('courses', CourseController::class);
     Route::resource('subjects', SubjectController::class);
-    Route::resource('groups', GroupController::class);
 
 
     // Rutas protegidas para la gestión de usuarios, solo para administradores
     Route::middleware('role:admin')->resource('users', UserController::class);
+   
 
 });
