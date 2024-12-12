@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { PlusIcon } from '@heroicons/vue/24/outline'
+// import { PlusIcon } from '@heroicons/vue/24/outline'
 import GroupGenerator from '../../components/Groups/GroupGenerator.vue'
 import GroupPreview from '../../components/Groups/GroupPreview.vue'
 const students = ref([

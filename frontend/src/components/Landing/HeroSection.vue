@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-8">
+        <div class="relative overflow-hidden rounded-2xl p-8 bg-gray-50">
           <div class="carousel-container">
             <div class="carousel-track">
               <div v-for="(image, index) in images" :key="index" class="carousel-item">
@@ -51,10 +51,6 @@ export default {
           alt: 'Students'
         },
         {
-          url: '../../../public/img/img4.jpg',
-          alt: 'Reports'
-        },
-        {
           url: '../../../public/img/img3.jpg',
           alt: 'Analytics'
         }
@@ -67,13 +63,19 @@ export default {
 <style scoped>
 .carousel-container {
   width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   overflow: hidden;
   position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: white;
 }
 
 .carousel-track {
   display: flex;
-  animation: smoothScroll 20s linear infinite;
+  animation: carouselAnimation 15s ease-in-out infinite;
 }
 
 .carousel-item {
@@ -83,24 +85,36 @@ export default {
 
 .carousel-image {
   width: 100%;
-  height: 300px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
 }
 
-@keyframes smoothScroll {
-  0% {
+.carousel-image:hover {
+  transform: scale(1.05);
+}
+
+@keyframes carouselAnimation {
+  0%, 20% {
     transform: translateX(0);
   }
+  33%, 53% {
+    transform: translateX(-100%);
+  }
+  66%, 86% {
+    transform: translateX(-200%);
+  }
   100% {
-    transform: translateX(-400%);
+    transform: translateX(0);
   }
 }
 
 @media (max-width: 1024px) {
   .carousel-container {
     margin-top: 2rem;
+    max-width: 400px;
   }
 }
 </style>
