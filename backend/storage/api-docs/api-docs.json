@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000/api",
+            "url": "http://localhost:8000/",
             "description": "local server"
         },
         {
@@ -25,11 +25,11 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Get all courses",
+                "summary": "Obtenir la llista de cursos",
                 "operationId": "02eeda67042dba2d22a517f26fb8eaf1",
                 "responses": {
                     "200": {
-                        "description": "List of all courses"
+                        "description": "Llista de cursos obtenida correctament"
                     }
                 }
             },
@@ -37,14 +37,33 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Create a new course",
+                "summary": "Crear un curs",
                 "operationId": "a4d6b7e7be59571034428ffbb86aaf0a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Introducció a PHP"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
-                        "description": "Course created successfully"
+                        "description": "Curs creat correctament"
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Error de validació"
                     }
                 }
             }
@@ -54,14 +73,14 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Get a specific course",
+                "summary": "Un curs en concret",
                 "operationId": "f170bd35e3106c9d9bf5807499c80b68",
                 "responses": {
                     "200": {
-                        "description": "Course details"
+                        "description": "Detalls del curs"
                     },
                     "404": {
-                        "description": "Course not found"
+                        "description": "Curs no trobat"
                     }
                 }
             },
@@ -69,22 +88,42 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Update an existing course",
+                "summary": "Canviar el nom d'un curs",
                 "operationId": "4d00e54a4b57b3259c40894ad2d0c76b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the course",
+                        "description": "ID del curs",
                         "required": true
                     }
                 ],
+                "requestBody": {
+                    "description": "Dades necessaries per actualitzar el curs",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nou nom del curs"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Course updated successfully"
+                        "description": "Curs actualitzat correctament"
                     },
                     "404": {
-                        "description": "Course not found"
+                        "description": "Curs no trobat"
                     }
                 }
             },
@@ -92,13 +131,13 @@
                 "tags": [
                     "Courses"
                 ],
-                "summary": "Delete a course",
+                "summary": "Borrar un curs",
                 "operationId": "3a2888333ed2868b6102094f5348520e",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the course",
+                        "description": "ID del curs",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -107,10 +146,463 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Course deleted successfully"
+                        "description": "Curs borrat correctament"
                     },
                     "404": {
-                        "description": "Course not found"
+                        "description": "Curs no trobat"
+                    }
+                }
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Obtener todos los roles",
+                "operationId": "77e3636d8592997ce9d6d27b50857a69",
+                "responses": {
+                    "200": {
+                        "description": "Lista de roles obtenida correctamente"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Crear un nuevo rol",
+                "operationId": "4a563842fbfcad237f63da43065fca3d",
+                "requestBody": {
+                    "description": "Datos del nuevo rol",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rol creado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Obtener un rol específico",
+                "operationId": "7fb0667a295b7678a30353aa11739683",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del rol",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol obtenido correctamente"
+                    },
+                    "404": {
+                        "description": "Rol no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Actualizar un rol existente",
+                "operationId": "786d6990093a8eb3a56931f19a827e43",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del rol",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos actualizados del rol",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "User"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rol actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Rol no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Eliminar un rol",
+                "operationId": "8285c46981c60ad600aa4077307aec04",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del rol",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Rol eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Rol no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/subjects": {
+            "get": {
+                "tags": [
+                    "Subjects"
+                ],
+                "summary": "Obtenir la llista d'assignatures",
+                "operationId": "c855f23389ed099cf68e0ec8b726d707",
+                "responses": {
+                    "200": {
+                        "description": "Lista d'assignatures obtenida correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Subjects"
+                ],
+                "summary": "Crear una nova asignatura",
+                "operationId": "acfe3773777c814aad62a7c623672b37",
+                "requestBody": {
+                    "description": "Dades necessaries per crear una nova asignatura",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Matemàtiques"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Assignatura creada correctament"
+                    }
+                }
+            }
+        },
+        "/api/subjects/{id}": {
+            "get": {
+                "tags": [
+                    "Subjects"
+                ],
+                "summary": "Obtenir una asignatura",
+                "operationId": "051f52e9b82cde48605830b5099e1870",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'assignatura",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assignatura obtenida correctament"
+                    },
+                    "404": {
+                        "description": "Assignatura no trobada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Subjects"
+                ],
+                "summary": "Actualitzar una asignatura",
+                "operationId": "962badd11b34db532cfba057979e03dc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'assignatura",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dades necessaries per actualitzar l'assignatura",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Català"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assignatura actualitzada correctament"
+                    },
+                    "404": {
+                        "description": "Assignatura no trobada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Subjects"
+                ],
+                "summary": "Eliminar una asignatura",
+                "operationId": "66808726432e96fed2fcea3bca0b74a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'assignatura",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Assignatura eliminada correctament"
+                    },
+                    "404": {
+                        "description": "Assignatura no trobada"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir tots els usuaris",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Llista d'usuaris obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Crear un nou usuari",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "requestBody": {
+                    "description": "Dades del nou usuari",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Joan"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "joan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuari creat correctament"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir un usuari específic",
+                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'usuari",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuari obtingut correctament"
+                    },
+                    "404": {
+                        "description": "Usuari no trobat"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Actualitzar un usuari existent",
+                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'usuari",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dades actualitzades de l'usuari",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Joana"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "joana@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "654321"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuari actualitzat correctament"
+                    },
+                    "404": {
+                        "description": "Usuari no trobat"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Eliminar un usuari",
+                "operationId": "fa56cffde745d3f152f95cbacd936c0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'usuari",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Usuari eliminat correctament"
+                    },
+                    "404": {
+                        "description": "Usuari no trobat"
                     }
                 }
             }
@@ -130,6 +622,18 @@
         {
             "name": "Courses",
             "description": "Courses"
+        },
+        {
+            "name": "Roles",
+            "description": "Roles"
+        },
+        {
+            "name": "Subjects",
+            "description": "Subjects"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
         }
     ]
 }

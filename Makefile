@@ -40,6 +40,9 @@ close: ## Tancar tot i eliminar les docker images que no utilitzas.
 dist:
 	docker exec -it $(VUE_CONTAINER) npm run build
 
+swagger:
+	docker exec -it $(LARAVEL_CONTAINER) php artisan l5-swagger:generate
+
 show:
 	@echo "$(CYAN)==> Listando todos los contenedores (activos e inactivos):$(RESET)"
 	@docker ps -a
