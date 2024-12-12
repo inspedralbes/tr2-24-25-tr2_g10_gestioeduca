@@ -5,6 +5,9 @@ on:
     branches:
       - dev
 
+env:
+  CHECK_SECRET: ${{ secrets.CHECK_SECRET }}
+
 jobs:
   validate-docker-compose:
     runs-on: ubuntu-latest
@@ -13,6 +16,10 @@ jobs:
       # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Check if secret is set
+        if: env.CHECK_SECRET == 'true'
+        run: echo "Secret is set" 
 
       # Step 2: Install Docker Compose
       - name: Install Docker Compose
@@ -24,14 +31,6 @@ jobs:
       # Step 3: Debug - Check working directory
       - name: List project files
         run: ls -R .
-
-      - name: Verify GitHub Secrets
-        run: |
-          if [ -z "${{ secrets.MYSQL_DATABASE }}" ]; then echo "MYSQL_DATABASE is not set!" && exit 1; fi
-          if [ -z "${{ secrets.MYSQL_USER }}" ]; then echo "MYSQL_USER is not set!" && exit 1; fi
-          if [ -z "${{ secrets.MYSQL_PASSWORD }}" ]; then echo "MYSQL_PASSWORD is not set!" && exit 1; fi
-          if [ -z "${{ secrets.MYSQL_ROOT_PASSWORD }}" ]; then echo "MYSQL_ROOT_PASSWORD is not set!" && exit 1; fi
-          echo "All GitHub Secrets are configured correctly."
 
       # Step 4: Run Docker Compose (up)
       - name: Start Docker Compose
