@@ -9,12 +9,12 @@ const isLoading = ref(true);
 const router = useRouter();
 
 const viewStudentDetails = (id) => {
-  router.push({ name: 'studentProfile', params: { id } });
+  router.push({ name: 'StudentProfileComponent', params: { id } });
 };
 
 onMounted(async () => {
   try {
-    const response = await fetch('/students.json');
+    const response = await fetch('http://localhost:8000/api/users');
     if (!response.ok) throw new Error('Error dades.');
     students.value = await response.json();
   } catch (error) {
@@ -40,7 +40,7 @@ const getAvatar = (id) => `https://api.dicebear.com/5.x/adventurer/svg?seed=${id
     <!-- Lista de estudiantes -->
     <div class="student-list-wrapper bg-white py-12 sm:py-16 w-full flex flex-col min-h-[calc(100vh-150px)]">
       <div class="mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 px-6 lg:px-8">
-        <div v-for="student in students" :key="student.id_student" class="bg-gray-100 p-4 rounded-lg shadow-md">
+        <div v-for="student in students.filter(f => f.role_id === 2)" :key="student.id_student" class="bg-gray-100 p-4 rounded-lg shadow-md">
           <!-- Tarjeta del estudiante -->
           <div class="flex flex-col items-center">
             <div class="card-container">

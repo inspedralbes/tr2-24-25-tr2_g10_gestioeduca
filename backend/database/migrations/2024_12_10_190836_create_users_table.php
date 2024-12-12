@@ -25,7 +25,6 @@ return new class extends Migration
                 $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
                 $table->rememberToken();
                 $table->timestamps();
-                $table->unique(['role_id']);
             });
         }
 
