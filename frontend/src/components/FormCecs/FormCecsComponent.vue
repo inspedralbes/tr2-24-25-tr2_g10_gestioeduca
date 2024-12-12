@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen bg-blue-50 flex items-center justify-center p-4">
-      <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg overflow-hidden">
+    <div v-if="formState === 'active'" class="min-h-screen bg-blue-50 flex items-center justify-center p-4">
+      <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden">
         <!-- Progress Bar Component -->
         <ProgressBar 
           v-if="questions.length > 0"
@@ -12,15 +12,13 @@
           <!-- Personal Info Step -->
           <PersonalInfoStep 
             v-if="currentStep === -1"
-            :student-name="studentName"
-            :gender="gender"
-            @update:student-name="studentName = $event"
-            @update:gender="gender = $event"
+            :student-info="studentInfo"
+            @update:student-info="updateStudentInfo"
           />
   
           <!-- Question Steps -->
           <QuestionStep 
-            v-else
+            v-else-if="currentStep < questions.length"
             :question="questions[currentStep]"
             :question-index="currentStep"
             :students="students"
@@ -43,12 +41,28 @@
               type="submit" 
               class="ml-auto bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full"
             >
-              {{ currentStep === questions.length - 1 ? 'Enviar' : 'Siguiente' }}
+              {{ currentStep === questions.length - 1 ? 'Finalizar' : 'Siguiente' }}
             </button>
           </div>
         </form>
       </div>
     </div>
+  
+    <!-- Confirmation Modal -->
+    <ConfirmationModal 
+      v-else-if="formState === 'confirmation'"
+      :student-info="studentInfo"
+      :total-questions="questions.length"
+      @confirm="submitForm"
+      @cancel="cancelSubmission"
+    />
+  
+    <!-- Thank You Page -->
+    <ThankYouPage 
+      v-else-if="formState === 'thankyou'"
+      :student-info="studentInfo"
+      @reset="resetForm"
+    />
   </template>
   
   <script setup>
@@ -56,10 +70,19 @@
   import ProgressBar from './ProgressBar.vue'
   import PersonalInfoStep from './PersonalInfoStep.vue'
   import QuestionStep from './QuestionStep.vue'
+  import ConfirmationModal from './ConfirmationModal.vue'
+  import ThankYouPage from './ThankYouPage.vue'
   
   // Estado del formulario
-  const studentName = ref('')
-  const gender = ref(null)
+  const formState = ref('active')
+  const studentInfo = ref({
+    name: '',
+    gender: null,
+    grade: '',
+    tutorName: '',
+    school: '',
+    city: ''
+  })
   const currentStep = ref(-1)
   const students = ref([])
   const responses = ref([])
@@ -84,6 +107,11 @@
     }
   })
   
+  // Método para actualizar información del estudiante
+  const updateStudentInfo = (updatedInfo) => {
+    studentInfo.value = updatedInfo
+  }
+  
   // Método para actualizar respuestas
   const updateResponses = (selectedStudents) => {
     responses.value[currentStep.value] = selectedStudents
@@ -97,23 +125,17 @@
       return
     }
   
-    // Último paso: envío de formulario
+    // Último paso: ir a confirmación
     if (currentStep.value === questions.value.length - 1) {
       // Validación final
-      if (!studentName.value || !gender.value) {
-        alert('Por favor, completa la información personal')
+      const { name, gender, grade, tutorName, school, city } = studentInfo.value
+      if (!name || !gender || !grade || !tutorName || !school || !city) {
+        alert('Por favor, completa toda la información personal')
         return
       }
   
-      const formData = {
-        studentName: studentName.value,
-        gender: gender.value,
-        responses: responses.value
-      }
-  
-      console.log('Formulario completo:', formData)
-      // Aquí podrías enviar los datos al backend
-      alert('Cuestionario enviado correctamente')
+      // Ir a la pantalla de confirmación
+      formState.value = 'confirmation'
       return
     }
   
@@ -121,10 +143,44 @@
     currentStep.value++
   }
   
+  // Método para enviar formulario
+  const submitForm = () => {
+    const formData = {
+      ...studentInfo.value,
+      responses: responses.value
+    }
+  
+    console.log('Formulario completo:', formData)
+    
+    // Aquí podrías enviar los datos al backend
+    formState.value = 'thankyou'
+  }
+  
+  // Método para cancelar el envío y volver a revisar
+  const cancelSubmission = () => {
+    formState.value = 'active'
+  }
+  
   // Método para retroceder
   const previousStep = () => {
     if (currentStep.value > -1) {
       currentStep.value--
+    }
+  }
+  
+  // Método para resetear el formulario
+  const resetForm = () => {
+    // Restablecer todos los valores
+    formState.value = 'active'
+    currentStep.value = -1
+    responses.value = questions.value.map(() => [])
+    studentInfo.value = {
+      name: '',
+      gender: null,
+      grade: '',
+      tutorName: '',
+      school: '',
+      city: ''
     }
   }
   </script>
