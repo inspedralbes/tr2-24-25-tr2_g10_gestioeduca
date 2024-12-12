@@ -25,6 +25,14 @@ jobs:
       - name: List project files
         run: ls -R .
 
+      - name: Verify GitHub Secrets
+        run: |
+          if [ -z "${{ secrets.MYSQL_DATABASE }}" ]; then echo "MYSQL_DATABASE is not set!" && exit 1; fi
+          if [ -z "${{ secrets.MYSQL_USER }}" ]; then echo "MYSQL_USER is not set!" && exit 1; fi
+          if [ -z "${{ secrets.MYSQL_PASSWORD }}" ]; then echo "MYSQL_PASSWORD is not set!" && exit 1; fi
+          if [ -z "${{ secrets.MYSQL_ROOT_PASSWORD }}" ]; then echo "MYSQL_ROOT_PASSWORD is not set!" && exit 1; fi
+          echo "All GitHub Secrets are configured correctly."
+
       # Step 4: Run Docker Compose (up)
       - name: Start Docker Compose
         uses: hoverkraft-tech/compose-action@v2.0.1
@@ -38,12 +46,12 @@ jobs:
 
       # Step 5: Wait for services to start
       - name: Wait for services to start
-        run: sleep 10
+        run: sleep 20
 
-      # Step 6: Verify db service
-      - name: Verify Database Service (db)
+            # Step 6: Verify db service
+      - name: Verify Database Connection
         run: |
-          docker-compose exec db echo "Database service is running"
+          docker-compose exec db sh -c "mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e 'SHOW DATABASES;'"
 
       # Step 7: Verify adminer service
       - name: Verify Adminer Service
