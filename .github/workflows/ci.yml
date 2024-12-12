@@ -19,7 +19,7 @@ jobs:
 
       - name: Check if secret is set
         if: env.CHECK_SECRET == 'true'
-        run: echo "Secret is set" 
+        run: echo "Secret is set"
 
       # Step 2: Install Docker Compose
       - name: Install Docker Compose
@@ -32,41 +32,48 @@ jobs:
       - name: List project files
         run: ls -R .
 
-      # Step 4: Run Docker Compose (up)
-      - name: Start Docker Compose
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: "./docker-compose.yml"
-          env-vars: |
-            MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-            MYSQL_USER=${{ secrets.MYSQL_USER }}
-            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+      # Step 4: Create .env file
+      - name: Create .env file
+        run: |
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" > .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
 
-      # Step 5: Wait for services to start
+
+      # Step 5: Run Docker Compose (up)
+      - name: Start Docker Compose
+        run: |
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" > .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          docker-compose up -d
+
+      # Step 6: Wait for services to start
       - name: Wait for services to start
         run: sleep 20
 
-            # Step 6: Verify db service
+      # Step 7: Verify Database Connection
       - name: Verify Database Connection
         run: |
-          docker-compose exec db sh -c "mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e 'SHOW DATABASES;'"
+          docker-compose exec db sh -c "mysql -u${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }} -e 'SHOW DATABASES;'"
 
-      # Step 7: Verify adminer service
+      # Step 8: Verify adminer service
       - name: Verify Adminer Service
         run: |
           docker-compose exec adminer echo "Adminer service is running"
 
-      # Step 8: Verify backend service
+      # Step 9: Verify backend service
       - name: Verify Backend Service
         run: |
           docker-compose exec backend php artisan test
 
-      # Step 9: Verify frontend service
+      # Step 10: Verify frontend service
       - name: Verify Frontend Service
         run: |
           docker-compose exec frontend npm run test
 
-      # Step 10: Clean up services
+      # Step 11: Clean up services
       - name: Clean up services
         run: docker-compose down --volumes
