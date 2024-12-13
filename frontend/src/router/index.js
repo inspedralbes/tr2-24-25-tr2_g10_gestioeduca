@@ -45,6 +45,11 @@ const router = createRouter({
           path: 'forms',
           name: 'studentForms',
           component: () => import('@/components/student/StudentForms.vue')
+        },
+        {
+          path: 'forms/sociogram',
+          name: 'sociogramTest',
+          component: () => import('@/components/student/sociogram/SociagramTest.vue')
         }
       ]
     },
