@@ -1,36 +1,30 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import Sidebar from '@/components/Layout/Sidebar.vue'
-import MainLayout from '@/components/Layout/MainLayout.vue';
+import Sidebar from '@/components/Layout/Sidebar.vue';
 
-const router = useRouter();
 const userData = ref(null);
 
 onMounted(() => {
-    // Get user data from localStorage
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-        userData.value = JSON.parse(storedUser);
-    } else {
-        // If no user data, redirect to login
-        router.push('/login');
-    }
+  // Obtener datos del usuario desde localStorage
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    userData.value = JSON.parse(storedUser);
+  }
 });
 </script>
 
 <template>
-    <Sidebar />
-    <div class="dashboard-container">
-        <div v-if="userData" class="welcome-section">
-            <h1>Benvingut, {{ userData.name }}!</h1>
-            <img :src="userData.picture" alt="Profile picture" class="profile-picture" v-if="userData.picture">
-            <p>{{ userData.email }}</p>
-        </div>
-        <div v-else>
-            <p>Carregant...</p>
-        </div>
+  <Sidebar />
+  <div class="dashboard-container">
+    <div v-if="userData" class="welcome-section">
+      <h1>Benvingut, {{ userData.name }}!</h1>
+      <img :src="userData.picture" alt="Profile picture" class="profile-picture" v-if="userData.picture">
+      <p>{{ userData.email }}</p>
     </div>
+    <div v-else>
+      <p>Carregant...</p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
