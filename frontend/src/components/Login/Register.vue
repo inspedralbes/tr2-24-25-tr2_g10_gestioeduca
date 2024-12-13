@@ -1,75 +1,79 @@
 <script setup>
-import { ref, onMounted } from 'vue'; // Añade onMounted
-import { useRouter, useRoute } from 'vue-router'; // Importa useRouter y useRoute
+import { ref } from 'vue';
 import SocialLogin from './SocialLogin.vue';
 import PasswordInput from './PasswordInput.vue';
 import TextInput from './TextInput.vue';
 
-const router = useRouter();
-const route = useRoute();
-
-const username = ref('');
+const name = ref('');
+const email = ref('');
 const password = ref('');
+const confirmPassword = ref('');
 const isLoading = ref(false);
 const msgError = ref('');
-const successMessage = ref('');
-
-// Comprueba si hay un mensaje de registro exitoso
-onMounted(() => {
-    if (route.query.registered === 'true') {
-        successMessage.value = 'Usuari registrat correctament. Inicia sessió.';
-    }
-});
 
 // Valida el formulario
 const validateForm = () => {
-    if (!username.value) {
-        msgError.value = "El nom d'usuari és obligatori";
+    if (!name.value) {
+        msgError.value = "El nom és obligatori";
+        return false;
+    }
+    if (!email.value) {
+        msgError.value = "El correu electrònic és obligatori";
         return false;
     }
     if (!password.value) {
         msgError.value = 'La contrasenya és obligatoria';
         return false;
     }
+    if (password.value !== confirmPassword.value) {
+        msgError.value = 'Les contrasenyes no coincideixen';
+        return false;
+    }
     return true;
 };
 
-// Enviar el formulario de login
+// Enviar el formulario de registro
 const gestioSubmit = async (e) => {
     e.preventDefault();
     msgError.value = '';
-    successMessage.value = '';
 
     if (!validateForm()) return;
 
     isLoading.value = true;
 
     try {
-        const response = await fetch('http://localhost:8000/api/login', {
+        const response = await fetch('http://localhost:8000/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json', // Añade esto
             },
             body: JSON.stringify({
-                email: username.value,
+                name: name.value,
+                email: email.value,
                 password: password.value,
+                password_confirmation: confirmPassword.value, // Añade esto
             }),
         });
 
-        const data = await response.json();
+        const data = await response.json(); // Siempre intenta parsear JSON
 
         if (!response.ok) {
-            throw new Error('No s\'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.');
+            // Maneja errores de validación
+            if (data.errors) {
+                const errorMessages = Object.values(data.errors).flat();
+                msgError.value = errorMessages.join(', ');
+            } else {
+                msgError.value = data.message || 'Error desconegut';
+            }
+            throw new Error(msgError.value);
         }
 
-        // Guardar el token en localStorage
-        localStorage.setItem('auth_token', data.token);
-
-        // Redirigir al dashboard
-        router.push({ name: 'dashboard' });
+        // Registro exitoso
+        console.log('Usuari registrat!', data);
 
     } catch (err) {
-        msgError.value = err.message || "No s'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.";
+        msgError.value = err.message || "No s'ha pogut registrar l'usuari. Si us plau, torna-ho a provar.";
     } finally {
         isLoading.value = false;
     }
@@ -80,26 +84,19 @@ const gestioSubmit = async (e) => {
     <div class="login-container">
         <div class="login-content">
             <div class="login-header">
-                <h1>Benvingut!</h1>
-                <p>Gestió d'informació académica</p>
+                <h1>Registra't!</h1>
+                <p>Gestió d'informació acadèmica</p>
             </div>
 
             <form @submit="gestioSubmit" class="login-form">
-                <!-- Añade un mensaje de éxito cuando se registra un usuario -->
-                <div v-if="successMessage" class="success-message">
-                    {{ successMessage }}
-                </div>
-
-                <TextInput v-model="username" placeholder="Nom d'usuari" :has-msgError="msgError && !username" />
-
+                <TextInput v-model="name" placeholder="Nom complet" :has-msgError="msgError && !name" />
+                <TextInput v-model="email" placeholder="Correu electrònic" :has-msgError="msgError && !email" />
                 <PasswordInput v-model="password" :has-msgError="msgError && !password" />
-
-                <div class="forgot-password">
-                    <a href="#">Heu oblidat la contrasenya?</a>
-                </div>
+                <PasswordInput v-model="confirmPassword" :has-msgError="msgError && !confirmPassword"
+                    placeholder="Confirma la contrasenya" />
 
                 <button type="submit" class="sign-in-button" :disabled="isLoading">
-                    {{ isLoading ? 'Iniciant sessió...' : 'Iniciar sessió' }}
+                    {{ isLoading ? 'Registrant...' : 'Registrar-se' }}
                 </button>
 
                 <div v-if="msgError" class="msgError-message">
@@ -192,8 +189,6 @@ p {
     font-size: 0.875rem;
     text-align: center;
 }
-
-
 
 .divider {
     position: relative;
