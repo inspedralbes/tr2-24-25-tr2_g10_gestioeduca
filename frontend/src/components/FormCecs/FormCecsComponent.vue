@@ -91,7 +91,6 @@
   // Cargar preguntas desde el archivo JSON
   onMounted(async () => {
     try {
-      // Cargar preguntas desde public/questionsCesc.json
       const [questionsResponse, studentsResponse] = await Promise.all([
         fetch('/questionsCesc.json'),
         fetch('/students.json')
@@ -117,33 +116,37 @@
     responses.value[currentStep.value] = selectedStudents
   }
   
-  // Método para avanzar/enviar
   const submitStep = () => {
-    // Validación de selección de 3 estudiantes
-    if (currentStep.value >= 0 && responses.value[currentStep.value].length !== 3) {
-      alert('Por favor, selecciona 3 estudiantes')
-      return
+  // Validación de selección de 3 estudiantes
+  if (currentStep.value >= 0 && responses.value[currentStep.value].length !== 3) {
+    // Mostrar pantalla de error o mensaje en lugar de alerta
+    validationScreen.value = {
+      type: 'error',
+      message: 'Por favor, selecciona 3 estudiantes',
     }
-  
-    // Último paso: ir a confirmación
-    if (currentStep.value === questions.value.length - 1) {
-      // Validación final
-      const { name, gender, grade, tutorName, school, city } = studentInfo.value
-      if (!name || !gender || !grade || !tutorName || !school || !city) {
-        alert('Por favor, completa toda la información personal')
-        return
-      }
-  
-      // Ir a la pantalla de confirmación
-      formState.value = 'confirmation'
-      return
-    }
-  
-    // Avanzar al siguiente paso
-    currentStep.value++
+    return
   }
-  
-  // Método para enviar formulario
+
+  if (currentStep.value === questions.value.length - 1) {
+    const { name, gender, grade, tutorName, school, city } = studentInfo.value
+    if (!name || !gender || !grade || !tutorName || !school || !city) {
+      // Mostrar pantalla de error o mensaje en lugar de alerta
+      validationScreen.value = {
+        type: 'error',
+        message: 'Por favor, completa toda la información personal',
+      }
+      return
+    }
+
+    // Cambiar a pantalla de confirmación
+    formState.value = 'confirmation'
+    return
+  }
+
+  // Avanzar al siguiente paso
+  currentStep.value++
+}
+
   const submitForm = () => {
     const formData = {
       ...studentInfo.value,
@@ -152,16 +155,14 @@
   
     console.log('Formulario completo:', formData)
     
-    // Aquí podrías enviar los datos al backend
+    // Aquí tenemos que enviar los datos al backend
     formState.value = 'thankyou'
   }
   
-  // Método para cancelar el envío y volver a revisar
   const cancelSubmission = () => {
     formState.value = 'active'
   }
   
-  // Método para retroceder
   const previousStep = () => {
     if (currentStep.value > -1) {
       currentStep.value--
@@ -189,4 +190,4 @@
   input:checked + label {
     @apply bg-blue-500 text-white;
   }
-  </style>
+  </style>  
