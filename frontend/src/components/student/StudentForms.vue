@@ -45,22 +45,7 @@ const forms = ref([
     id: 1,
     title: 'Evaluación de Sociagrama',
     description: 'Formulario para evaluar la estructura de las relaciones grupales',
-  },
-  {
-    id: 2,
-    title: 'Cuestionario CESC',
-    description: 'Reflexiona sobre la conducta y las experiencias sociales de un grupo',
-  },
-  {
-    id: 3,
-    title: 'Autoevaluación',
-    description: 'Reflexiona sobre tu desempeño en el curso',
-  },
-  {
-    id: 4,
-    title: 'Evaluación del Curso',
-    description: 'Formulario para evaluar el contenido y metodología del curso',
-  },
+  }
 ]);
 
 const isFormCompleted = (formId) => {
