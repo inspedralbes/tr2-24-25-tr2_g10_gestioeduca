@@ -103,6 +103,11 @@ const router = createRouter({
       component: () => import('../views/DashboardView.vue'),
     },
     {
+      path:'/formCecs',
+      name:'formCecs',
+      component: () => import('../components/FormCecs/FormCecsComponent.vue'),
+    },
+    {
       path: '/tancar-sessio', // Nueva ruta para cerrar sesión
       name: 'tancarSessio',
       component: () => import('../components/pages/TancarSessioComponent.vue'), // Asegúrate de que este componente exista
