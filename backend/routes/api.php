@@ -15,5 +15,5 @@ Route::resource('courses', CourseController::class);
 Route::resource('subjects', SubjectController::class);
 Route::resource('users', UserController::class);
 
-Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::post('/register', [RegisteredUserController::class, 'store']);
+//Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+//Route::post('/register', [RegisteredUserController::class, 'store']);
