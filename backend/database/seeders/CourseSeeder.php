@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Course;
+use App\Models\Division;
 
 class CourseSeeder extends Seeder
 {
@@ -11,12 +12,27 @@ class CourseSeeder extends Seeder
     {
         // Crear cursos
         Course::create([
-            'name' => '1ero eso'
-                ]);
-
-        Course::create([
-            'name' => '1ro bachillerato',
+            'name' => '1 ESO',
         ]);
 
+        Course::create([
+            'name' => '2 ESO'
+        ]);
+
+        Course::create([
+            'name' => '3 ESO'
+        ]);
+
+        Course::create([
+            'name' => '4 ESO'
+        ]);
+
+        Course::create([
+            'name' => '1 BACHILLERATO',
+        ]);
+
+        Course::create([
+            'name' => '2 BACHILLERATO'
+                ]);
     }
 }
