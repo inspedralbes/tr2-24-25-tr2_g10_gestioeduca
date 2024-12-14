@@ -17,3 +17,4 @@ Route::resource('users', UserController::class);
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'login']);
 //Route::post('/register', [RegisteredUserController::class, 'store']);
+//Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'logout']);
