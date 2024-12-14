@@ -65,8 +65,11 @@ const gestioSubmit = async (e) => {
         // Guardar el token en localStorage
         localStorage.setItem('auth_token', data.token);
 
+        // IMPORTANTE: Guarda también la información del usuario
+        localStorage.setItem('user', JSON.stringify(data.user));
+
         // Redirigir al dashboard
-        router.push({ name: 'dashboard' });
+        router.push('/dashboard');  // Cambia a ruta directa en lugar de nombre
 
     } catch (err) {
         msgError.value = err.message || "No s'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.";
