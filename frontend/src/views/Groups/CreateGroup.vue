@@ -137,7 +137,7 @@ onMounted(async () => {
   
         <!-- Seleccionar estudiantes -->
         <div class="col-span-1 sm:col-span-2">
-          <label for="students" class="block font-semibold">Seleccionar Estudiantes</label>
+          <label for="students" class="block font-semibold">Seleccionar Estudiants</label>
           <div id="students" class="border rounded p-3 mb-4 max-h-40 overflow-y-auto">
             <div v-for="student in students" :key="student.id" class="flex items-center gap-2 mb-2">
               <input type="checkbox" :value="student" v-model="selectedStudents" />
