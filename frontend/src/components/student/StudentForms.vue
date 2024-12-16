@@ -50,12 +50,20 @@ const forms = ref([
     description: 'Formulario para la detección e intervención en casos de acoso escolar',
     dueDate: '20 Mayo'
   },
+  {
+    id: 5,
+    title: 'Evaluación de Sociagrama',
+    description: 'Formulario para evaluar la estructura de las relaciones grupales',
+  }
 ])
 
 const handleFormClick = (formId) => {
   if (formId === 4) {
     // Redirigir al formulario CESC
     router.push({ name: 'formCecs' })
+  } else if (formId === 5) {
+    // Redirigir al formulario Sociograma
+    router.push({ name: 'sociogramTest' })
   } else {
     console.log(`Formulario con ID ${formId} no tiene una ruta específica.`)
   }
