@@ -8,7 +8,7 @@ export function generateGroups(students, options = {}) {
   } = options
 
   if (!students?.length) {
-    throw new Error('No hay estudiantes para generar grupos')
+    throw new Error("No hi ha alumnes per generar els grups.")
   }
 
   let sortedStudents = [...students]

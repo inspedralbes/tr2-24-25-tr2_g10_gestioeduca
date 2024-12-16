@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { analyzeBullyingResponses } from '../services/formAnalysis.js';
 
 export const useFormAnalyticsStore = defineStore('formAnalytics', () => {
   const analyses = ref(new Map());
@@ -34,7 +33,7 @@ export const useFormAnalyticsStore = defineStore('formAnalytics', () => {
       analyses.value.set(formId, results);
       return results;
     } catch (error) {
-      console.error('Error in batch analysis:', error);
+      console.error('Error analitzant la resposta:', error);
       throw error;
     } finally {
       isAnalyzing.value = false;

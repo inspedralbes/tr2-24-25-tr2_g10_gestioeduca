@@ -12,26 +12,26 @@ const parseJSONSafely = (text) => {
     // Find JSON object in text (handles cases where there might be additional text)
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error('No se encontró un objeto JSON válido en la respuesta');
+      throw new Error("No s'ha trobat cap objecte JSON");
     }
     return JSON.parse(jsonMatch[0]);
   } catch (error) {
-    throw new Error(`Error al analizar la respuesta: ${error.message}`);
+    throw new Error(`Error al analitzar la resposta: ${error.message}`);
   }
 };
 
 const validateQuestion = (question, index) => {
   if (!question.type || !['text', 'multiple', 'checkbox', 'number'].includes(question.type)) {
-    throw new Error(`Tipo de pregunta inválido en la pregunta ${index + 1}`);
+    throw new Error(`Tipus de pregunta invàlid en la pregunta ${index + 1}`);
   }
 
   if (!question.title?.trim()) {
-    throw new Error(`Título inválido en la pregunta ${index + 1}`);
+    throw new Error(`Títul invàlid en la pregunta ${index + 1}`);
   }
 
   if (['multiple', 'checkbox'].includes(question.type)) {
     if (!Array.isArray(question.options) || question.options.length < 2) {
-      throw new Error(`Se requieren al menos 2 opciones en la pregunta ${index + 1}`);
+      throw new Error(`Obligatori almenys dues opcións en la pregunta ${index + 1}`);
     }
 
     question.options = question.options.map((option, optionIndex) => ({
@@ -45,15 +45,15 @@ const validateQuestion = (question, index) => {
 
 const validateResponse = (response) => {
   if (!response?.title?.trim()) {
-    throw new Error('El título del formulario es requerido');
+    throw new Error('El títul del formulario es obligatori');
   }
 
   if (!response?.description?.trim()) {
-    throw new Error('La descripción del formulario es requerida');
+    throw new Error('La descripció del formularii es obligatoria');
   }
 
   if (!Array.isArray(response.questions) || response.questions.length === 0) {
-    throw new Error('El formulario debe contener al menos una pregunta');
+    throw new Error('El formulari ha de tenir mínim una pregunta');
   }
 
   response.questions = response.questions.map((q, i) => validateQuestion(q, i));

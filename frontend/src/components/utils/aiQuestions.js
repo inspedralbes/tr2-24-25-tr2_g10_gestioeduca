@@ -2,10 +2,10 @@ import { generateFormQuestions } from '../../services/gemini'
 
 export async function regenerateQuestion(originalQuestion, context) {
   try {
-    const prompt = `Por favor, genera una nueva versión de esta pregunta manteniendo el mismo tema pero con un enfoque diferente. 
+    const prompt = `Genera una nova pregunta basada en la pregunta original i el mateix context. 
     Pregunta original: "${originalQuestion.title}"
-    Contexto del formulario: "${context}"
-    Tipo de pregunta: ${originalQuestion.type}`
+    Contexte del formulari: "${context}"
+    Tipus de pregunta: ${originalQuestion.type}`
 
     const response = await generateFormQuestions(prompt)
     const newQuestion = response.questions[0]
@@ -14,13 +14,13 @@ export async function regenerateQuestion(originalQuestion, context) {
       id: originalQuestion.id
     }
   } catch (error) {
-    throw new Error('No se pudo regenerar la pregunta. Por favor, intenta de nuevo.')
+    throw new Error('No es pot regenerar la pregunta. Intenta de nou.')
   }
 }
 
 export async function editQuestion(question, newPrompt) {
   try {
-    const prompt = `Por favor, modifica esta pregunta según las siguientes instrucciones: "${newPrompt}"
+    const prompt = `Modifica aquesta pregunta segons les seguents descripcions: "${newPrompt}"
     Pregunta actual: "${question.title}"
     Tipo de pregunta: ${question.type}`
 
@@ -31,6 +31,6 @@ export async function editQuestion(question, newPrompt) {
       id: question.id
     }
   } catch (error) {
-    throw new Error('No se pudo editar la pregunta. Por favor, intenta de nuevo.')
+    throw new Error('No es pot editar la pregunta. Intenta de nou.')
   }
 }

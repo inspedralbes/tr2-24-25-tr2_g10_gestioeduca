@@ -85,22 +85,22 @@ const saveForm = () => {
     createdAt: new Date().toISOString()
   }
   
-  console.log('Saving form:', form)
-  alert('Formulario guardado correctamente')
+  console.log('Guardant formulari:', form)
+  alert('Formulari guardat correctament')
   router.push('/formularios')
 }
 
 const handleSendForm = () => {
   if (!formTitle.value || !questions.value.length) {
-    alert('Por favor, completa el formulario antes de enviarlo')
-    return
+    alert("Completa el formulari abans d'enviar")
+    return;
   }
   showAssignModal.value = true
 }
 
 const handleFormAssigned = (assignments) => {
-  console.log('Form assigned to students:', assignments)
-  alert('Formulario enviado correctamente a los estudiantes seleccionados')
+  console.log('Formulari assignat:', assignments)
+  alert('Formulari enviat correctament als alumnes seleccionats')
   router.push('/formularios')
 }
 </script>
@@ -115,9 +115,9 @@ const handleFormAssigned = (assignments) => {
               @click="goBack"
               class="mr-4 text-gray-600 hover:text-gray-900"
             >
-              ← Volver
+              ← Tornar
             </button>
-            <h1 class="text-2xl font-bold text-gray-900">Crear Nuevo Formulario</h1>
+            <h1 class="text-2xl font-bold text-gray-900">Crear formulari</h1>
           </div>
         </div>
       </div>

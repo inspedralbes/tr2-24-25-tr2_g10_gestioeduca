@@ -4,39 +4,39 @@ import { ref } from 'vue'
 const suggestionGroups = [
   // Evaluación académica
   [
-    'Necesito un formulario para evaluar matemáticas de 1º ESO',
-    'Crea una evaluación de física y química',
-    'Genera un test de comprensión lectora',
-    'Diseña una prueba de inglés nivel B1',
-    'Evaluación de conocimientos de historia',
-    'Test de geografía sobre la Unión Europea'
+    "Necessito un formulari per avaluar matemàtiques de 1r ESO",
+    "Crea una avaluació de física i química",
+    "Genera un test de comprensió lectora",
+    "Dissenya una prova d'anglès nivell B1",
+    "Avaluació de coneixements d'història",
+    "Test de geografia sobre la Unió Europea",
   ],
-  // Seguimiento y tutoría
+  // Seguiment i tutoria
   [
-    'Cuestionario sobre hábitos de estudio',
-    'Encuesta sobre el ambiente en clase',
-    'Formulario de seguimiento tutorial',
-    'Evaluación de necesidades de apoyo',
-    'Cuestionario de adaptación al curso',
-    'Formulario de orientación académica'
+    "Qüestionari sobre hàbits d'estudi",
+    "Enquesta sobre l'ambient a classe",
+    "Formulari de seguiment tutorial",
+    "Avaluació de necessitats de suport",
+    "Qüestionari d'adaptació al curs",
+    "Qüestionari d'adaptació al curs",
   ],
-  // Feedback y mejora
+  // Feedback i millora
   [
-    'Encuesta de satisfacción trimestral',
-    'Evaluación de la metodología docente',
-    'Valoración de recursos didácticos',
-    'Sugerencias de mejora del curso',
-    'Feedback sobre actividades extraescolares',
-    'Evaluación del plan de estudios'
+    "Enquesta de satisfacció trimestral",
+    "Avaluació de la metodologia docent",
+    "Valoració de recursos didàctics",
+    "Suggeriments de millora del curs",
+    "Feedback sobre activitats extraescolars",
+    "Avaluació del pla d'estudis"
   ],
-  // Desarrollo personal
+  // Desenvolupament personal
   [
-    'Cuestionario de intereses profesionales',
-    'Test de estilos de aprendizaje',
-    'Evaluación de habilidades sociales',
-    'Encuesta sobre gestión del tiempo',
-    'Formulario de objetivos académicos',
-    'Valoración de competencias digitales'
+    "Qüestionari d'interessos professionals",
+    "Test d'estils d'aprenentatge",
+    "Test d'estils d'aprenentatge",
+    "Enquesta sobre gestió del temps",
+    "Formulari d'objectius acadèmics",
+    "Valoració de competències digitals",
   ]
 ]
 
