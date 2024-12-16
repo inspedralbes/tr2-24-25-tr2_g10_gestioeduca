@@ -8,6 +8,7 @@ import Register from '@/components/Login/Register.vue';
 import FormResponses from '@/views/Forms/FormResponses.vue';
 import StudentList from '../views/Students/StudentList.vue'
 import StudentProfile from '../views/Students/StudentProfile.vue'
+import CreateForm from '@/views/CreateForm.vue';
 
 
 const router = createRouter({
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/alumnos/:id',
       name: 'StudentProfile',
       component: StudentProfile
+    },
+    {
+      path: '/crear-formulario',
+      name: 'CreateForm',
+      component: CreateForm,
     },
     {
       path: '/formularios/:id/respuestas',
