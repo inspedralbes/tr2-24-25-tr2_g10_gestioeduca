@@ -8,8 +8,10 @@ import {
   PencilIcon,
   TrashIcon,
   EyeIcon,
-  UserGroupIcon
+  UserGroupIcon,
+  ChartBarIcon
 } from '@heroicons/vue/24/outline'
+import AssignFormModal from '../../components/Forms/AssignFormModal.vue'
 
 const router = useRouter()
 const searchQuery = ref('')
@@ -59,6 +61,10 @@ const navigateToCreate = () => {
   router.push({ name: 'CreateForm' })
 }
 
+const viewResponses = (formId) => {
+  router.push({ name: 'FormResponses', params: { id: formId } })
+}
+
 const openAssignModal = (form) => {
   selectedForm.value = form
   showAssignModal.value = true
@@ -66,17 +72,18 @@ const openAssignModal = (form) => {
 
 const handleFormAssigned = (assignments) => {
   console.log('Form assigned to students:', assignments)
+  // Show success message
   alert('Formulario asignado correctamente a los estudiantes seleccionados')
 }
 </script>
 
 <template>
-  <div class="p-4 sm:p-6">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold">Formularios</h1>
       <button 
         @click="navigateToCreate"
-        class="btn btn-primary flex items-center justify-center space-x-2 w-full sm:w-auto"
+        class="btn btn-primary flex items-center space-x-2"
       >
         <PlusIcon class="w-5 h-5" />
         <span>Nuevo Formulario</span>
@@ -85,8 +92,8 @@ const handleFormAssigned = (assignments) => {
 
     <!-- Filters -->
     <div class="bg-white rounded-lg shadow p-4 mb-6">
-      <div class="flex flex-col sm:flex-row gap-4">
-        <div class="flex-1">
+      <div class="flex flex-wrap gap-4">
+        <div class="flex-1 min-w-[200px]">
           <input
             v-model="searchQuery"
             type="text"
@@ -94,7 +101,7 @@ const handleFormAssigned = (assignments) => {
             class="w-full px-4 py-2 border rounded-lg"
           />
         </div>
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex space-x-4">
           <select
             v-model="selectedStatus"
             class="px-4 py-2 border rounded-lg"
@@ -119,57 +126,7 @@ const handleFormAssigned = (assignments) => {
 
     <!-- Forms List -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
-      <!-- Mobile View -->
-      <div class="block sm:hidden">
-        <div class="divide-y">
-          <div
-            v-for="form in forms"
-            :key="form.id"
-            class="p-4 hover:bg-gray-50"
-          >
-            <div class="mb-2">
-              <h3 class="font-medium text-gray-900">{{ form.title }}</h3>
-              <p class="text-sm text-gray-500">{{ form.description }}</p>
-            </div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                :class="{
-                  'bg-green-100 text-green-800': form.status === 'active',
-                  'bg-gray-100 text-gray-800': form.status === 'draft',
-                  'bg-red-100 text-red-800': form.status === 'closed'
-                }">
-                {{ form.status }}
-              </span>
-              <span class="text-sm text-gray-500">
-                {{ new Date(form.createdAt).toLocaleDateString() }}
-              </span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">
-                {{ form.responses }} respuestas
-              </span>
-              <div class="flex space-x-2">
-                <button 
-                  class="p-2 text-primary bg-primary/10 rounded-full"
-                  @click="openAssignModal(form)"
-                  title="Asignar a estudiantes"
-                >
-                  <UserGroupIcon class="w-5 h-5" />
-                </button>
-                <button class="p-2 text-gray-400 hover:text-primary">
-                  <PencilIcon class="w-5 h-5" />
-                </button>
-                <button class="p-2 text-gray-400 hover:text-danger">
-                  <TrashIcon class="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Desktop View -->
-      <div class="hidden sm:block overflow-x-auto">
+      <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -214,9 +171,22 @@ const handleFormAssigned = (assignments) => {
               </td>
               <td class="px-6 py-4 text-right text-sm font-medium">
                 <div class="flex justify-end space-x-3">
-  
-                  <button class="text-gray-400 hover:text-primary">
-                    <EyeIcon class="w-5 h-5" />
+                  <button 
+                    class="flex items-center space-x-1 px-3 py-1 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                    @click="openAssignModal(form)"
+                    title="Asignar a estudiantes"
+                  >
+                    <UserGroupIcon class="w-4 h-4" />
+                    <span>Asignar</span>
+                  </button>
+                  <button 
+                    v-if="form.responses > 0"
+                    class="flex items-center space-x-1 px-3 py-1 bg-success text-white rounded-md hover:bg-success/90 transition-colors"
+                    @click="viewResponses(form.id)"
+                    title="Ver respuestas"
+                  >
+                    <ChartBarIcon class="w-4 h-4" />
+                    <span>Ver Respuestas</span>
                   </button>
                   <button class="text-gray-400 hover:text-primary">
                     <PencilIcon class="w-5 h-5" />

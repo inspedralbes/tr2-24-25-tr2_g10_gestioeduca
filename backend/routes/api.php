@@ -28,6 +28,6 @@ Route::get('forms/{formId}/questions', [FormController::class, 'getQuestionsAndA
 
 
 
-//Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-//Route::post('/register', [RegisteredUserController::class, 'store']);
-//Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'logout']);
+Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'logout']);
