@@ -20,4 +20,8 @@ Route::resource('forms', FormController::class);
 Route::resource('questions', QuestionController::class);
 Route::resource('answers', AnswerController::class);
 
+// ruta para pedir todas las preguntas y respuestas de un formulario
+Route::get('forms/{formId}/questions', [FormController::class, 'getQuestionsAndAnswers']);
+
+
 

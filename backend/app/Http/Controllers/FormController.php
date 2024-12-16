@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\Validator;
 
 class FormController extends Controller
 {
+
+    public function getQuestionsAndAnswers($formId)
+    {
+        $form = Form::with(['questions.answers'])->find($formId);
+
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        return response()->json($form, 200);
+    }
+
+
+
     public function index()
     {
         $questions = Form::all();
