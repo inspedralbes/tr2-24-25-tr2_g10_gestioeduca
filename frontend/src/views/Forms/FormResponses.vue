@@ -1,29 +1,32 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { 
-  ArrowDownTrayIcon, 
+  ChevronDownIcon, 
   ChatBubbleLeftRightIcon,
   ChartBarIcon,
   EyeIcon
-} from '@heroicons/vue/24/outline'
-import ResponsesTable from '../../components/Forms/Responses/ResponsesTable.vue'
-import ResponseStats from '../../components/Forms/Responses/ResponseStats.vue'
-import ResponseFilters from '../../components/Forms/Responses/ResponseFilters.vue'
-import ResponseDetails from '../../components/Forms/Responses/ResponseDetails.vue'
-import BulkActionsMenu from '../../components/Forms/Responses/BulkActionsMenu.vue'
-import { useFormAnalyticsStore } from '../../stores/formAnalytics'
+} from '@heroicons/vue/24/outline';
+import ResponsesTable from '../../components/Forms/Responses/ResponsesTable.vue';
+import ResponseStats from '../../components/Forms/Responses/ResponseStats.vue';
+import ResponseFilters from '../../components/Forms/Responses/ResponseFilters.vue';
+import ResponseDetails from '../../components/Forms/Responses/ResponseDetails.vue';
+import BulkActionsMenu from '../../components/Forms/Responses/BulkActionsMenu.vue';
+import { useFormAnalyticsStore } from '../../stores/formAnalytics';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-const route = useRoute()
-const formAnalyticsStore = useFormAnalyticsStore()
-const showResponseDetails = ref(false)
-const selectedResponse = ref(null)
-const selectedResponses = ref([])
-const searchQuery = ref('')
-const selectedGrade = ref('all')
-const selectedStatus = ref('all')
+const route = useRoute();
+const formAnalyticsStore = useFormAnalyticsStore();
+const showResponseDetails = ref(false);
+const selectedResponse = ref(null);
+const selectedResponses = ref([]);
+const searchQuery = ref('');
+const selectedGrade = ref('all');
+const selectedStatus = ref('all');
+const showDownloadMenu = ref(false);
 
-// Mock data - In a real app, this would come from an API
+// Mock data
 const form = ref({
   id: route.params.id,
   title: 'Evaluación Trimestral',
@@ -57,7 +60,7 @@ const form = ref({
       ]
     }
   ]
-})
+});
 
 const responses = ref([
   {
@@ -98,47 +101,83 @@ const responses = ref([
       { questionId: 2, value: 'Ninguno en particular' }
     ]
   }
-])
+]);
 
 const filteredResponses = computed(() => {
   return responses.value.filter(response => {
-    const matchesSearch = response.studentName.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesGrade = selectedGrade.value === 'all' || response.grade === selectedGrade.value
-    const matchesStatus = selectedStatus.value === 'all' || response.status === selectedStatus.value
-    return matchesSearch && matchesGrade && matchesStatus
-  })
-})
+    const matchesSearch = response.studentName.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesGrade = selectedGrade.value === 'all' || response.grade === selectedGrade.value;
+    const matchesStatus = selectedStatus.value === 'all' || response.status === selectedStatus.value;
+    return matchesSearch && matchesGrade && matchesStatus;
+  });
+});
 
 const handleViewResponse = (response) => {
-  selectedResponse.value = response
-  showResponseDetails.value = true
-}
+  selectedResponse.value = response;
+  showResponseDetails.value = true;
+};
 
-const handleExportCSV = () => {
-  const csvContent = generateCSV(responses.value)
-  downloadCSV(csvContent, `${form.value.title}_responses.csv`)
-}
-
-const handleExportJSON = () => {
-  const jsonContent = JSON.stringify(responses.value, null, 2); // Formato legible con 2 espacios de indentación
-  downloadJSON(jsonContent, `${form.value.title}_responses.json`);
-}
-
-const handleExportPDF = () => {
-  console.log('Exporting to PDF...')
-}
-
-const handleBulkAction = async (action) => {
-  if (action === 'analyze') {
-    await formAnalyticsStore.analyzeResponses(form.value.id, selectedResponses.value)
-  } else if (action === 'export') {
-    handleExportCSV()
+const handleDownload = (format) => {
+  if (format === 'csv') {
+    const csvContent = generateCSV(responses.value);
+    downloadFile(csvContent, `${form.value.title}_responses.csv`, 'text/csv;charset=utf-8;');
+  } else if (format === 'json') {
+    const jsonContent = JSON.stringify(responses.value, null, 2);
+    downloadFile(jsonContent, `${form.value.title}_responses.json`, 'application/json;charset=utf-8;');
+  } else if (format === 'pdf') {
+    generatePDF(responses.value);
   }
-}
+};
+
+const generatePDF = (responses) => {
+  const doc = new jsPDF();
+
+  // Título
+  doc.setFontSize(18);
+  doc.text(form.value.title, 10, 10);
+
+  // Subtítulo
+  doc.setFontSize(12);
+  doc.text(form.value.description, 10, 20);
+
+  // Configurar la tabla
+  const tableData = responses.map(response => {
+    const row = [
+      response.studentName,
+      response.grade,
+      new Date(response.submittedAt).toLocaleString(),
+      response.status
+    ];
+
+    form.value.questions.forEach(question => {
+      const answer = response.answers.find(a => a.questionId === question.id);
+      row.push(answer ? Array.isArray(answer.value) ? answer.value.join(', ') : answer.value : '');
+    });
+
+    return row;
+  });
+
+  const headers = [
+    'Estudiante', 
+    'Curso', 
+    'Fecha', 
+    'Estado', 
+    ...form.value.questions.map(q => q.title)
+  ];
+
+  doc.autoTable({
+    head: [headers],
+    body: tableData,
+    startY: 30
+  });
+
+  // Guardar el archivo
+  doc.save(`${form.value.title}_responses.pdf`);
+};
 
 const generateCSV = (responses) => {
-  const headers = ['Estudiante', 'Curso', 'Fecha', 'Estado']
-  form.value.questions.forEach(q => headers.push(q.title))
+  const headers = ['Estudiante', 'Curso', 'Fecha', 'Estado'];
+  form.value.questions.forEach(q => headers.push(q.title));
   
   const rows = responses.map(response => {
     const row = [
@@ -146,35 +185,28 @@ const generateCSV = (responses) => {
       response.grade,
       new Date(response.submittedAt).toLocaleString(),
       response.status
-    ]
+    ];
     
     form.value.questions.forEach(question => {
-      const answer = response.answers.find(a => a.questionId === question.id)
-      row.push(answer ? Array.isArray(answer.value) ? answer.value.join('; ') : answer.value : '')
-    })
+      const answer = response.answers.find(a => a.questionId === question.id);
+      row.push(answer ? Array.isArray(answer.value) ? answer.value.join('; ') : answer.value : '');
+    });
     
-    return row
-  })
+    return row;
+  });
   
-  return [headers, ...rows].map(row => row.join(',')).join('\n')
-}
+  return [headers, ...rows].map(row => row.join(',')).join('\n');
+};
 
-const downloadCSV = (content, filename) => {
-  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' })
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = filename
-  link.click()
-}
-
-const downloadJSON = (content, filename) => {
-  const blob = new Blob([content], { type: 'application/json;charset=utf-8;' })
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = filename
-  link.click()
-}
+const downloadFile = (content, filename, type) => {
+  const blob = new Blob([content], { type });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+};
 </script>
+
 
 <template>
   <div class="p-6">
@@ -184,28 +216,46 @@ const downloadJSON = (content, filename) => {
         <p class="text-gray-500">{{ form.description }}</p>
       </div>
       
-      <div class="flex space-x-3">
-        <button 
+      <!-- Download Menu -->
+      <div class="relative">
+        <button
           class="btn bg-white hover:bg-gray-50 text-gray-700 border flex items-center space-x-2"
-          @click="handleExportCSV"
+          @click="showDownloadMenu = !showDownloadMenu"
         >
-          <ArrowDownTrayIcon class="w-5 h-5" />
-          <span>CSV</span>
+          <span>Descargar</span>
+          <ChevronDownIcon class="w-5 h-5" />
         </button>
-        <button 
-          class="btn bg-white hover:bg-gray-50 text-gray-700 border flex items-center space-x-2"
-          @click="handleExportJSON"
+        <div
+          v-if="showDownloadMenu"
+          class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50"
         >
-          <ArrowDownTrayIcon class="w-5 h-5" />
-          <span>JSON</span>
-        </button>
-        <button 
-          class="btn bg-white hover:bg-gray-50 text-gray-700 border flex items-center space-x-2"
-          @click="handleExportPDF"
-        >
-          <ArrowDownTrayIcon class="w-5 h-5" />
-          <span>PDF</span>
-        </button>
+          <ul>
+            <li>
+              <button 
+                class="w-full text-left px-4 py-2 hover:bg-gray-100"
+                @click="handleDownload('csv')"
+              >
+                CSV
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full text-left px-4 py-2 hover:bg-gray-100"
+                @click="handleDownload('json')"
+              >
+                JSON
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full text-left px-4 py-2 hover:bg-gray-100"
+                @click="handleDownload('pdf')"
+              >
+                PDF
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
