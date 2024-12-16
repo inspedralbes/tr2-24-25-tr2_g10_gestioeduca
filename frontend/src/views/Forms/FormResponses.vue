@@ -194,8 +194,10 @@ const generateCSV = (responses) => {
     
     return row;
   });
-  
-  return [headers, ...rows].map(row => row.join(',')).join('\n');
+
+  // Añadir BOM para soporte de acentos en Excel
+  const bom = '\uFEFF';
+  return bom + [headers, ...rows].map(row => row.join(',')).join('\n');
 };
 
 const downloadFile = (content, filename, type) => {
@@ -206,7 +208,6 @@ const downloadFile = (content, filename, type) => {
   link.click();
 };
 </script>
-
 
 <template>
   <div class="p-6">
