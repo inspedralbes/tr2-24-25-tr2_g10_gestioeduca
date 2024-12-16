@@ -6,6 +6,9 @@ import FormList from '../views/Forms/FormList.vue';
 import StudentDashboard from '@/components/student/StudentDashboard.vue';
 import Register from '@/components/Login/Register.vue';
 import FormResponses from '@/views/Forms/FormResponses.vue';
+import StudentList from '../views/Students/StudentList.vue'
+import StudentProfile from '../views/Students/StudentProfile.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +27,16 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register,
+    },
+    {
+      path: '/alumnos',
+      name: 'StudentList',
+      component: StudentList,
+    },
+    {
+      path: '/alumnos/:id',
+      name: 'StudentProfile',
+      component: StudentProfile
     },
     {
       path: '/formularios/:id/respuestas',
