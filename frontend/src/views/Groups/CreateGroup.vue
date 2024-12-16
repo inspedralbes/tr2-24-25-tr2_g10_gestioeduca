@@ -11,6 +11,8 @@ const groupDescription = ref('');
 const selectedCourse = ref(null); 
 const selectedDivisio = ref(null);
 const selectedStudents = ref([]);
+const selectedSubject = ref([]);
+
 const totalStudents = ref(0);
 const groups = ref([]); 
 //recargar grupos
@@ -56,6 +58,7 @@ const createGroup = () => {
     description: groupDescription.value || null,
     course: selectedCourse.value,
     divisio: selectedDivisio.value,
+    subject: selectedSubject.value,
     students: selectedStudents.value.map(student => ({
     student_id: student.id,
     name: student.name,
@@ -88,6 +91,7 @@ const resetForm = () => {
   selectedCourse.value = null;
   selectedDivisio.value = null;
   selectedStudents.value = [];
+  selectedSubject.value = null;
 };
 
 
@@ -136,13 +140,28 @@ onMounted(async () => {
             <option value="3º ESO">3º ESO</option>
             <option value="4º ESO">4º ESO</option>
           </select>
+          </div>
+
           <!-- Seleccionar divisio -->
+          <div>
+          <label for="divisio" class="block font-semibold">Divisió</label>
           <select v-model="selectedDivisio" id="divisio" class="w-full p-2 border rounded mb-4">
             <option disabled value="">Selecciona divisió</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
             <option value="D">D</option>
+          </select>
+        </div>
+
+          <!-- Seleccionar assignatura -->
+          <div>
+          <label for="subject" class="block font-semibold">Assignatura</label>
+          <select v-model="selectedSubject" id="subjects" class="w-full p-2 border rounded mb-4">
+            <option disabled value="">Selecciona assignatura</option>
+            <option value="matemàtiques">Matemàtiques</option>
+            <option value="B">Història</option>
+            
           </select>
         </div>
   
