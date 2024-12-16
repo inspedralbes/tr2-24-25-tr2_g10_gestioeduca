@@ -137,6 +137,41 @@ const router = createRouter({
       name: 'createGroup',
       component: () => import('../views/Groups/CreateGroup.vue'),
     },
+    {
+      path: '/adminer',
+      component: () => import('@/components/Adminer/AdminerDashboard.vue'),
+      children: [
+        {
+          path: '',
+          redirect: '/adminer/dashboard'
+        },
+        {
+          path: 'dashboard',
+          name: 'adminerHome',
+          component: () => import('@/components/Adminer/AdminerHome.vue')
+        },
+        {
+          path: 'students',
+          name: 'adminerStudents',
+          component: () => import('@/components/Adminer/crud/StudentsCrud.vue')
+        },
+        {
+          path: 'teachers',
+          name: 'adminerTeachers',
+          component: () => import('@/components/Adminer/crud/TeachersCrud.vue')
+        },
+        {
+          path: 'forms',
+          name: 'adminerForms',
+          component: () => import('@/components/Adminer/crud/FormsCrud.vue')
+        },
+        {
+          path: 'groups',
+          name: 'adminerGroups',
+          component: () => import('@/components/Adminer/crud/GroupsCrud.vue')
+        }
+      ]
+    }
   ],
 });
 
