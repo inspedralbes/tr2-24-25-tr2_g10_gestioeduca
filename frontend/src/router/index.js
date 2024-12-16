@@ -9,6 +9,7 @@ import FormResponses from '@/views/Forms/FormResponses.vue';
 import StudentList from '../views/Students/StudentList.vue'
 import StudentProfile from '../views/Students/StudentProfile.vue'
 import CreateForm from '@/views/CreateForm.vue';
+import BrainView from '@/views/BrainView.vue';
 
 
 const router = createRouter({
@@ -48,6 +49,11 @@ const router = createRouter({
       path: '/formularios/:id/respuestas',
       name: 'FormResponses',
       component: FormResponses,
+    },
+    {
+      path: '/brain',
+      name: 'brain',
+      components: BrainView,
     },
     {
       path: '/student',
