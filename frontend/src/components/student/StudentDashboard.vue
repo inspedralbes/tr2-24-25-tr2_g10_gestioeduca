@@ -33,22 +33,7 @@
 
     <!-- Contenido principal -->
     <main class="flex-1 overflow-y-auto">
-      <div class="p-8">
-        <!-- Tarjeta de perfil -->
-        <div class="bg-white rounded-lg shadow p-6 mb-8">
-          <div class="flex items-center">
-            <div
-              class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-2xl font-bold text-primary">
-              {{ userInitials }}
-            </div>
-            <div class="ml-4">
-              <h2 class="text-2xl font-bold">{{ studentName }}</h2>
-              <p class="text-gray-600">{{ studentClass }}</p>
-              <p class="text-gray-500 text-sm">{{ studentEmail }}</p>
-            </div>
-          </div>
-        </div>
-
+      <div class="p-8">        
         <router-view></router-view>
       </div>
     </main>
@@ -108,10 +93,8 @@ const toggleMenu = () => {
 </script>
 
 <style scoped>
-/* Espacio reservado para el encabezado */
 aside>div:first-child {
   height: 4rem;
-  /* Ajustar según el diseño */
 }
 
 main {

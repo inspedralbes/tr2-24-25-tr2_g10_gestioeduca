@@ -1,15 +1,27 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue'; // Añade onMounted
+import { useRouter, useRoute } from 'vue-router'; // Importa useRouter y useRoute
 import SocialLogin from './SocialLogin.vue';
 import PasswordInput from './PasswordInput.vue';
 import TextInput from './TextInput.vue';
+
+const router = useRouter();
+const route = useRoute();
 
 const username = ref('');
 const password = ref('');
 const isLoading = ref(false);
 const msgError = ref('');
+const successMessage = ref('');
 
-// Valida el formulari
+// Comprueba si hay un mensaje de registro exitoso
+onMounted(() => {
+    if (route.query.registered === 'true') {
+        successMessage.value = 'Usuari registrat correctament. Inicia sessió.';
+    }
+});
+
+// Valida el formulario
 const validateForm = () => {
     if (!username.value) {
         msgError.value = "El nom d'usuari és obligatori";
@@ -22,20 +34,45 @@ const validateForm = () => {
     return true;
 };
 
-// Envia el formulari de login
+// Enviar el formulario de login
 const gestioSubmit = async (e) => {
     e.preventDefault();
     msgError.value = '';
+    successMessage.value = '';
 
     if (!validateForm()) return;
 
     isLoading.value = true;
+
     try {
-        // Envia el formulari i espera 1 segon per a la resposta amb les dades introduïdes
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('Formulari enviat:', { username: username.value, password: password.value });
+        const response = await fetch('http://localhost:8000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: username.value,
+                password: password.value,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error('No s\'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.');
+        }
+
+        // Guardar el token en localStorage
+        localStorage.setItem('auth_token', data.token);
+
+        // IMPORTANTE: Guarda también la información del usuario
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        // Redirigir al dashboard
+        router.push('/dashboard');  // Cambia a ruta directa en lugar de nombre
+
     } catch (err) {
-        msgError.value = "No s'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.";
+        msgError.value = err.message || "No s'ha pogut iniciar la sessió. Si us plau, torna-ho a provar.";
     } finally {
         isLoading.value = false;
     }
@@ -51,6 +88,11 @@ const gestioSubmit = async (e) => {
             </div>
 
             <form @submit="gestioSubmit" class="login-form">
+                <!-- Añade un mensaje de éxito cuando se registra un usuario -->
+                <div v-if="successMessage" class="success-message">
+                    {{ successMessage }}
+                </div>
+
                 <TextInput v-model="username" placeholder="Nom d'usuari" :has-msgError="msgError && !username" />
 
                 <PasswordInput v-model="password" :has-msgError="msgError && !password" />
@@ -153,6 +195,8 @@ p {
     font-size: 0.875rem;
     text-align: center;
 }
+
+
 
 .divider {
     position: relative;

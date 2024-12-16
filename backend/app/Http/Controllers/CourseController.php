@@ -10,11 +10,11 @@ class CourseController extends Controller
     /**
      * @OA\Get(
      *     path="/api/courses",
-     *     summary="Get all courses",
+     *     summary="Obtenir la llista de cursos",
      *     tags={"Courses"},
      *     @OA\Response(
      *         response=200,
-     *         description="List of all courses",
+     *         description="Llista de cursos obtenida correctament",
      *     )
      * )
      */
@@ -27,15 +27,22 @@ class CourseController extends Controller
     /**
      * @OA\Post(
      *     path="/api/courses",
-     *     summary="Create a new course",
+     *     summary="Crear un curs",
      *     tags={"Courses"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name"},
+     *             @OA\Property(property="name", type="string", example="Introducció a PHP"),
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Course created successfully",
+     *         description="Curs creat correctament",
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="Validation error"
+     *         description="Error de validació"
      *     )
      * )
      */
@@ -53,15 +60,15 @@ class CourseController extends Controller
     /**
      * @OA\Get(
      *     path="/api/courses/{id}",
-     *     summary="Get a specific course",
+     *     summary="Un curs en concret",
      *     tags={"Courses"},
      *     @OA\Response(
      *         response=200,
-     *         description="Course details",
+     *         description="Detalls del curs",
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Course not found"
+     *         description="Curs no trobat"
      *     )
      * )
      */
@@ -73,21 +80,30 @@ class CourseController extends Controller
     /**
      * @OA\Put(
      *     path="/api/courses/{id}",
-     *     summary="Update an existing course",
+     *     summary="Canviar el nom d'un curs",
      *     tags={"Courses"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the course",
+     *         description="ID del curs",
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Dades necessaries per actualitzar el curs",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             required={"name"},
+     *             @OA\Property(property="name", type="string", example="Nou nom del curs"),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Course updated successfully",
+     *         description="Curs actualitzat correctament",
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Course not found"
+     *         description="Curs no trobat"
      *     )
      * )
      */
@@ -105,22 +121,22 @@ class CourseController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/courses/{id}",
-     *     summary="Delete a course",
+     *     summary="Borrar un curs",
      *     tags={"Courses"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the course",
+     *         description="ID del curs",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Course deleted successfully"
+     *         description="Curs borrat correctament"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Course not found"
+     *         description="Curs no trobat"
      *     )
      * )
      */

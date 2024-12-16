@@ -6,6 +6,7 @@ import {
   DocumentTextIcon,
   UserGroupIcon,
   UsersIcon,
+  ArrowLeftStartOnRectangleIcon,
   ChatBubbleLeftRightIcon,
   HeartIcon,
   ChartBarIcon,
@@ -23,7 +24,8 @@ const navigation = [
   { name: 'Grupos', icon: UsersIcon, route: '/grupos' },
   { name: 'Comunicación', icon: ChatBubbleLeftRightIcon, route: '/comunicacion' },
   { name: 'Bienestar', icon: HeartIcon, route: '/bienestar' },
-  { name: 'Reportes', icon: ChartBarIcon, route: '/reportes' }
+  { name: 'Reportes', icon: ChartBarIcon, route: '/reportes' },
+  { name: 'Tancar sessió', icon: ArrowLeftStartOnRectangleIcon, route: '/tancar-sessio' }
 ]
 
 const navigateTo = (route) => {

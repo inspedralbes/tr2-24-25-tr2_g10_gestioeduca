@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'name',
-        'last_name',
         'email',
         'password',
         'role_id',
@@ -36,5 +39,13 @@ class User extends Model
     public function subjects()
     {
         return $this->belongsToMany(Subject::class);
+    }
+
+    public function answers() {
+        return $this-> hasMany(Answer::class);
+    }
+
+    public function divisions(){
+        return $this->belongsToMany(Division::class);
     }
 }

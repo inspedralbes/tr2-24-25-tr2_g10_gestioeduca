@@ -18,14 +18,12 @@ return new class extends Migration
                 $table->id();
                 $table->string('image')->nullable();
                 $table->string('name');
-                $table->string('last_name');
                 $table->string('email')->unique();
                 $table->string('password');
                 $table->timestamp('email_verified_at')->nullable();
                 $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
                 $table->rememberToken();
                 $table->timestamps();
-                $table->unique(['role_id']);
             });
         }
 
@@ -51,8 +49,3 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
-
-
-
-
-

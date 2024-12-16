@@ -19,4 +19,12 @@ class Course extends Model
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function divisions() {
+        return $this->belongsToMany(Division::class);
+    }
+
+    public function forms(){
+        return $this->belongsToMany(Form::class);
+    }
 }
