@@ -9,6 +9,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
     chown 1000:1000 .env # Asignar permisos correctos
     php artisan key:generate
+    touch /var/www/database/database.sqlite
 fi
 
 # Ejecutar migraciones
