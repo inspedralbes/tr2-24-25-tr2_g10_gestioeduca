@@ -9,6 +9,7 @@ const teachers = ref([]);
 const groupName = ref('');
 const groupDescription = ref('');
 const selectedCourse = ref(null); 
+const selectedDivisio = ref(null);
 const selectedStudents = ref([]);
 const totalStudents = ref(0);
 const groups = ref([]); 
@@ -54,6 +55,7 @@ const createGroup = () => {
     group_id: Date.now(), // ID único para el grupo (puedes ajustarlo según las necesidades)
     description: groupDescription.value || null,
     course: selectedCourse.value,
+    divisio: selectedDivisio.value,
     students: selectedStudents.value.map(student => ({
     student_id: student.id,
     name: student.name,
@@ -84,6 +86,7 @@ const resetForm = () => {
   groupName.value = '';
   groupDescription.value = '';
   selectedCourse.value = null;
+  selectedDivisio.value = null;
   selectedStudents.value = [];
 };
 
@@ -132,6 +135,14 @@ onMounted(async () => {
             <option value="2º ESO">2º ESO</option>
             <option value="3º ESO">3º ESO</option>
             <option value="4º ESO">4º ESO</option>
+          </select>
+          <!-- Seleccionar divisio -->
+          <select v-model="selectedDivisio" id="divisio" class="w-full p-2 border rounded mb-4">
+            <option disabled value="">Selecciona divisió</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
           </select>
         </div>
   
