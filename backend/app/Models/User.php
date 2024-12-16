@@ -40,4 +40,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function answers() {
+        return $this-> hasMany(Answer::class);
+    }
+
+    public function divisions(){
+        return $this->belongsToMany(Division::class);
+    }
 }
