@@ -21,7 +21,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return response()->json(Role::all(), 200);
+        $roles = Role::all();
+        return view('roles', compact('roles')); 
+        //return response()->json(Role::all(), 200);
     }
 
     /**
