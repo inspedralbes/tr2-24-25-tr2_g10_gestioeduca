@@ -8,7 +8,8 @@ class Form extends Model
 {
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'status'
     ];
 
     public function course() {
