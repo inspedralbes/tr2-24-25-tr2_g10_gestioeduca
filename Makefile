@@ -1,7 +1,7 @@
-LARAVEL_CONTAINER=dawtr2gx_g10_gestioeduca-backend-1
-MYSQL_CONTAINER=dawtr2gx_g10_gestioeduca-db-1
-VUE_CONTAINER=dawtr2gx_g10_gestioeduca-frontend-1
-ADMINER_CONTAINER=dawtr2gx_g10_gestioeduca-adminer-1
+LARAVEL_CONTAINER=laravel
+MYSQL_CONTAINER=mysql
+VUE_CONTAINER=vue
+ADMINER_CONTAINER=adminer
 
 RED    := \033[0;31m
 GREEN  := \033[0;32m
