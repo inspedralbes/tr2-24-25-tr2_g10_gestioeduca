@@ -36,6 +36,7 @@ Aquest projecte utilitza Docker per gestionar de manera senzilla els serveis del
 Aquest projecte utilitza swagger com a eina per documentar de manera visual les APIs creades. 
 
 Pots **veure tota la informació** fent docker compose up (comprova que laravel està en funcionament) i entras a **"localhost:8000/api/documentation"**
+![Laravel APIs Documentació](image.png)
 
 Proporcionem informació sobre:
 
