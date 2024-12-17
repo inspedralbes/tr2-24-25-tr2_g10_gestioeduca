@@ -8,7 +8,7 @@ Aleiram Minaya, Lucas Benitez, Araceli Pacheco, Joselyn Ninahuaman, Adrià Esté
 1. **Clona el projecte**
     ```bash
     git clone https://github.com/inspedralbes/DAWTR2GX_g10_gestioeduca.git
-## 🚀 Requisitos
+## 🚀 Requisits
 
 Abans de començar, assegura't de tenir instal·lat el següent component:
 
@@ -32,8 +32,34 @@ Aquest projecte utilitza Docker per gestionar de manera senzilla els serveis del
 
 ---
 
+## Documentació Laravel (APIs)
+Aquest projecte utilitza swagger com a eina per documentar de manera visual les APIs creades. 
+
+Pots **veure tota la informació** fent docker compose up (comprova que laravel està en funcionament) i entras a **"localhost:8000/api/documentation"**
+
+Proporcionem informació sobre:
+
+1. Totes les rutes existents
+2. Les taules utilitzades
+3. En quina ruta es realitza cada petició
+4. Requeriments al body (si es obligatori o no)
+5. Quin Schema has d'utilitzar al body
+    ```bash
+    {
+        "email": "adria@inspedralbes.cat",
+        "password": "password123",
+    }
+6. Tipus de petició (POST, GET, PUT, DELETE)
+7. Descripció de cada peticio
+8. Descripció de cada resposta amb el seu codi corresponent (200 = Exitós. 404 = No trobat...)
+9. Parametres necessaris per cada API en particular
+    ```bash
+    localhost:8000/api/courses/{id} #ID del curs sería un paràmetre obligatori.
+---
+
 # 📂 Estructura del projecte
 El projecte està dividit en dos directoris principals:
 
-- **Back/:** Conté el codi i els serveis per al backend.
-- **Front/:** Conté el codi i els serveis per al frontend + Nodejs.
+- **Back/:** Conté el codi i els serveis per al backend (laravel / nodejs).
+- **Back/node-app:** Conte el nodejs dins del back
+- **Front/:** Conté el codi i els serveis per al frontend.
