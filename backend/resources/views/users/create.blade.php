@@ -4,8 +4,7 @@
 <div class="container">
     <h1>Create New User</h1>
     <form action="{{ route('users.store') }}" method="POST">
-        @csrf  <!-- Este campo es obligatorio para la protección CSRF -->
-
+        @csrf
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>

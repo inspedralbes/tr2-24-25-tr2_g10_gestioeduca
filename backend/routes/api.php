@@ -19,8 +19,6 @@ Route::resource('courses', CourseController::class);
 Route::resource('subjects', SubjectController::class);
 
 //CRUD USERSS
-
-
 Route::resource('users', UserController::class)->names([
     'index' => 'users.index',
     'create' => 'users.create',
@@ -30,6 +28,8 @@ Route::resource('users', UserController::class)->names([
     'update' => 'users.update',
     'destroy' => 'users.destroy'
 ]);
+
+
 Route::resource('divisions', DivisionController::class);
 Route::resource('forms', FormController::class);
 Route::resource('questions', QuestionController::class);
