@@ -46,6 +46,7 @@ import {
   HomeIcon,
   UserGroupIcon,
   DocumentTextIcon,
+  ArrowLeftStartOnRectangleIcon
 } from '@heroicons/vue/24/outline'
 
 // Información del usuario
@@ -64,6 +65,7 @@ const menuItems = [
   { name: 'Dashboard', path: '/student/dashboard', icon: HomeIcon },
   { name: 'Mi Grupo', path: '/student/group', icon: UserGroupIcon },
   { name: 'Formularios', path: '/student/forms', icon: DocumentTextIcon },
+  { name: 'Tancar Sessió', path: '/tancar-sessio', icon: ArrowLeftStartOnRectangleIcon },
 ]
 
 // Estado del menú móvil
