@@ -32,11 +32,6 @@ const router = createRouter({
           component: () => import('@/components/student/StudentHome.vue')
         },
         {
-          path: 'subjects',
-          name: 'studentSubjects',
-          component: () => import('@/components/student/StudentSubjects.vue')
-        },
-        {
           path: 'group',
           name: 'studentGroup',
           component: () => import('@/components/student/StudentGroup.vue')

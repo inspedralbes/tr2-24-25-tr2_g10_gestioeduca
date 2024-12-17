@@ -19,7 +19,6 @@
             </span>
           </div>
           <div class="mt-3 flex justify-between items-center">
-            <span class="text-sm text-gray-500">Fecha límite: {{ form.dueDate }}</span>
             <button class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">
               Completar
             </button>
@@ -37,7 +36,6 @@
       description: 'Formulario para evaluar el contenido y metodología',
       urgency: 'Urgente',
       urgencyColor: 'bg-red-100 text-red-800',
-      dueDate: '20 Mayo'
     },
     {
       id: 2,
@@ -45,7 +43,6 @@
       description: 'Comparte tu opinión sobre las instalaciones',
       urgency: 'Normal',
       urgencyColor: 'bg-blue-100 text-blue-800',
-      dueDate: '25 Mayo'
     },
     {
       id: 3,
@@ -53,7 +50,6 @@
       description: 'Reflexiona sobre tu desempeño',
       urgency: 'Próximo',
       urgencyColor: 'bg-green-100 text-green-800',
-      dueDate: '30 Mayo'
     }
   ];
   </script>

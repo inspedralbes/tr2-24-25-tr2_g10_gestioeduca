@@ -15,21 +15,6 @@
       <h2 class="text-2xl font-bold text-gray-800">{{ studentName }}</h2>
       <p class="text-gray-600">{{ studentClass }}</p>
       <p class="text-gray-500 text-sm">{{ studentEmail }}</p>
-      
-      <div class="mt-4 grid grid-cols-3 gap-4 w-full">
-        <div class="text-center p-3 bg-primary/10 rounded-lg">
-          <p class="font-semibold text-primary">98%</p>
-          <p class="text-sm text-gray-600">Asistencia</p>
-        </div>
-        <div class="text-center p-3 bg-green-100 rounded-lg">
-          <p class="font-semibold text-green-600">8.5</p>
-          <p class="text-sm text-gray-600">Promedio</p>
-        </div>
-        <div class="text-center p-3 bg-purple-100 rounded-lg">
-          <p class="font-semibold text-purple-600">5</p>
-          <p class="text-sm text-gray-600">Grupos</p>
-        </div>
-      </div>
     </div>
   </div>
 </template>

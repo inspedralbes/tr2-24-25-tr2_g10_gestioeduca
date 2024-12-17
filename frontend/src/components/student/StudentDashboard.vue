@@ -44,7 +44,6 @@
 import { ref, computed, onMounted } from 'vue'
 import {
   HomeIcon,
-  BookOpenIcon,
   UserGroupIcon,
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
@@ -63,7 +62,6 @@ const userInitials = computed(() => {
 // Elementos del menú
 const menuItems = [
   { name: 'Dashboard', path: '/student/dashboard', icon: HomeIcon },
-  { name: 'Materias', path: '/student/subjects', icon: BookOpenIcon },
   { name: 'Mi Grupo', path: '/student/group', icon: UserGroupIcon },
   { name: 'Formularios', path: '/student/forms', icon: DocumentTextIcon },
 ]
