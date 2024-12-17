@@ -9,8 +9,6 @@ import FormResponses from '@/views/Forms/FormResponses.vue';
 import StudentList from '../views/Students/StudentList.vue'
 import StudentProfile from '../views/Students/StudentProfile.vue'
 import CreateForm from '@/views/CreateForm.vue';
-import BrainView from '@/views/BrainView.vue';
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,7 +51,7 @@ const router = createRouter({
     {
       path: '/brain',
       name: 'brain',
-      components: BrainView,
+      component: () => import('@/components/Brain/ChatInterface.vue'),
     },
     {
       path: '/student',
