@@ -20,6 +20,151 @@
         }
     ],
     "paths": {
+        "/api/answers": {
+            "get": {
+                "tags": [
+                    "Respostes"
+                ],
+                "summary": "Llistar totes les respostes",
+                "operationId": "6ffc73781e9ca17d5917d27e50145b6b",
+                "responses": {
+                    "200": {
+                        "description": "Llista de respostes obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Respostes"
+                ],
+                "summary": "Crear una nova resposta",
+                "operationId": "a1aa30cc6ce16b56a43129192929677d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "answer"
+                                ],
+                                "properties": {
+                                    "answer": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Aquesta és una resposta d'exemple."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resposta creada correctament"
+                    },
+                    "422": {
+                        "description": "Error de validació"
+                    }
+                }
+            }
+        },
+        "/api/answers/{id}": {
+            "get": {
+                "tags": [
+                    "Respostes"
+                ],
+                "summary": "Obtenir una resposta específica per ID",
+                "operationId": "9fbab7e05c455ae2d2b0f94968eef7e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la resposta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dades de la resposta"
+                    },
+                    "404": {
+                        "description": "Resposta no trobada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Respostes"
+                ],
+                "summary": "Actualitzar una resposta existent",
+                "operationId": "6cd32a0872c0ac2e5268cf6e82478b47",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la resposta a actualitzar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "answer": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Text de la resposta actualitzada."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resposta actualitzada correctament"
+                    },
+                    "400": {
+                        "description": "Error de validació"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Respostes"
+                ],
+                "summary": "Eliminar una resposta",
+                "operationId": "e173b1afc518f767162047993b50f321",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la resposta a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Resposta eliminada correctament"
+                    },
+                    "404": {
+                        "description": "Resposta no trobada"
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -225,6 +370,646 @@
                     },
                     "404": {
                         "description": "Curs no trobat"
+                    }
+                }
+            }
+        },
+        "/api/divisions": {
+            "get": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Llistar totes les divisions",
+                "operationId": "50e6486e19fd3378a07526a29416537b",
+                "responses": {
+                    "200": {
+                        "description": "Llista de divisions obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Crear una nova divisió",
+                "operationId": "10f2905b9762df55784172225492f9f5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "division"
+                                ],
+                                "properties": {
+                                    "division": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Divisió d'exemple"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Divisió creada correctament"
+                    },
+                    "422": {
+                        "description": "Error de validació"
+                    }
+                }
+            }
+        },
+        "/api/divisions/{id}": {
+            "get": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Obtenir una divisió específica per ID",
+                "operationId": "e20c07f74f99f6bb20ac901ecbfc2b27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la divisió",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dades de la divisió"
+                    },
+                    "404": {
+                        "description": "Divisió no trobada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Actualitzar una divisió existent",
+                "operationId": "1b05ba1b51bfb0699552c30b186c5ecb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la divisió a actualitzar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "division": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Divisió actualitzada"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Divisió actualitzada correctament"
+                    },
+                    "400": {
+                        "description": "Error de validació"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Eliminar una divisió",
+                "operationId": "d446cb987c6337b93d242acc288453e5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la divisió a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Divisió eliminada correctament"
+                    },
+                    "404": {
+                        "description": "Divisió no trobada"
+                    }
+                }
+            }
+        },
+        "/api/forms/{formId}/questions-and-answers": {
+            "get": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Obtenir preguntes i respostes d'un formulari",
+                "operationId": "66c794752e43f66ca91ba300257b466a",
+                "parameters": [
+                    {
+                        "name": "formId",
+                        "in": "path",
+                        "description": "ID del formulari",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Preguntes i respostes obtingudes correctament"
+                    },
+                    "404": {
+                        "description": "Formulari no trobat"
+                    }
+                }
+            }
+        },
+        "/api/forms": {
+            "get": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Llistar tots els formularis",
+                "operationId": "f3b25f912126359aa20da08d3e875714",
+                "responses": {
+                    "200": {
+                        "description": "Llista de formularis obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Crear un nou formulari",
+                "operationId": "6cd3f97447c1b326d440894389e4459e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Formulari d'exemple"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Formulari creat correctament"
+                    },
+                    "422": {
+                        "description": "Error de validació"
+                    }
+                }
+            }
+        },
+        "/api/forms/{id}": {
+            "get": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Obtenir un formulari específic per ID",
+                "operationId": "17035b81e30778da2bcbbaa959fef9b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del formulari",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dades del formulari"
+                    },
+                    "404": {
+                        "description": "Formulari no trobat"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Actualitzar un formulari existent",
+                "operationId": "f229471e4a4f98827ba74d73e236ebb5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del formulari a actualitzar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Títol actualitzat"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Formulari actualitzat correctament"
+                    },
+                    "400": {
+                        "description": "Error de validació"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Forms"
+                ],
+                "summary": "Eliminar un formulari",
+                "operationId": "e9712e2f46a318b3438714b125cd518f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del formulari a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Formulari eliminat correctament"
+                    },
+                    "404": {
+                        "description": "Formulari no trobat"
+                    }
+                }
+            }
+        },
+        "/api/groups": {
+            "get": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Llistar tots els grups",
+                "operationId": "f286cbf34dc4be32a94459a335658168",
+                "responses": {
+                    "200": {
+                        "description": "Llista de grups obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Crear un nou grup",
+                "operationId": "74e9878763e20c38ae5c9930b8d2d3f6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "number_of_students"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Grup A"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Grup de matemàtiques",
+                                        "nullable": true
+                                    },
+                                    "number_of_students": {
+                                        "type": "integer",
+                                        "example": 25
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Grup creat correctament"
+                    },
+                    "422": {
+                        "description": "Error de validació"
+                    }
+                }
+            }
+        },
+        "/api/groups/{id}": {
+            "get": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Obtenir un grup específic per ID",
+                "operationId": "38a1f4990d0dc69ead7f7377ad016117",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del grup",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dades del grup"
+                    },
+                    "404": {
+                        "description": "Grup no trobat"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Actualitzar un grup existent",
+                "operationId": "f6aca8def1d24d74f3f6bdc6fda8d84e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del grup a actualitzar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "number_of_students"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Grup actualitzat"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Descripció actualitzada",
+                                        "nullable": true
+                                    },
+                                    "number_of_students": {
+                                        "type": "integer",
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Grup actualitzat correctament"
+                    },
+                    "404": {
+                        "description": "Grup no trobat"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Eliminar un grup",
+                "operationId": "8c693e934c350f47618655bc71886930",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del grup a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Grup eliminat correctament"
+                    },
+                    "404": {
+                        "description": "Grup no trobat"
+                    }
+                }
+            }
+        },
+        "/api/questions": {
+            "get": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Llistar totes les preguntes",
+                "operationId": "e64d3c7a745fc05662a4a1e1eb3d96ab",
+                "responses": {
+                    "200": {
+                        "description": "Llista de preguntes obtinguda correctament"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Crear una nova pregunta",
+                "operationId": "788d85763184ddf1b557afb040547f32",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "question"
+                                ],
+                                "properties": {
+                                    "question": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Quina és la teva resposta?"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pregunta creada correctament"
+                    },
+                    "422": {
+                        "description": "Error de validació"
+                    }
+                }
+            }
+        },
+        "/api/questions/{id}": {
+            "get": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Obtenir una pregunta específica",
+                "operationId": "bea45702e58c27163e9dc928d8984dfa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la pregunta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dades de la pregunta"
+                    },
+                    "404": {
+                        "description": "Pregunta no trobada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Actualitzar una pregunta existent",
+                "operationId": "795b02e5ecdc23fd74f20e0671a40f8c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la pregunta a actualitzar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "question": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Pregunta actualitzada"
+                                    },
+                                    "form_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pregunta actualitzada correctament"
+                    },
+                    "400": {
+                        "description": "Error de validació"
+                    },
+                    "404": {
+                        "description": "Pregunta no trobada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Eliminar una pregunta",
+                "operationId": "b2cbd34337a604c75c8a94f1a6e2f252",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la pregunta a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Pregunta eliminada correctament"
+                    },
+                    "404": {
+                        "description": "Pregunta no trobada"
                     }
                 }
             }
@@ -744,6 +1529,26 @@
         }
     },
     "tags": [
+        {
+            "name": "Respostes",
+            "description": "Endpoints per gestionar les respostes"
+        },
+        {
+            "name": "Divisions",
+            "description": "Endpoints per gestionar les divisions"
+        },
+        {
+            "name": "Forms",
+            "description": "Endpoints per gestionar els formularis"
+        },
+        {
+            "name": "Groups",
+            "description": "Endpoints per gestionar grups d'estudiants"
+        },
+        {
+            "name": "Questions",
+            "description": "Endpoints per gestionar preguntes"
+        },
         {
             "name": "Authentication",
             "description": "Authentication"
