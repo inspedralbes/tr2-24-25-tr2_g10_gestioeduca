@@ -17,7 +17,19 @@ use Illuminate\Auth\Events\Authenticated;
 Route::resource('roles', RoleController::class);
 Route::resource('courses', CourseController::class);
 Route::resource('subjects', SubjectController::class);
-Route::resource('users', UserController::class);
+
+//CRUD USERSS
+
+
+Route::resource('users', UserController::class)->names([
+    'index' => 'users.index',
+    'create' => 'users.create',
+    'store' => 'users.store',
+    'show' => 'users.show',
+    'edit' => 'users.edit',
+    'update' => 'users.update',
+    'destroy' => 'users.destroy'
+]);
 Route::resource('divisions', DivisionController::class);
 Route::resource('forms', FormController::class);
 Route::resource('questions', QuestionController::class);
@@ -25,6 +37,7 @@ Route::resource('answers', AnswerController::class);
 
 // ruta para pedir todas las preguntas y respuestas de un formulario
 Route::get('forms/{formId}/questions', [FormController::class, 'getQuestionsAndAnswers']);
+
 
 
 

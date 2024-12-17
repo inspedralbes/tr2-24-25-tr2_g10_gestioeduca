@@ -10,11 +10,23 @@ const teachers = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/users');
-    if (!response.ok) throw new Error('Error dades.');
+    // Realizar la solicitud fetch a la API
+    const response = await fetch('http://localhost:8000/api/users', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json', // Asegúrate de aceptar respuestas JSON
+      },
+    });
+
+    // Comprobar si la respuesta es exitosa
+    if (!response.ok) {
+      throw new Error('Error obteniendo los datos.');
+    }
+
+    // Parsear la respuesta JSON
     teachers.value = await response.json();
   } catch (error) {
-    console.error(error);
+    console.error('Error:', error);
   } finally {
     isLoading.value = false;
   }
@@ -51,7 +63,7 @@ const getInitials = (name, surname) => {
               <div
           class="flex items-center justify-center w-10 h-10 bg-blue-500 text-white text-lg font-semibold rounded-full"
               >
-          {{ getInitials(teacher.name, teacher.last_name) }}
+            <img :src=teacher.image alt="">
               </div>
               <div class="text-center">
           <h3 class="text-base font-semibold text-gray-900">{{ teacher.name }} {{ teacher.last_name }}</h3>

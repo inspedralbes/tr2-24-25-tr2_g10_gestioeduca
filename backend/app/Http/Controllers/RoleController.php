@@ -128,6 +128,8 @@ class RoleController extends Controller
         return response()->json($role, 200);
     }
 
+    
+
     /**
      * @OA\Delete(
      *     path="/api/roles/{id}",
