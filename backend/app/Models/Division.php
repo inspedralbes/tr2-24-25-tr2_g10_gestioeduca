@@ -10,15 +10,22 @@ class Division extends Model
         'division'
     ];
 
-    public function courses() {
+    public function courses()
+    {
         return $this->belongsToMany(Course::class);
     }
 
-    public function forms() {
+    public function forms()
+    {
         return $this->belongsToMany(Form::class);
     }
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class);
+    }
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
     }
 }
