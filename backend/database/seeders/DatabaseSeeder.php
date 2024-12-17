@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Answer;
 use App\Models\Division;
+use App\Models\Group;
 use App\Models\Question;
 use Illuminate\Database\Seeder;
 use Laravel\Prompts\FormStep;
@@ -30,8 +31,11 @@ class DatabaseSeeder extends Seeder
             FormSeeder::class,
             QuestionSeeder::class,
             AnswerSeeder::class,
-
-
+            GroupSeeder::class,
+            GroupDivisionSeeder::class,
+            GroupUserSeeder::class,
+            GroupSubjectSeeder::class,
+            GroupCourseSeeder::class,
         ]);
     }
 }

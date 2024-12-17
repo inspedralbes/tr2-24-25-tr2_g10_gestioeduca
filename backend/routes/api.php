@@ -13,6 +13,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\RegisteredUserController;
 use Illuminate\Auth\Events\Authenticated;
+use App\Http\Controllers\GroupController;
 
 Route::resource('roles', RoleController::class);
 Route::resource('courses', CourseController::class);
@@ -22,7 +23,7 @@ Route::resource('divisions', DivisionController::class);
 Route::resource('forms', FormController::class);
 Route::resource('questions', QuestionController::class);
 Route::resource('answers', AnswerController::class);
-
+Route::resource('groups', GroupController::class);
 // ruta para pedir todas las preguntas y respuestas de un formulario
 Route::get('forms/{formId}/questions', [FormController::class, 'getQuestionsAndAnswers']);
 

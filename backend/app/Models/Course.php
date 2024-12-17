@@ -20,11 +20,17 @@ class Course extends Model
         return $this->belongsToMany(Subject::class);
     }
 
-    public function divisions() {
+    public function divisions()
+    {
         return $this->belongsToMany(Division::class);
     }
 
-    public function forms(){
+    public function forms()
+    {
         return $this->belongsToMany(Form::class);
+    }
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
     }
 }
