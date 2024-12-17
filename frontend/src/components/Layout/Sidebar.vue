@@ -11,7 +11,8 @@ import {
   HeartIcon,
   ChartBarIcon,
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  SparklesIcon
 } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
@@ -23,9 +24,7 @@ const navigation = [
   { name: 'Alumnos', icon: UserGroupIcon, route: '/alumnos' },
   { name: 'Grupos', icon: UsersIcon, route: '/grupos' },
   { name: 'Comunicación', icon: ChatBubbleLeftRightIcon, route: '/comunicacion' },
-  { name: 'Bienestar', icon: HeartIcon, route: '/bienestar' },
-  { name: 'Reportes', icon: ChartBarIcon, route: '/reportes' },
-  { name: 'Brain', icon: ChartBarIcon, route: '/brain' },
+  { name: 'Brain', icon: SparklesIcon, route: '/brain' },
   { name: 'Tancar sessió', icon: ArrowLeftStartOnRectangleIcon, route: '/tancar-sessio' }
 ]
 
