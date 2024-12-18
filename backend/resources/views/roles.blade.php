@@ -4,43 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Roles</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">Gestión de Roles</h1>
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold mb-6">Gestión de Roles</h1>
 
     <!-- Mostrar mensajes de éxito -->
     <?php if (session('success')): ?>
-        <div class="alert alert-success">
+        <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
             <?php echo session('success'); ?>
         </div>
     <?php endif; ?>
 
     <!-- Listado de roles -->
-    <h2>Lista de Roles</h2>
-    <table class="table table-bordered">
-        <thead>
+    <h2 class="text-2xl font-semibold mb-4">Lista de Roles</h2>
+    <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead class="bg-gray-100">
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
+                <th class="border border-gray-300 px-4 py-2">ID</th>
+                <th class="border border-gray-300 px-4 py-2">Nombre</th>
+                <th class="border border-gray-300 px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($roles as $role): ?>
                 <tr>
-                    <td><?php echo $role->id; ?></td>
-                    <td><?php echo $role->name; ?></td>
-                    <td>
+                    <td class="border border-gray-300 px-4 py-2"><?php echo $role->id; ?></td>
+                    <td class="border border-gray-300 px-4 py-2"><?php echo $role->name; ?></td>
+                    <td class="border border-gray-300 px-4 py-2">
                         <!-- Botón para Editar -->
-                        <button class="btn btn-warning btn-sm" onclick="editRole(<?php echo htmlspecialchars(json_encode($role)); ?>)">Editar</button>
+                        <a href="<?php echo route('roles.index', ['edit' => $role->id]); ?>" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Editar</a>
 
                         <!-- Formulario para Eliminar -->
-                        <form action="<?php echo route('roles.destroy', $role->id); ?>" method="POST" style="display:inline-block;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este rol?');">
+                        <form action="<?php echo route('roles.destroy', $role->id); ?>" method="POST" class="inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <?php echo csrf_field(); ?>
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -48,66 +48,34 @@
         </tbody>
     </table>
 
-    <!-- Formulario para Crear Nuevo Rol -->
-    <h2 id="create-form-title" style="display: none;">Crear Nuevo Rol</h2>
-    <form id="create-role-form" action="{{ route('roles.store') }}" method="POST" style="display: none;">
-        @csrf
+    <!-- Formulario para Crear o Editar Roles -->
+    <h2 class="text-2xl font-semibold mt-8 mb-4">
+        <?php echo isset($_GET['edit']) ? 'Editar Rol' : 'Crear Nuevo Rol'; ?>
+    </h2>
+    <form action="<?php echo isset($_GET['edit']) ? route('roles.update', $_GET['edit']) : route('roles.store'); ?>" method="POST" class="bg-gray-100 p-6 rounded shadow-md">
+        <?php if (isset($_GET['edit'])): ?>
+            <input type="hidden" name="_method" value="PUT">
+        <?php endif; ?>
+        <?php echo csrf_field(); ?>
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre del Rol</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-medium">Nombre del Rol</label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                value="<?php echo isset($_GET['edit']) ? htmlspecialchars($roles->firstWhere('id', $_GET['edit'])->name) : ''; ?>" 
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500" 
+                required>
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            <?php echo isset($_GET['edit']) ? 'Actualizar' : 'Guardar'; ?>
+        </button>
+        <?php if (isset($_GET['edit'])): ?>
+            <a href="<?php echo route('roles.index'); ?>" class="ml-2 text-gray-500 hover:underline">Cancelar</a>
+        <?php endif; ?>
     </form>
-
-    <!-- Formulario para Editar Rol -->
-    <h2 id="edit-form-title" style="display: none;">Editar Rol</h2>
-    <form id="edit-role-form" action="{{ route('roles.update', 'role_id') }}" method="POST" style="display: none;">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre del Rol</label>
-            <input type="text" class="form-control" id="edit-name" name="name" required>
-        </div>
-
-        <button type="submit" class="btn btn-success">Actualizar</button>
-    </form>
-
 </div>
-
-<!-- Script para manejar el formulario dinámico -->
-<script>
-    function editRole(role) {
-        // Ocultar formulario de creación y mostrar formulario de edición
-        document.getElementById('create-role-form').style.display = 'none';
-        document.getElementById('create-form-title').style.display = 'none';
-
-        document.getElementById('edit-role-form').style.display = 'block';
-        document.getElementById('edit-form-title').style.display = 'block';
-
-        // Llenar el formulario de edición con los datos del rol
-        document.getElementById('edit-name').value = role.name;
-
-        // Actualizar la acción del formulario con la URL del rol correspondiente
-        const editForm = document.getElementById('edit-role-form');
-        editForm.action = `{{ url('roles') }}/${role.id}`;
-    }
-
-    // Función para mostrar el formulario de creación
-    function showCreateForm() {
-        // Ocultar formulario de edición y mostrar formulario de creación
-        document.getElementById('edit-role-form').style.display = 'none';
-        document.getElementById('edit-form-title').style.display = 'none';
-
-        document.getElementById('create-role-form').style.display = 'block';
-        document.getElementById('create-form-title').style.display = 'block';
-    }
-
-    // Mostrar el formulario de creación cuando se carga la página
-    window.onload = showCreateForm;
-</script>
-
 </body>
 </html>
