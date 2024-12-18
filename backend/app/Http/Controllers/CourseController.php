@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -18,10 +19,15 @@ class CourseController extends Controller
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::orderBy('name')->get();
-        return response()->json($courses);
+        $courses = Course::all();
+
+        if ($request->expectsJson()) {
+            return response()->json($courses, 200);
+        }
+
+        return view('courses', compact('courses'));
     }
 
     /**
@@ -48,13 +54,26 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->expectsJson()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $course = Course::create($validator->validated());
+            return response()->json($course, 201);
+        }
+
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
         ]);
 
-        $course = Course::create($validatedData);
+        Course::create($validatedData);
 
-        return response()->json($course, 201);
+        return redirect()->route('courses.index')->with('success', 'Curso creado exitosamente');
     }
 
     /**
@@ -72,11 +91,14 @@ class CourseController extends Controller
      *     )
      * )
      */
-    public function show(Course $course)
+    public function show(Request $request, Course $course)
     {
-        return response()->json($course);
-    }
+        if ($request->expectsJson()) {
+            return response()->json($course, 200);
+        }
 
+        return view('courses.show', compact('course'));
+    }
     /**
      * @OA\Put(
      *     path="/api/courses/{id}",
@@ -109,13 +131,26 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
+        if ($request->expectsJson()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $course->update($validator->validated());
+            return response()->json($course, 200);
+        }
+
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255'
+            'name' => 'required|string|max:255',
         ]);
 
         $course->update($validatedData);
 
-        return response()->json($course);
+        return redirect()->route('courses.index')->with('success', 'Curso actualizado exitosamente');
     }
 
     /**
@@ -140,9 +175,14 @@ class CourseController extends Controller
      *     )
      * )
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request, Course $course)
     {
         $course->delete();
-        return response()->json(null, 204);
+
+        if ($request->expectsJson()) {
+            return response()->json(null, 204);
+        }
+
+        return redirect()->route('courses.index')->with('success', 'Curso eliminado exitosamente');
     }
 }
