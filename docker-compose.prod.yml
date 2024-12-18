@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.2.0
+    container_name: mysql_prod
+    ports:
+      - "20001:3306"  # Puerto para MySQL en el rango permitido
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword  # Usa contraseñas seguras
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: securepassword
+
+  adminer:
+    image: adminer
+    container_name: adminer_prod
+    depends_on:
+      - db
+    ports:
+      - "20002:8080"  # Puerto para Adminer en producción
+
+  backend:
+    build:
+      context: ./backend
+    dockerfile: Dockerfile
+    container_name: laravel_prod
+    ports:
+      - "20003:8000"  # Puerto para Laravel en producción
+    volumes:
+      - ./backend:/var/www/
+    working_dir: /var/www/
+    depends_on:
+      - db
+    command: bash -c "chmod +x entrypoint.sh && ./entrypoint.sh"
+
+  frontend:
+    build:
+      context: ./frontend
+    dockerfile: Dockerfile
+    container_name: vue_prod
+    ports:
+      - "20004:5173"  # Puerto para Vue en producción
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=production
+    command: sh -c "npm install && npm run build && npm run preview -- --host"
+
+  nodejs:
+    image: node:18
+    container_name: nodejs_prod
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend/node-app:/usr/src/app
+    ports:
+      - "20005:3000"  # Puerto para Node.js en producción
+    command: bash -c "npm install && npm start"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
