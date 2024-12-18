@@ -1,7 +1,7 @@
-LARAVEL_CONTAINER=dawtr2gx_g10_gestioeduca-backend-1
-MYSQL_CONTAINER=dawtr2gx_g10_gestioeduca-db-1
-VUE_CONTAINER=dawtr2gx_g10_gestioeduca-frontend-1
-ADMINER_CONTAINER=dawtr2gx_g10_gestioeduca-adminer-1
+LARAVEL_CONTAINER=laravel
+MYSQL_CONTAINER=mysql
+VUE_CONTAINER=vue
+ADMINER_CONTAINER=adminer
 
 RED    := \033[0;31m
 GREEN  := \033[0;32m
@@ -17,6 +17,12 @@ help:
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+laravel: ## Accedir al contenidor Laravel
+	docker exec -it $(LARAVEL_CONTAINER) bash
+
+vue: ## Accedir al contenidor Vue
+	docker exec -it $(VUE_CONTAINER) sh
+
 migrate: ## Migrate dins del contenidor laravel
 	docker exec -it $(LARAVEL_CONTAINER) php artisan migrate:fresh
 	docker restart $(LARAVEL_CONTAINER)
@@ -30,6 +36,12 @@ seed: ## Migrate seeders
 close: ## Tancar tot i eliminar les docker images que no utilitzas.
 	docker compose down
 	docker image prune -a
+
+dist:
+	docker exec -it $(VUE_CONTAINER) npm run build
+
+swagger:
+	docker exec -it $(LARAVEL_CONTAINER) php artisan l5-swagger:generate
 
 show:
 	@echo "$(CYAN)==> Listando todos los contenedores (activos e inactivos):$(RESET)"

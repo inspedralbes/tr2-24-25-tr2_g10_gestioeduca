@@ -2,11 +2,7 @@ services:
   db:
     image: mysql:8.2.0
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: gestioeduca
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
+    container_name: mysql
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -15,6 +11,7 @@ services:
   adminer:
     image: adminer
     restart: always
+    container_name: adminer
     depends_on:
       - db
     ports:
@@ -24,8 +21,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: laravel
     ports:
-      - "8000:8000"
+      - "8000:8000" 
     volumes:
       - ./backend:/var/www/
     working_dir: /var/www/
@@ -38,15 +36,15 @@ services:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
+    container_name: vue
     ports:
-      - "5173:5173" # Puerto para Vue.js
+      - "5173:5173"
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=development
     restart: unless-stopped
-    command: npm run dev -- --host
+    command: sh -c "npm install && npm run dev -- --host"
 
   nodejs:
     image: node:18
@@ -56,11 +54,12 @@ services:
       - ./backend/node-app:/usr/src/app
     ports:
       - "3000:3000"
-    command: npm install && npm start
+    command: bash -c "npm install && npm start"
     environment:
       - NODE_ENV=development
     depends_on:
       - db
+
 
 # Persistencia
 volumes:
