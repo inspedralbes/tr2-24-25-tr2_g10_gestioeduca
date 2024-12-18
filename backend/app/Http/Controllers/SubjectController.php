@@ -22,7 +22,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        return response()->json($subjects, 200);
+        return view('subjects', compact('subjects'));  // Mostrar vista con lista de asignaturas
     }
 
     /**
@@ -47,17 +47,15 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        // Crear nueva asignatura
+        $subject = Subject::create($validatedData);
 
-        $subject = Subject::create($request->all());
-        return response()->json($subject, 201);
+        return redirect()->route('subjects.index')->with('success', 'Asignatura creada correctamente');
     }
 
     /**
@@ -87,10 +85,10 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         if (is_null($subject)) {
-            return response()->json(['message' => 'Subject not found'], 404);
+            return redirect()->route('subjects.index')->with('error', 'Asignatura no encontrada');
         }
 
-        return response()->json($subject, 200);
+        return view('subjects.show', compact('subject'));  // Vista para mostrar asignatura
     }
 
     /**
@@ -129,20 +127,18 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         if (is_null($subject)) {
-            return response()->json(['message' => 'Subject not found'], 404);
+            return redirect()->route('subjects.index')->with('error', 'Asignatura no encontrada');
         }
 
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        // Actualizar asignatura
+        $subject->update($validatedData);
 
-        $subject->update($request->all());
-        return response()->json($subject, 200);
+        return redirect()->route('subjects.index')->with('success', 'Asignatura actualizada correctamente');
     }
 
     /**
@@ -172,10 +168,11 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         if (is_null($subject)) {
-            return response()->json(['message' => 'Subject not found'], 404);
+            return redirect()->route('subjects.index')->with('error', 'Asignatura no encontrada');
         }
 
+        // Eliminar asignatura
         $subject->delete();
-        return response()->json(null, 204);
+        return redirect()->route('subjects.index')->with('success', 'Asignatura eliminada correctamente');
     }
 }
