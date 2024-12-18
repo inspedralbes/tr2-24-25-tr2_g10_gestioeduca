@@ -36,13 +36,13 @@ export default {
       grades: [
         {
           title: 'ESO',
-          image: '../../../public/img/eso.jpg',
+          image: '/img/eso.jpg',
           description: 'Descripción del primer grado educativo.',
           details: ['1º ESO', '2º ESO', '3º ESO', '4º ESO']
         },
         {
           title: 'Bachillerato',
-          image: '../../../public/img/bachillerato.jpg',
+          image: '/img/bachillerato.jpg',
           description: 'El Bachillerato es la etapa de la educación secundaria posobligatoria que tiene por finalidad proporcionar al alumnado:',
           details: ['Formación', 'Madurez (intelectual y humana)', 'Conocimientos', 'Destrezas']
         }

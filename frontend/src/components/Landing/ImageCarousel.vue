@@ -23,12 +23,12 @@ export default {
   data() {
     return {
       images: [
-        { url: './../../public/img/logo1.jpg', alt: 'Image 1' },
-        { url: './../../public/img/logo2.png', alt: 'Image 2' },
-        { url: './../../public/img/logo3.png', alt: 'Image 3' },
-        { url: './../../public/img/logo4.jpg', alt: 'Image 4' },
-        { url: './../../public/img/logo5.jpg', alt: 'Image 5' },
-        { url: './../../public/img/logo6.jpg', alt: 'Image 6' }
+        { url: '/img/logo1.jpg', alt: 'Image 1' },
+        { url: '/img/logo2.png', alt: 'Image 2' },
+        { url: '/img/logo3.png', alt: 'Image 3' },
+        { url: '/img/logo4.jpg', alt: 'Image 4' },
+        { url: '/img/logo5.jpg', alt: 'Image 5' },
+        { url: '/img/logo6.jpg', alt: 'Image 6' }
       ]
     }
   },

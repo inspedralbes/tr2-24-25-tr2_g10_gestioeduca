@@ -43,15 +43,15 @@ export default {
     return {
       images: [
         {
-          url: '../../../public/img/img1.jpg',
+          url: '/img/img1.jpg',
           alt: 'Dashboard'
         },
         {
-          url: '../../../public/img/img2.jpg',
+          url: '/img/img2.jpg',
           alt: 'Students'
         },
         {
-          url: '../../../public/img/img3.jpg',
+          url: '/img/img3.jpg',
           alt: 'Analytics'
         }
       ]
