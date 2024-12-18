@@ -24,7 +24,6 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -33,13 +32,12 @@
                 <tr>
                     <td><?php echo $role->id; ?></td>
                     <td><?php echo $role->name; ?></td>
-                    <td><?php echo $role->description; ?></td>
                     <td>
                         <!-- Botón para Editar -->
                         <button class="btn btn-warning btn-sm" onclick="editRole(<?php echo htmlspecialchars(json_encode($role)); ?>)">Editar</button>
 
                         <!-- Formulario para Eliminar -->
-                        <form action="<?php echo route('roles.destroy', $role->id); ?>" method="POST" style="display:inline-block;">
+                        <form action="<?php echo route('roles.destroy', $role->id); ?>" method="POST" style="display:inline-block;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este rol?');">
                             <input type="hidden" name="_method" value="DELETE">
                             <?php echo csrf_field(); ?>
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -50,67 +48,66 @@
         </tbody>
     </table>
 
-    <!-- Formulario para Crear/Editar Roles -->
-    <h2 id="form-title">Crear Nuevo Rol</h2>
-    <form id="role-form" action="<?php echo route('roles.store'); ?>" method="POST">
-        <?php echo csrf_field(); ?>
-        <input type="hidden" id="role-id" name="id">
+    <!-- Formulario para Crear Nuevo Rol -->
+    <h2 id="create-form-title" style="display: none;">Crear Nuevo Rol</h2>
+    <form id="create-role-form" action="{{ route('roles.store') }}" method="POST" style="display: none;">
+        @csrf
 
         <div class="mb-3">
             <label for="name" class="form-label">Nombre del Rol</label>
-            <input type="text" id="name" name="name" class="form-control" required>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
 
-        <div class="mb-3">
-            <label for="description" class="form-label">Descripción</label>
-            <textarea id="description" name="description" class="form-control"></textarea>
-        </div>
-        
-        <button type="submit" class="btn btn-success" id="form-button">Guardar</button>
-        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancelar</button>
+        <button type="submit" class="btn btn-success">Guardar</button>
     </form>
+
+    <!-- Formulario para Editar Rol -->
+    <h2 id="edit-form-title" style="display: none;">Editar Rol</h2>
+    <form id="edit-role-form" action="{{ route('roles.update', 'role_id') }}" method="POST" style="display: none;">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre del Rol</label>
+            <input type="text" class="form-control" id="edit-name" name="name" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Actualizar</button>
+    </form>
+
 </div>
 
 <!-- Script para manejar el formulario dinámico -->
 <script>
     function editRole(role) {
-        // Cambia el título del formulario
-        document.getElementById('form-title').innerText = 'Editar Rol';
+        // Ocultar formulario de creación y mostrar formulario de edición
+        document.getElementById('create-role-form').style.display = 'none';
+        document.getElementById('create-form-title').style.display = 'none';
 
-        // Actualiza los campos del formulario con los datos del rol
-        document.getElementById('role-id').value = role.id;
-        document.getElementById('name').value = role.name;
-        document.getElementById('description').value = role.description;
+        document.getElementById('edit-role-form').style.display = 'block';
+        document.getElementById('edit-form-title').style.display = 'block';
 
-        // Cambia la acción del formulario al método PUT
-        const form = document.getElementById('role-form');
-        form.action = `<?php echo url('roles'); ?>/${role.id}`;
-        if (!document.querySelector('input[name="_method"]')) {
-            const methodInput = document.createElement('input');
-            methodInput.type = 'hidden';
-            methodInput.name = '_method';
-            methodInput.value = 'PUT';
-            form.appendChild(methodInput);
-        }
+        // Llenar el formulario de edición con los datos del rol
+        document.getElementById('edit-name').value = role.name;
 
-        // Cambia el texto del botón
-        document.getElementById('form-button').innerText = 'Actualizar';
+        // Actualizar la acción del formulario con la URL del rol correspondiente
+        const editForm = document.getElementById('edit-role-form');
+        editForm.action = `{{ url('roles') }}/${role.id}`;
     }
 
-    function resetForm() {
-        // Restablece el formulario al estado inicial
-        document.getElementById('form-title').innerText = 'Crear Nuevo Rol';
-        document.getElementById('role-id').value = '';
-        document.getElementById('name').value = '';
-        document.getElementById('description').value = '';
-        const form = document.getElementById('role-form');
-        form.action = '<?php echo route('roles.store'); ?>';
-        document.getElementById('form-button').innerText = 'Guardar';
+    // Función para mostrar el formulario de creación
+    function showCreateForm() {
+        // Ocultar formulario de edición y mostrar formulario de creación
+        document.getElementById('edit-role-form').style.display = 'none';
+        document.getElementById('edit-form-title').style.display = 'none';
 
-        // Elimina el campo _method si existe
-        const methodInput = document.querySelector('input[name="_method"]');
-        if (methodInput) methodInput.remove();
+        document.getElementById('create-role-form').style.display = 'block';
+        document.getElementById('create-form-title').style.display = 'block';
     }
+
+    // Mostrar el formulario de creación cuando se carga la página
+    window.onload = showCreateForm;
 </script>
+
 </body>
 </html>

@@ -19,14 +19,17 @@ class RoleController extends Controller
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
         $roles = Role::all();
-        return view('roles', compact('roles')); 
-        //return response()->json(Role::all(), 200);
-    }
 
-    /**
+        if ($request->expectsJson()) {
+            return response()->json($roles, 200);
+        }
+
+        return view('roles', compact('roles'));
+    }
+     /**
      * @OA\Post(
      *     path="/api/roles",
      *     summary="Crear un nuevo rol",
@@ -46,18 +49,31 @@ class RoleController extends Controller
      *     )
      * )
      */
+
     public function store(Request $request)
     {
+        if ($request->expectsJson()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $role = Role::create($validator->validated());
+            return response()->json($role, 201);
+        }
+
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
         ]);
 
-        $role = Role::create($validatedData);
+        Role::create($validatedData);
 
-        return response()->json($role, 201);
+        return redirect()->route('roles.index')->with('success', 'Rol creado exitosamente');
     }
-
-    /**
+      /**
      * @OA\Get(
      *     path="/api/roles/{id}",
      *     summary="Obtener un rol específico",
@@ -79,12 +95,16 @@ class RoleController extends Controller
      *     )
      * )
      */
-    public function show(Role $role)
+    public function show(Request $request, Role $role)
     {
-        return response()->json($role, 200);
+        if ($request->expectsJson()) {
+            return response()->json($role, 200);
+        }
+
+        return view('roles.show', compact('role'));
     }
 
-    /**
+     /**
      * @OA\Put(
      *     path="/api/roles/{id}",
      *     summary="Actualizar un rol existente",
@@ -117,19 +137,25 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|string|max:255'
-        ]);
+        if ($request->expectsJson()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $role->update($validator->validated());
+            return response()->json($role, 200);
         }
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $role->update($validatedData);
 
-        $role->update($validator->validated());
-
-        return response()->json($role, 200);
+        return redirect()->route('roles.index')->with('success', 'Rol actualizado exitosamente');
     }
-
     /**
      * @OA\Delete(
      *     path="/api/roles/{id}",
@@ -152,9 +178,13 @@ class RoleController extends Controller
      *     )
      * )
      */
-    public function destroy(Role $role)
+    public function destroy(Request $request, Role $role)
     {
         $role->delete();
-        return response()->json(null, 204);
+
+        if ($request->expectsJson()) {
+            return response()->json(null, 204);
+        }
+        return redirect()->route('roles.index')->with('success', 'Rol eliminado exitosamente');
     }
 }
