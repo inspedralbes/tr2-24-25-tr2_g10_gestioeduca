@@ -59,7 +59,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all();  // Supongamos que tienes un modelo Role y quieres permitir al usuario seleccionar un rol
+        $roles = Role::all();
         return view('users.create', compact('roles'));  // Devuelve la vista 'create' con los roles disponibles
     }
 
@@ -75,7 +75,11 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($request->wantsJson()) {
+                return response()->json($validator->errors(), 400);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
         }
 
         $user = User::create([
@@ -85,9 +89,13 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'role_id' => $request->role_id,
             'image' => $request->image
-              ]);
+        ]);
 
-        return response()->json($user, 201);
+        if ($request->wantsJson()) {
+            return response()->json($user, 201);
+        }
+
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     /**
