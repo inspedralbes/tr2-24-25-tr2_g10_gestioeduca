@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,8 +23,16 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json($users, 200);
+
+        // Si la solicitud es AJAX, devolver una respuesta JSON
+        if (request()->wantsJson()) {
+            return response()->json($users, 200);
+        }
+
+        // Si no es AJAX (es una solicitud tradicional), devolver una vista
+        return view('users.users', compact('users'));
     }
+
 
     /**
      * @OA\Post(
@@ -47,28 +56,46 @@ class UserController extends Controller
      *     )
      * )
      */
+
+    public function create()
+    {
+        $roles = Role::all();
+        return view('users.create', compact('roles'));  // Devuelve la vista 'create' con los roles disponibles
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:roles,id',
+            'image' => 'required|string|max:255'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($request->wantsJson()) {
+                return response()->json($validator->errors(), 400);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
         }
 
         $user = User::create([
             'name' => $request->name,
-            'last_name' => $request->lastname,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role_id' => $request->role_id,
+            'image' => $request->image
         ]);
 
-        return response()->json($user, 201);
+        if ($request->wantsJson()) {
+            return response()->json($user, 201);
+        }
+
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     /**
@@ -101,7 +128,11 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        return response()->json($user, 200);
+        if (request()->wantsJson()) {
+            return response()->json($user, 200);
+        }
+
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -136,6 +167,20 @@ class UserController extends Controller
      *     )
      * )
      */
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id); // Obtener el usuario por ID
+        $roles = Role::all(); // Obtener todos los roles
+        return view('users.edit', [
+            'user' => $user,
+            'roles' => $roles
+        ]);
+        // Pasar las variables a la vista
+    }
+
+
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -146,18 +191,27 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|string|max:255',
+            'last_name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'sometimes|required|string|min:8',
             'role_id' => 'sometimes|required|exists:roles,id',
+            'image' => 'sometimes|required|string|max:255'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($request->wantsJson()) {
+                return response()->json($validator->errors(), 400);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
         }
 
         $user->update($request->all());
 
-        return response()->json($user, 200);
+        if ($request->wantsJson()) {
+            return response()->json($user, 200);
+        }
+
+        return redirect()->route('users.index', $user->id)->with('success', 'User updated successfully');
     }
 
     /**
