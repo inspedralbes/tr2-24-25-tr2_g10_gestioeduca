@@ -39,8 +39,8 @@ services:
  # Frontend (Vue.js)
   frontend:
     build:
-      context: ./public_html  # Contexto correcto para el frontend
-      dockerfile: Dockerfile  # Asegúrate de que el Dockerfile esté en ./public_html/frontend
+      context: ./public_html
+      dockerfile: Dockerfile
     container_name: vue_prod
     volumes:
       - ./public_html:/usr/share/nginx/html
@@ -50,7 +50,7 @@ services:
   # Servicio para Node.js
   nodejs:
     build:
-      context: ./private/node-app  # Contexto correcto para node-app
+      context: ./private/node-app
       dockerfile: Dockerfile
     container_name: nodejs_prod
     working_dir: /usr/src/app
