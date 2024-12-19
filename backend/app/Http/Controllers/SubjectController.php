@@ -22,9 +22,10 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
+        if ($request->expectsJson()) {
         return response()->json($subjects, 200);
-    }
-
+        }
+        return view('subjects', compact('subjects'));
     /**
      * @OA\Post(
      *     path="/api/subjects",
