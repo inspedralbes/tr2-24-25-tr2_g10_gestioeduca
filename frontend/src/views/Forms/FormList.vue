@@ -15,7 +15,7 @@ import AssignFormModal from '../../components/Forms/AssignFormModal.vue'
 
 const router = useRouter()
 const searchQuery = ref('')
-const selectedStatus = ref('all')
+const selectedDivision = ref('all')
 const selectedDate = ref('all')
 const showAssignModal = ref(false)
 const selectedForm = ref(null)
@@ -25,7 +25,7 @@ const forms = ref([
     id: 1,
     title: 'Evaluación Trimestral',
     description: 'Evaluación del primer trimestre',
-    status: 'active',
+    division: 'active',
     responses: 24,
     createdAt: '2024-02-15'
   },
@@ -33,7 +33,7 @@ const forms = ref([
     id: 2,
     title: 'Cuestionario de Hábitos de Estudio',
     description: 'Evaluación de hábitos y técnicas de estudio',
-    status: 'active',
+    division: 'active',
     responses: 12,
     createdAt: '2024-02-20'
   }
@@ -43,17 +43,17 @@ const students = ref([
   {
     id: 1,
     name: 'Ana García',
-    grade: '1º ESO'
+    course: '1º ESO'
   },
   {
     id: 2,
     name: 'Carlos Rodríguez',
-    grade: '2º ESO'
+    course: '2º ESO'
   },
   {
     id: 3,
     name: 'Laura Martínez',
-    grade: '1º ESO'
+    course: '1º ESO'
   }
 ])
 
@@ -103,7 +103,7 @@ const handleFormAssigned = (assignments) => {
         </div>
         <div class="flex space-x-4">
           <select
-            v-model="selectedStatus"
+            v-model="selectedDivision"
             class="px-4 py-2 border rounded-lg"
           >
             <option value="all">Todos los estados</option>
@@ -156,11 +156,11 @@ const handleFormAssigned = (assignments) => {
               <td class="px-6 py-4">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                   :class="{
-                    'bg-green-100 text-green-800': form.status === 'active',
-                    'bg-gray-100 text-gray-800': form.status === 'draft',
-                    'bg-red-100 text-red-800': form.status === 'closed'
+                    'bg-green-100 text-green-800': form.division === 'active',
+                    'bg-gray-100 text-gray-800': form.division === 'draft',
+                    'bg-red-100 text-red-800': form.division === 'closed'
                   }">
-                  {{ form.status }}
+                  {{ form.division }}
                 </span>
               </td>
               <td class="px-6 py-4 text-sm text-gray-500">

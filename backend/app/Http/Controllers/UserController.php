@@ -209,10 +209,8 @@ class UserController extends Controller
                 'email' => $student->email,
                 'course' => $firstCourse?->name ?? 'Sin Curso', // Usamos "?" para manejar nulos
                 'division' => $firstCourse?->divisions->first()?->division ?? 'Sin División',
-                'attendance' => rand(80, 100), // Dato ficticio
             ];
         });
-
         return response()->json($formatted);
     }
 }

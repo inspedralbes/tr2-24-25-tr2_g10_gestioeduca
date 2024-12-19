@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline'
+import { EyeIcon } from '@heroicons/vue/24/outline' // Importamos un ícono de "ojo" de Heroicons
 import { useStudentsStore } from '@/stores/studentsStore'
 import { onMounted, computed } from 'vue'
 
@@ -11,19 +11,23 @@ onMounted(() => {
   studentsStore.fetchStudents()
 })
 
-// Usar propiedad computada para obtener los estudiantes desde el store de forma reactiva
-const students = computed(() => studentsStore.students)
 
 const router = useRouter()
 
 const viewProfile = (studentId) => {
   router.push(`/alumnos/${studentId}`)
 }
-
+// Declara la prop 'student' en este componente
+defineProps({
+  student: {
+    type: Object,
+    required: true
+  }
+})
 </script>
 
 <template>
-  <tr class="border-b hover:bg-gray-50 cursor-pointer" v-for="student in students" :key="student.id" @click="viewProfile(student.id)">
+  <tr class="border-b hover:bg-gray-50"  :key="student.id">
     <td class="py-4">
       <div class="flex items-center space-x-3">
         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
@@ -34,21 +38,12 @@ const viewProfile = (studentId) => {
     </td>
     <td>{{ student.course }}</td>
     <td>{{ student.division }}</td>
-    <td>
-      <div class="flex items-center">
-        <div class="w-20 bg-gray-200 rounded-full h-2.5">
-          <div class="bg-primary h-2.5 rounded-full" :style="`width: ${student.attendance}%`"></div>
-        </div>
-        <span class="ml-2">{{ student.attendance }}%</span>
-      </div>
-    </td>
+
     <td>
       <div class="flex space-x-2">
-        <button class="p-1 hover:text-primary" @click.stop>
-          <PencilIcon class="w-5 h-5" />
-        </button>
-        <button class="p-1 hover:text-danger" @click.stop>
-          <TrashIcon class="w-5 h-5" />
+        <!-- Botón con ícono de ojo -->
+        <button class="p-1 hover:text-primary" @click.stop="viewProfile(student.id)">
+          <EyeIcon class="w-5 h-5" />
         </button>
       </div>
     </td>

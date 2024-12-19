@@ -13,7 +13,7 @@ const formAssignments = ref([
     formTitle: 'Evaluación Trimestral de Matemáticas',
     assignedDate: '2024-03-10',
     dueDate: '2024-03-17',
-    status: 'pending'
+    division: 'pending'
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const formAssignments = ref([
     formTitle: 'Cuestionario de Hábitos de Estudio',
     assignedDate: '2024-03-05',
     dueDate: '2024-03-12',
-    status: 'completed'
+    division: 'completed'
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const formAssignments = ref([
     formTitle: 'Evaluación de Física y Química',
     assignedDate: '2024-02-28',
     dueDate: '2024-03-07',
-    status: 'expired'
+    division: 'expired'
   }
 ])
 
@@ -39,7 +39,7 @@ onMounted(async () => {
   student.value = {
     id: Number(route.params.id),
     name: 'Ana García',
-    grade: '1º ESO A',
+    course: '1º ESO A',
     email: 'ana.garcia@escuela.edu',
     image: '',
     skills: {

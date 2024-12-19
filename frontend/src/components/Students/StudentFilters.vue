@@ -1,11 +1,12 @@
 <script setup>
+
 defineProps({
   searchQuery: String,
-  selectedGrade: String,
-  selectedStatus: String
+  selectedCourse: String,
+  selectedDivision: String
 })
 
-defineEmits(['update:searchQuery', 'update:selectedGrade', 'update:selectedStatus'])
+defineEmits(['update:searchQuery', 'update:selectedCourse', 'update:selectedDivision'])
 </script>
 
 <template>
@@ -22,8 +23,8 @@ defineEmits(['update:searchQuery', 'update:selectedGrade', 'update:selectedStatu
       </div>
       <div class="flex space-x-4">
         <select
-          :value="selectedGrade"
-          @change="$emit('update:selectedGrade', $event.target.value)"
+          :value="selectedCourse"
+          @change="$emit('update:selectedCourse', $event.target.value)"
           class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
         >
           <option value="all">Todos los cursos</option>
@@ -31,15 +32,22 @@ defineEmits(['update:searchQuery', 'update:selectedGrade', 'update:selectedStatu
           <option value="2">2º ESO</option>
           <option value="3">3º ESO</option>
           <option value="4">4º ESO</option>
+          <option value="4">1ºBACHILLERATO</option>
+          <option value="4">2ºBACHILLERATO</option>
         </select>
         <select
-          :value="selectedStatus"
-          @change="$emit('update:selectedStatus', $event.target.value)"
+          :value="selectedDivision"
+          @change="$emit('update:selectedDivision', $event.target.value)"
           class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
         >
-          <option value="all">Todos los estados</option>
-          <option value="active">Activos</option>
-          <option value="inactive">Inactivos</option>
+          <option value="all">Todas las clases</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
         </select>
       </div>
     </div>

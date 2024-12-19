@@ -11,8 +11,15 @@ onMounted(() => {
   studentsStore.fetchStudents()
 })
 
+// Declara la prop 'student' en este componente
+defineProps({
+  students: {
+    type: Object,
+    required: true
+  }
+})
+
 // Utilizar computed para asegurar que reaccionen cambios en el estado
-const students = computed(() => studentsStore.students)
 </script>
 
 <template>
@@ -24,12 +31,10 @@ const students = computed(() => studentsStore.students)
             <th class="text-left py-3">Nombre</th>
             <th class="text-left py-3">Curso</th>
             <th class="text-left py-3">Clase</th>
-            <th class="text-left py-3">Asistencia</th>
             <th class="text-left py-3">Ficha</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Loop sobre los estudiantes usando v-for -->
           <StudentListItem
             v-for="student in students"
             :key="student.id"
@@ -38,7 +43,6 @@ const students = computed(() => studentsStore.students)
         </tbody>
       </table>
     </div>
-    
     <div v-if="students.length === 0" class="text-center py-8 text-gray-500">
       No se encontraron estudiantes con los filtros seleccionados
     </div>

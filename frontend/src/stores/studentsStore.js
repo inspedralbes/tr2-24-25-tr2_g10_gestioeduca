@@ -14,7 +14,7 @@ export const useStudentsStore = defineStore('students', {
                 const response = await fetch('http://localhost:8000/api/get-students');
 
                 if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
+                    throw new Error(`Error: ${response.divisionText}`);
                 }
 
                 const data = await response.json();

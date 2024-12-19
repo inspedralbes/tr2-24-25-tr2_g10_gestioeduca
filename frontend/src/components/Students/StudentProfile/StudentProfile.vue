@@ -26,7 +26,7 @@ const { getSkillLevel, getSkillColor } = useStudentSkills()
         
         <StudentInfo
           :name="student.name"
-          :grade="student.grade"
+          :course="student.course"
           :email="student.email"
         />
       </div>

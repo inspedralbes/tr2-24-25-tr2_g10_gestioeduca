@@ -9,8 +9,8 @@
             <h3 class="text-lg font-semibold">{{ group.name }}</h3>
             <p class="text-gray-600">{{ group.subject }}</p>
           </div>
-          <span :class="getStatusClass(group.status)">
-            {{ group.status }}
+          <span :class="getdivisionClass(group.division)">
+            {{ group.division }}
           </span>
         </div>
 
@@ -52,7 +52,7 @@ const groups = ref([
     id: 1,
     name: 'Grupo Proyecto Historia',
     subject: 'Historia',
-    status: 'Activo',
+    division: 'Activo',
     isExpanded: false,
     members: [
       { id: 1, name: 'Ana García', initials: 'AG' },
@@ -64,7 +64,7 @@ const groups = ref([
     id: 2,
     name: 'Equipo Matemáticas',
     subject: 'Algebra',
-    status: 'Pendiente',
+    division: 'Pendiente',
     isExpanded: false,
     members: [
       { id: 4, name: 'Juan Pérez', initials: 'JP' },
@@ -76,7 +76,7 @@ const groups = ref([
     id: 3,
     name: 'Laboratorio Ciencias',
     subject: 'Biology',
-    status: 'Próximo',
+    division: 'Próximo',
     isExpanded: false,
     members: [
       { id: 7, name: 'Sofia Rodríguez', initials: 'SR' },
@@ -93,13 +93,13 @@ const toggleMembers = (groupId) => {
   }
 }
 
-const getStatusClass = (status) => {
+const getdivisionClass = (division) => {
   const classes = {
     'Activo': 'bg-green-100 text-green-800',
     'Pendiente': 'bg-yellow-100 text-yellow-800',
     'Próximo': 'bg-blue-100 text-blue-800'
   }
-  return `px-3 py-1 rounded-full text-sm font-medium ${classes[status] || ''}`
+  return `px-3 py-1 rounded-full text-sm font-medium ${classes[division] || ''}`
 }
 </script>
 

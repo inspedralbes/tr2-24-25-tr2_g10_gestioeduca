@@ -4,7 +4,7 @@ defineProps({
     type: String,
     required: true
   },
-  grade: {
+  course: {
     type: String,
     required: true
   },
@@ -18,7 +18,7 @@ defineProps({
 <template>
   <div class="flex-1">
     <h2 class="text-2xl font-bold text-gray-900">{{ name }}</h2>
-    <div class="mt-1 text-gray-500">{{ grade }}</div>
+    <div class="mt-1 text-gray-500">{{ course }}</div>
     <div class="mt-1 text-gray-500">{{ email }}</div>
   </div>
 </template>

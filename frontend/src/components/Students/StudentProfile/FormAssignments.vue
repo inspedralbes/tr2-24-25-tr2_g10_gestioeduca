@@ -9,19 +9,19 @@ const props = defineProps({
   }
 })
 
-const statusIcons = {
+const divisionIcons = {
   pending: ClockIcon,
   completed: CheckCircleIcon,
   expired: XCircleIcon
 }
 
-const statusClasses = {
+const divisionClasses = {
   pending: 'text-warning bg-warning/10',
   completed: 'text-success bg-success/10',
   expired: 'text-danger bg-danger/10'
 }
 
-const statusLabels = {
+const divisionLabels = {
   pending: 'Pendiente',
   completed: 'Completado',
   expired: 'Expirado'
@@ -29,8 +29,8 @@ const statusLabels = {
 
 const sortedAssignments = computed(() => {
   return [...props.assignments].sort((a, b) => {
-    if (a.status === 'pending' && b.status !== 'pending') return -1
-    if (b.status === 'pending' && a.status !== 'pending') return 1
+    if (a.division === 'pending' && b.division !== 'pending') return -1
+    if (b.division === 'pending' && a.division !== 'pending') return 1
     return new Date(b.assignedDate) - new Date(a.assignedDate)
   })
 })
@@ -62,14 +62,14 @@ const sortedAssignments = computed(() => {
         <div class="flex items-center space-x-4">
           <span
             class="px-3 py-1 rounded-full text-sm flex items-center space-x-1"
-            :class="statusClasses[assignment.status]"
+            :class="divisionClasses[assignment.division]"
           >
-            <component :is="statusIcons[assignment.status]" class="w-4 h-4" />
-            <span>{{ statusLabels[assignment.status] }}</span>
+            <component :is="divisionIcons[assignment.division]" class="w-4 h-4" />
+            <span>{{ divisionLabels[assignment.division] }}</span>
           </span>
           
           <button
-            v-if="assignment.status === 'pending'"
+            v-if="assignment.division === 'pending'"
             class="text-primary hover:text-primary/80"
           >
             Ver formulario
