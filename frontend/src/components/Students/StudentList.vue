@@ -1,12 +1,18 @@
 <script setup>
 import StudentListItem from './StudentListItem.vue';
+import { useStudentsStore } from '@/stores/studentsStore'
+import { onMounted, computed } from 'vue';
 
-defineProps({
-  students: {
-    type: Array,
-    required: true
-  }
-});
+// Usar store
+const studentsStore = useStudentsStore()
+
+// Llamar a la API al montar el componente
+onMounted(() => {
+  studentsStore.fetchStudents()
+})
+
+// Utilizar computed para asegurar que reaccionen cambios en el estado
+const students = computed(() => studentsStore.students)
 </script>
 
 <template>
@@ -17,13 +23,13 @@ defineProps({
           <tr class="border-b">
             <th class="text-left py-3">Nombre</th>
             <th class="text-left py-3">Curso</th>
+            <th class="text-left py-3">Clase</th>
             <th class="text-left py-3">Asistencia</th>
-            <th class="text-left py-3">Rendimiento</th>
-            <th class="text-left py-3">Estado</th>
-            <th class="text-left py-3">Acciones</th>
+            <th class="text-left py-3">Ficha</th>
           </tr>
         </thead>
         <tbody>
+          <!-- Loop sobre los estudiantes usando v-for -->
           <StudentListItem
             v-for="student in students"
             :key="student.id"
