@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">CRUD App</a>
+            <a class="navbar-brand" href="{{ route('dashboard') }}">GRUPIFY CRUD</a>
         </div>
     </nav>
     <main class="py-4">
