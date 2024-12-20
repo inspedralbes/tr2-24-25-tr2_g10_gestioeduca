@@ -71,7 +71,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:roles,id',
-            'image' => 'required|string|max:255'
+            'image' => 'nullable|string|max:255' // Hacer la imagen opcional
         ]);
 
         if ($validator->fails()) {
@@ -82,14 +82,20 @@ class UserController extends Controller
             }
         }
 
-        $user = User::create([
+        $userData = [
             'name' => $request->name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role_id' => $request->role_id,
-            'image' => $request->image
-        ]);
+        ];
+
+        // Solo agregar la imagen si está presente en la solicitud
+        if ($request->has('image')) {
+            $userData['image'] = $request->image;
+        }
+
+        $user = User::create($userData);
 
         if ($request->wantsJson()) {
             return response()->json($user, 201);
@@ -97,6 +103,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
+
 
     /**
      * @OA\Get(

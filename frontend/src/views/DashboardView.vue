@@ -17,7 +17,7 @@ onMounted(() => {
   <Sidebar />
   <div class="dashboard-container">
     <div v-if="userData" class="welcome-section">
-      <h1>Benvingut, {{ userData.name }}!</h1>
+      <h1>Benvingut, {{ userData.name }} {{  userData.last_name }}!</h1>
       <img :src="userData.picture" alt="Profile picture" class="profile-picture" v-if="userData.picture">
       <p>{{ userData.email }}</p>
     </div>
