@@ -33,18 +33,10 @@ services:
     working_dir: /var/www/
     depends_on:
       - db
-    expose:
-      - "20030"
-    command: bash -c "
-      composer install --no-dev --optimize-autoloader --no-interaction && \
-      php artisan key:generate && \
-      php artisan migrate --force && \
-      php artisan config:cache && \
-      php artisan route:cache && \
-      php artisan view:cache && \
-      php-fpm"
-
-  # Frontend (Vue.js)
+    ports:
+      - "20030:9000"
+ 
+ # Frontend (Vue.js)
   frontend:
     build:
       context: ./public_html
