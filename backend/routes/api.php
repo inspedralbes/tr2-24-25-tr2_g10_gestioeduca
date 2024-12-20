@@ -14,6 +14,12 @@ use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\RegisteredUserController;
 use Illuminate\Auth\Events\Authenticated;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\DashboardController;
+
+Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin-dashboard', [DashboardController::class, 'adminDashboard']);
+Route::middleware(['auth:sanctum', 'role:teacher'])->get('/teacher-dashboard', [DashboardController::class, 'teacherDashboard']);
+Route::middleware(['auth:sanctum', 'role:student'])->get('/student-dashboard', [DashboardController::class, 'studentDashboard']);
+
 
 Route::resource('roles', RoleController::class);
 Route::resource('courses', CourseController::class);
@@ -42,6 +48,6 @@ Route::get('forms/{formId}/questions', [FormController::class, 'getQuestionsAndA
 
 
 
-//Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-//Route::post('/register', [RegisteredUserController::class, 'store']);
-//Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'logout']);
+Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'logout']);
