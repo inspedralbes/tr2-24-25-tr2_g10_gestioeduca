@@ -19,13 +19,14 @@ class SubjectController extends Controller
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
         $subjects = Subject::all();
         if ($request->expectsJson()) {
         return response()->json($subjects, 200);
         }
         return view('subjects', compact('subjects'));
+    }
     /**
      * @OA\Post(
      *     path="/api/subjects",
@@ -48,17 +49,15 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+        $subject = Subject::create($validatedData);
+        if ($request->expectsJson()) {
+            return response()->json($subject, 201);
         }
-
-        $subject = Subject::create($request->all());
-        return response()->json($subject, 201);
+        return redirect()->route('subjects.index')->with('success', 'Asignatura creada correctamente');
     }
 
     /**
@@ -83,16 +82,30 @@ class SubjectController extends Controller
      *     )
      * )
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        // Buscar la asignatura por su ID
         $subject = Subject::find($id);
 
+        // Si la asignatura no se encuentra
         if (is_null($subject)) {
-            return response()->json(['message' => 'Subject not found'], 404);
+            // Si la solicitud espera una respuesta JSON (API)
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Asignatura no encontrada'], 404);
+            }
+            // Para solicitudes web, redirigir con un mensaje de error
+            return redirect()->route('subjects.index')->with('error', 'Asignatura no encontrada');
         }
 
-        return response()->json($subject, 200);
+        // Si la asignatura se encuentra y la solicitud espera JSON
+        if ($request->expectsJson()) {
+            return response()->json($subject, 200);
+        }
+
+        // Para solicitudes web, mostrar la vista con la asignatura
+        return view('subjects.show', compact('subject'));
     }
+
 
     /**
      * @OA\Put(
